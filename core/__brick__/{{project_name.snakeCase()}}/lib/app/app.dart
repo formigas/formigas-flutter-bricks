@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:{{project_name.snakeCase()}}/ui/counter/counter_controller_implementation.dart';
-import 'package:{{project_name.snakeCase()}}/ui/counter/counter_view.dart';
+import 'package:{{project_name.snakeCase()}}/feature/counter/counter_controller_implementation.dart';
+import 'package:{{project_name.snakeCase()}}/feature/counter/counter_view.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

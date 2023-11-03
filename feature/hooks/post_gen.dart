@@ -25,8 +25,6 @@ Future<void> _runBuildRunner(HookContext context) async {
     'build_runner',
     'build',
     '--delete-conflicting-outputs',
-    '--build-filter',
-    './lib/ui/',
   ]);
   progress.complete();
 }

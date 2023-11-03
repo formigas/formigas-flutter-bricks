@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:{{project_name.snakeCase()}}/ui/{{mvc_name.snakeCase()}}/{{mvc_name.snakeCase()}}_controller.dart';
-import 'package:{{project_name.snakeCase()}}/ui/{{mvc_name.snakeCase()}}/{{mvc_name.snakeCase()}}_model.dart';
+import 'package:{{project_name.snakeCase()}}/feature/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_controller.dart';
+import 'package:{{project_name.snakeCase()}}/feature/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_model.dart';
 
-class {{mvc_name.pascalCase()}}View extends StatelessWidget {
-  const {{mvc_name.pascalCase()}}View({
-    required {{mvc_name.pascalCase()}}Controller controller,
-    required {{mvc_name.pascalCase()}}Model model,
+class {{feature_name.pascalCase()}}View extends StatelessWidget {
+  const {{feature_name.pascalCase()}}View({
+    required {{feature_name.pascalCase()}}Controller controller,
+    required {{feature_name.pascalCase()}}Model model,
     super.key,
   })  : _controller = controller,
         _model = model;
-  final {{mvc_name.pascalCase()}}Controller _controller;
-  final {{mvc_name.pascalCase()}}Model _model;
+  final {{feature_name.pascalCase()}}Controller _controller;
+  final {{feature_name.pascalCase()}}Model _model;
 
   @override
   Widget build(BuildContext context) => Scaffold(

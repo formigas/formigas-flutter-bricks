@@ -1,4 +1,4 @@
-name: formigas_mvc
+name: formigas_feature
 description: flutter core created by formigas with the base from Very Good Venture
 repository: https://https://git.dev.formigas.de/framework/flutter-core
 version: 0.1.0
@@ -12,11 +12,11 @@ vars:
     description: The project name
     default: my_app
     prompt: What is the project name?
-  mvc_name:
+  feature_name:
     type: string
-    description: The mvc name
-    default: mvc_component
-    prompt: What is the mvc name?
+    description: The feature name
+    default: my_feature
+    prompt: What is the feature name?
   use_fvm:
     type: boolean
     description: Whether to use fvm or not
