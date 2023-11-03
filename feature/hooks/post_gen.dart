@@ -3,17 +3,24 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
+  await _installMvcLibrary(context);
   await _installPackages(context);
   await _runBuildRunner(context);
 }
 
-Future<void> _installPackages(HookContext context) async {
+Future<void> _installMvcLibrary(HookContext context) async {
   final progress = context.logger.progress('Installing formigas-mvc library');
   await _runProcess(context, 'dart', [
     'pub',
     'add',
     'formigas_mvc:{"git":{"url":"git@git.dev.formigas.de:framework/lib-formigas-mvc.git","ref":"main"}}',
   ]);
+  progress.complete();
+}
+
+Future<void> _installPackages(HookContext context) async {
+  final progress = context.logger.progress('Installing packages');
+  await _runProcess(context, 'flutter', ['packages', 'get']);
   progress.complete();
 }
 

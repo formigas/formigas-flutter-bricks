@@ -11,7 +11,8 @@ Future<void> run(HookContext context) async {
 }
 
 Future<void> _addFeatureMason(HookContext context) async {
-  final progress = context.logger.progress('Adding formigas_feature mason');
+  final progress =
+      context.logger.progress('Adding formigas_feature brick to mason');
   await _runProcess(
     context,
     'mason',
@@ -32,7 +33,7 @@ Future<void> _addFeatureMason(HookContext context) async {
 
 Future<void> _makeMvcMason(HookContext context) async {
   final progress = context.logger
-      .progress('Adding example feauture via formigas_feature brick');
+      .progress('Adding example feature via formigas_feature brick');
   await _runProcess(
     context,
     'mason',
