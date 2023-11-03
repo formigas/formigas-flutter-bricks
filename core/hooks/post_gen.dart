@@ -40,12 +40,8 @@ Future<void> _makeMvcMason(HookContext context) async {
     [
       'make',
       'formigas_feature',
-      '--project_name',
-      context.vars['project_name'].toString(),
       '--feature_name',
       'counter',
-      '--use_fvm',
-      context.vars['use_fvm'].toString(),
     ],
     useFvmIfNeccessary: false,
   );
