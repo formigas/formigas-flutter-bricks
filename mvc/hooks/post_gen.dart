@@ -38,8 +38,6 @@ Future<void> _runProcess(
 ) async {
   final exec = _useFvm(context) ? 'fvm' : executable;
   final args = _useFvm(context) ? [executable, ...arguments] : arguments;
-  context.logger.info('Current working directory: ${Directory.current.path}');
-  context.logger.info('Running $exec ${args.join(' ')}');
   final result = await Process.run(
     exec,
     args,
