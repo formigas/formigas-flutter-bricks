@@ -25,7 +25,7 @@ $ flutter run --flavor staging --target lib/main_staging.dart
 $ flutter run --flavor production --target lib/main_production.dart
 ```
 
-_\*Very Good Core works on iOS, Android, Web, and Windows._
+_\*{{project_name.titleCase()}} works on iOS, Android, Web, and Windows._
 
 ---
 
@@ -86,7 +86,7 @@ This project relies on [flutter_localizations][flutter_localizations_link] and f
 3. Use the new string
 
 ```dart
-import 'package:formigas_core/l10n/l10n.dart';
+import 'package:{{project_name.snakeCase()}}/l10n/l10n.dart';
 
 @override
 Widget build(BuildContext context) {
@@ -160,4 +160,4 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 
 Alternatively, run `flutter run` and code generation will take place automatically.
 
-[very_good_ventures_link]: https://github.com/VeryGoodOpenSource/formigas_core
+[very_good_ventures_link]: https://github.com/VeryGoodOpenSource/{{project_name.snakeCase()}}
