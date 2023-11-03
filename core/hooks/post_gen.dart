@@ -4,14 +4,14 @@ import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
   await _checkFlutter(context);
-  await _addMvcMason(context);
+  await _addFeatureMason(context);
   await _makeMvcMason(context);
   await _installPackages(context);
   await _runBuildRunner(context);
 }
 
-Future<void> _addMvcMason(HookContext context) async {
-  final progress = context.logger.progress('Adding mvc_mason');
+Future<void> _addFeatureMason(HookContext context) async {
+  final progress = context.logger.progress('Adding formigas_feature mason');
   await _runProcess(
     context,
     'mason',
@@ -31,7 +31,8 @@ Future<void> _addMvcMason(HookContext context) async {
 }
 
 Future<void> _makeMvcMason(HookContext context) async {
-  final progress = context.logger.progress('Adding example mvc view');
+  final progress = context.logger
+      .progress('Adding example feauture via formigas_feature brick');
   await _runProcess(
     context,
     'mason',
