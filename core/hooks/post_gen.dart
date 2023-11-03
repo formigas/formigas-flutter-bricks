@@ -55,7 +55,7 @@ Future<void> _checkFlutter(HookContext context) async {
 }
 
 String _getWorkingDirectory(HookContext context) =>
-    context.vars['project_name'].toString();
+    (context.vars['project_name'] as String).snakeCase;
 
 Future<void> _installPackages(HookContext context) async {
   final progress = context.logger.progress('Installing packages');
