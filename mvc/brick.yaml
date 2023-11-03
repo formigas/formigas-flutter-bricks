@@ -1,0 +1,24 @@
+name: formigas_mvc
+description: flutter core created by formigas with the base from Very Good Venture
+repository: https://https://git.dev.formigas.de/framework/flutter-core
+version: 0.1.0
+
+environment:
+  mason: ">=0.1.0-dev.50 <0.1.0"
+
+vars:
+  project_name:
+    type: string
+    description: The project name
+    default: my_app
+    prompt: What is the project name?
+  mvc_name:
+    type: string
+    description: The mvc name
+    default: mvc_component
+    prompt: What is the mvc name?
+  use_fvm:
+    type: boolean
+    description: Whether to use fvm or not
+    default: false
+    prompt: Do you want to use fvm?
