@@ -24,10 +24,16 @@ vars:
   description:
     type: string
     description: A short project description
-    default: A Very Good App
+    default: App description
     prompt: What is the project description?
   use_fvm:
     type: boolean
     description: Whether to use fvm or not
     default: false
     prompt: Do you want to use fvm?
+  use_ci:
+    type: enum
+    description: Select the CI tool you want to use
+    default: "None"
+    prompt: Select the CI tool you want to use
+    values: ["None", "Github Actions", "Gitlab CI", "Bitbucket Pipelines"]

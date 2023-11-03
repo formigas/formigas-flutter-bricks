@@ -6,12 +6,30 @@ enum Platform {
 }
 
 void run(HookContext context) {
-  context.vars['application_id_android'] =
-      _appId(context, platform: Platform.android);
-  context.vars['application_id'] = _appId(context);
+  _selectAppId(context);
+  _selectCI(context);
 }
 
-String _appId(HookContext context, {Platform? platform}) {
+void _selectAppId(HookContext context) {
+  context.vars['application_id_android'] =
+      _createAppId(context, platform: Platform.android);
+  context.vars['application_id'] = _createAppId(context);
+}
+
+void _selectCI(HookContext context) {
+  final useCI = context.vars['use_ci'] as String?;
+  switch (useCI) {
+    case 'Github Actions':
+      context.vars = {...context.vars, 'use_github_ci': true};
+    case 'Gitlab CI':
+      context.vars = {...context.vars, 'use_gitlab_ci': true};
+    case 'Bitbucket Pipelines':
+      context.vars = {...context.vars, 'use_bitbucket_ci': true};
+    default:
+  }
+}
+
+String _createAppId(HookContext context, {Platform? platform}) {
   final orgName = context.vars['org_name'] as String;
   final projectName = context.vars['project_name'] as String;
 
