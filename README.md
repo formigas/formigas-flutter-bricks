@@ -5,9 +5,6 @@ There are currently two bricks in this reposiory:
 - core: core flutter app inspired by [very_good_ventures][very_good_ventures_link]
 - feature: a brick that provides the files and strucu for a freature how we implement it at [formigas][formigas_link]
 
-[very_good_ventures_link]: https://github.com/VeryGoodOpenSource/very_good_core
-[formigas_link]: https://formigas.io
-
 # Usage
 
 ## Preparation
@@ -45,6 +42,11 @@ mason make formigas_core
 
 # Helpful links
 
-- [VGV Core Brick](https://github.com/VeryGoodOpenSource/very_good_core)
-- [Brick Hub Development](https://docs.brickhub.dev/brick-development)
-- [Mason](https://github.com/felangel/mason)
+- [VGV Core Brick][very_good_ventures_link]
+- [Brick Hub Development][brick_hub_development_link]
+- [Mason][mason_link]
+
+[very_good_ventures_link]: https://github.com/VeryGoodOpenSource/very_good_core
+[formigas_link]: https://formigas.io
+[brick_hub_development_link]: https://docs.brickhub.dev/brick-development
+[mason_link]: https://github.com/felangel/mason
