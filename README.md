@@ -42,3 +42,9 @@ To add a new feature to your app run the following command in the root of your p
 ```sh
 mason make formigas_core
 ```
+
+# Helpful links
+
+- [VGV Core Brick](https://github.com/VeryGoodOpenSource/very_good_core)
+- [Brick Hub Development](https://docs.brickhub.dev/brick-development)
+- [Mason](https://github.com/felangel/mason)
