@@ -2,8 +2,8 @@
 
 There are currently two bricks in this reposiory:
 
-- core: core flutter app inspired by [very_good_ventures][very_good_ventures_link]
-- feature: a brick that provides the files and strucu for a freature how we implement it at [formigas][formigas_link]
+- [core][core_repo_link]: core flutter app inspired by [very_good_ventures][very_good_ventures_link]
+- [feature][feature_repo_link]: a brick that provides the files and strucu for a freature how we implement it at [formigas][formigas_link]
 
 # Usage
 
@@ -50,3 +50,5 @@ mason make formigas_core
 [formigas_link]: https://formigas.io
 [brick_hub_development_link]: https://docs.brickhub.dev/brick-development
 [mason_link]: https://github.com/felangel/mason
+[core_repo_link]: ./core/README.md
+[feature_repo_link]: ./feature/README.md
