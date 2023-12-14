@@ -1,0 +1,72 @@
+variables:
+  FLUTTER_VERSION: "3.13.9"
+  FLUTTER_DOCKER_IMAGE: "ghcr.io/cirruslabs/flutter:${FLUTTER_VERSION}"
+  UBUNTU_DOCKER_IMAGE: "ubuntu:22.04"
+
+stages:
+  - validate
+  - build
+  - test
+  - coverage
+
+validate:
+  stage: validate
+  image: $FLUTTER_DOCKER_IMAGE
+  only:
+    - merge_requests
+  script:
+    - dart format -o none --set-exit-if-changed lib/ test/
+    - flutter analyze --fatal-infos --fatal-warnings
+
+build_android:
+  stage: build
+  image: $FLUTTER_DOCKER_IMAGE
+  only:
+    - merge_requests
+  needs: []
+  script:
+    - flutter clean
+    - flutter build appbundle --debug -t lib/main_development.dart
+
+# Build iOS app not supported by GitLab CI yet
+
+test:
+  stage: test
+  image: $FLUTTER_DOCKER_IMAGE
+  only:
+    - merge_requests
+  needs: []
+  script:
+    - flutter pub global activate junitreport
+    - set -o pipefail
+    - flutter clean
+    - flutter test --machine --coverage | $HOME/.pub-cache/bin/tojunit > test-report-app.xml
+    - flutter pub global activate cobertura
+    - $HOME/.pub-cache/bin/cobertura convert -i coverage/lcov.info -o coverage/cobertura.xml -p pubspec.yaml
+  artifacts:
+    reports:
+      junit: test-report-app.xml
+    paths:
+    - coverage/lcov.info
+    - coverage/cobertura.xml
+
+test_coverage:
+  stage: coverage
+  image: $UBUNTU_DOCKER_IMAGE
+  script:
+    - apt update && apt install -y lcov
+    - genhtml -o docs/coverage/ --no-function-coverage --no-branch-coverage coverage/lcov.info
+    - lcov --list coverage/lcov.info
+  coverage: '/\s*lines\.*:\s*([\d\.]+%)/'
+  only:
+    - merge_requests
+  artifacts:
+    paths:
+      - docs/coverage/
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura.xml
+    expire_in: 1 week
+  needs:
+    - test
