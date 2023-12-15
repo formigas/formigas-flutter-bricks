@@ -44,6 +44,10 @@ unlinked_spec.ds
 .fvm/flutter_sdk
 {{/use_fvm}}
 
+# Generated files
+*.freezed.dart
+*.g.dart
+
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -114,3 +118,4 @@ app.*.map.json
 !.idea/codeStyles/
 !.idea/dictionaries/
 !.idea/runConfigurations/
+
