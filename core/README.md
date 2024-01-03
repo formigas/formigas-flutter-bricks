@@ -1,3 +1,14 @@
+# CI/CD
+## GitLab CI
+The GitLab CI pipeline runs validation, build and tests.  
+The pipeline is run on every push to `develop`, `staging` and `master`/`main` branches, as well as on every merge request.  
+The build step runs a different flavor depending on the branch:  
+- `develop` runs the `development` flavor
+- `staging` runs the `staging` flavor
+- `master`/`main` runs the `production` flavor
+
+The test stage adds the code coverage to the merge request if the pipeline is run on a merge request. Additionally, the pipeline will output code coverage reports.
+
 # Very Good Core
 
 [![Very Good Ventures][logo_white]][very_good_ventures_link_dark]
