@@ -1,6 +1,6 @@
+import 'package:{{project_name.snakeCase()}}/common/custom_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:{{project_name.snakeCase()}}/common/custom_themes.dart';
 import 'package:{{project_name.snakeCase()}}/feature/counter/counter_controller_implementation.dart';
 import 'package:{{project_name.snakeCase()}}/feature/counter/counter_view.dart';
 
