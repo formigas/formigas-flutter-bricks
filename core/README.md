@@ -2,7 +2,7 @@
 ## GitLab CI
 The GitLab CI pipeline runs validation, build and tests.  
 The pipeline is run on every push to `develop`, `staging` and `master`/`main` branches, as well as on every merge request.  
-The build step runs a different flavor depending on the branch:  
+The build stage runs a different flavor depending on the branch:  
 - `develop` runs the `development` flavor
 - `staging` runs the `staging` flavor
 - `master`/`main` runs the `production` flavor

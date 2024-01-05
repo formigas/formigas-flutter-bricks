@@ -1,0 +1,33 @@
+spec:
+  inputs:
+    docker_image:
+      description: 'Docker image to use for build'
+      type: string
+    flavor:
+      description: 'Flavor to build for'
+      options: [development, staging, production]
+
+---
+build_ios_$[[ inputs.flavor ]]:
+  stage: build
+  needs: []
+  tags:
+    - macbook-m2-local
+  image: $[[ inputs.docker_image]]
+  script:
+    - cd {{project_name.snakeCase()}}
+    - flutter clean
+    - dart run build_runner build --delete-conflicting-outputs
+    - flutter build ios --no-codesign --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
+
+build_android_$[[ inputs.flavor ]]:
+  stage: build
+  needs: []
+  tags:
+    - saas-linux-small-amd64
+  image: $[[ inputs.docker_image]]
+  script:
+    - cd {{project_name.snakeCase()}}
+    - flutter clean
+    - dart run build_runner build --delete-conflicting-outputs
+    - flutter build appbundle --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart

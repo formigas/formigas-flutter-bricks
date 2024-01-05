@@ -1,7 +1,33 @@
 variables:
   FLUTTER_VERSION: "3.13.9"
   FLUTTER_DOCKER_IMAGE: "ghcr.io/cirruslabs/flutter:${FLUTTER_VERSION}"
-  UBUNTU_DOCKER_IMAGE: "ubuntu:22.04"
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == "staging"
+    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
+    - when: never
+
+include:
+  - local: 'templates/build.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
+    inputs:
+      docker_image: $FLUTTER_DOCKER_IMAGE
+      flavor: 'development'
+  - local: 'templates/build.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH == "staging"
+    inputs:
+      docker_image: $FLUTTER_DOCKER_IMAGE
+      flavor: 'staging'
+  - local: 'templates/build.yml'
+    rules:
+      - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
+    inputs:
+      docker_image: $FLUTTER_DOCKER_IMAGE
+      flavor: 'production'
 
 stages:
   - validate
@@ -16,43 +42,6 @@ validate:
     - dart format -o none --set-exit-if-changed lib/ test/
     - dart run build_runner build --delete-conflicting-outputs
     - flutter analyze --fatal-infos --fatal-warnings
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "staging"
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
-
-.build_android:
-  stage: build
-  image: $FLUTTER_DOCKER_IMAGE
-  needs: []
-  script:
-    - cd {{project_name.snakeCase()}}
-    - flutter clean
-    - dart run build_runner build --delete-conflicting-outputs
-    - flutter build appbundle --debug --flavor $FLAVOR -t lib/main_$FLAVOR.dart
-
-build_development:
-  extends: .build_android
-  variables:
-    FLAVOR: "development"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
-
-build_staging:
-  extends: .build_android
-  variables:
-    FLAVOR: "staging"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "staging"
-
-build_production:
-  extends: .build_android
-  variables:
-    FLAVOR: "production"
-  rules:
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
-
-# Build iOS app not supported by GitLab CI yet
 
 test:
   stage: test
@@ -83,6 +72,3 @@ test:
     - {{project_name.snakeCase()}}/docs/coverage/
     expire_in: 1 week
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "staging"
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
