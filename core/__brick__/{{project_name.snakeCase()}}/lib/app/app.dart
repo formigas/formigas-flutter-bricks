@@ -14,7 +14,6 @@ class App extends StatelessWidget {
         title: 'Flutter Demo',
         theme: CustomTheme().light,
         darkTheme: CustomTheme().dark,
-        themeMode: ThemeMode.light,
         home: Consumer(
           builder: (_, ref, ___) => CounterView(
             controller:
