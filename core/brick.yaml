@@ -33,3 +33,8 @@ vars:
     default: "None"
     prompt: Select the CI tool you want to use
     values: ["None", "Github Actions", "Gitlab CI", "Bitbucket Pipelines"]
+  use_material_3:
+    type: boolean
+    description: Select if you want to use material 3 theming
+    default: false
+    prompt: Do you want to use material 3 theming?
