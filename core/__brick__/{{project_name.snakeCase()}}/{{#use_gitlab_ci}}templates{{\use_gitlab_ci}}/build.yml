@@ -15,7 +15,6 @@ build_ios_$[[ inputs.flavor ]]:
     - {{ gitlab_ios_runner_tag }}
   image: $[[ inputs.docker_image]]
   script:
-    - cd {{project_name.snakeCase()}}
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
     - flutter build ios --no-codesign --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
@@ -27,7 +26,6 @@ build_android_$[[ inputs.flavor ]]:
     - saas-linux-small-amd64
   image: $[[ inputs.docker_image]]
   script:
-    - cd {{project_name.snakeCase()}}
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
     - flutter build appbundle --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart

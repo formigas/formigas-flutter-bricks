@@ -38,7 +38,6 @@ validate:
   stage: validate
   image: $FLUTTER_DOCKER_IMAGE
   script:
-    - cd {{project_name.snakeCase()}}
     - dart format -o none --set-exit-if-changed lib/ test/
     - dart run build_runner build --delete-conflicting-outputs
     - flutter analyze --fatal-infos --fatal-warnings
@@ -50,7 +49,6 @@ test:
   script:
     - flutter pub global activate junitreport
     - set -o pipefail
-    - cd {{project_name.snakeCase()}}
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
     - flutter test --machine --coverage | tee >( $HOME/.pub-cache/bin/tojunit > test-report-app.xml )
@@ -62,13 +60,13 @@ test:
   coverage: '/lines\.*: \d+\.\d+\%/'
   artifacts:
     reports:
-      junit: {{project_name.snakeCase()}}/test-report-app.xml
+      junit: test-report-app.xml
       coverage_report:
           coverage_format: cobertura
-          path: {{project_name.snakeCase()}}/coverage/cobertura.xml
+          path: /coverage/cobertura.xml
     paths:
-    - {{project_name.snakeCase()}}/coverage/lcov.info
-    - {{project_name.snakeCase()}}/coverage/cobertura.xml
-    - {{project_name.snakeCase()}}/docs/coverage/
+    - /coverage/lcov.info
+    - /coverage/cobertura.xml
+    - /docs/coverage/
     expire_in: 1 week
   rules:
