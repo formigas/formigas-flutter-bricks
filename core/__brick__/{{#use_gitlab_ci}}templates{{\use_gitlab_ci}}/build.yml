@@ -12,7 +12,7 @@ build_ios_$[[ inputs.flavor ]]:
   stage: build
   needs: []
   tags:
-    - macbook-m2-local
+    - {{ gitlab_ios_runner_tag }}
   image: $[[ inputs.docker_image]]
   script:
     - cd {{project_name.snakeCase()}}
