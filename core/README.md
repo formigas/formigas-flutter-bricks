@@ -7,7 +7,17 @@ The build stage runs a different flavor depending on the branch:
 - `staging` runs the `staging` flavor
 - `master`/`main` runs the `production` flavor
 
-The test stage adds the code coverage to the merge request if the pipeline is run on a merge request. Additionally, the pipeline will output code coverage reports.
+If the pipeline is run on a merge request, the test stage will add the test coverage to it. Additionally, the pipeline will output code coverage reports.
+
+### Setup for iOS builds
+For iOS builds, having a GitLab Runner running macOS is required. Please refer to the [GitLab documentation](https://docs.gitlab.com/runner/install/osx.html) for setup instructions if you don't have one yet. Then follow [Manage Runners](https://docs.gitlab.com/ee/ci/runners/runners_scope.html) to set up the runner for your project. During the `mason make` dialog you will be prompted to enter the tag configured for the runner after you chose `GitLab CI` as your automation service provider.  
+
+### Configuration
+The pipeline is defined in `.gitlab-ci.yml`, while the build stage is defined in `templates/build.yml`.  
+- Flutter version: Make sure to update the `FLUTTER_VERSION` variable to the version of Flutter you want to use. 
+- Image: By default, [cirruslabs Flutter Docker images](https://github.com/cirruslabs/docker-images-flutter/pkgs/container/flutter) are used. If you want to use a different image, update the `FLUTTER_DOCKER_IMAGE` variable.
+
+
 
 # Very Good Core
 
