@@ -1,19 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:{{project_name.snakeCase()}}/feature/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_controller.dart';
 import 'package:{{project_name.snakeCase()}}/feature/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_model.dart';
+import 'package:flutter/material.dart';
+import 'package:formigas_mvc/formigas_mvc.dart';
 
-class {{feature_name.pascalCase()}}View extends StatelessWidget {
+class {{feature_name.pascalCase()}}View extends MViewC<{{feature_name.pascalCase()}}Controller, {{feature_name.pascalCase()}}Model> {
   const {{feature_name.pascalCase()}}View({
-    required {{feature_name.pascalCase()}}Controller controller,
-    required {{feature_name.pascalCase()}}Model model,
+    required super.controller,
     super.key,
-  })  : _controller = controller,
-        _model = model;
-  final {{feature_name.pascalCase()}}Controller _controller;
-  final {{feature_name.pascalCase()}}Model _model;
+  });
 
   @override
-  Widget build(BuildContext context) => Scaffold(
+  Widget build(BuildContext context, {{feature_name.pascalCase()}}Model model) => Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: const Text('Flutter Demo Home Page'),
@@ -26,14 +23,14 @@ class {{feature_name.pascalCase()}}View extends StatelessWidget {
                 'You have pushed the button this many times:',
               ),
               Text(
-                '${_model.count}',
+                '${model.count}',
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ],
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: _controller.increment,
+          onPressed: controller.increment,
           tooltip: 'Increment',
           child: const Icon(Icons.add),
         ),

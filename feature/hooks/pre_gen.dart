@@ -3,11 +3,6 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 import 'package:yaml/yaml.dart';
 
-enum Platform {
-  android,
-  ios,
-}
-
 void run(HookContext context) {
   _assertRootDirectory(context);
   _selectUseFvm(context);
