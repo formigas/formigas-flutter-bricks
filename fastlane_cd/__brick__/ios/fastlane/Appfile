@@ -1,0 +1,24 @@
+{{#use_env}}
+apple_id(ENV("FASTLANE_USER")) # Your Apple Developer Portal username
+itc_team_id(ENV["ITC_TEAM_ID"]) # Developer Portal Team ID
+team_id(ENV["APP_TEAM_ID"]) # A
+{{/use_env}}
+{{^use_env}}
+apple_id({{fastlane_user)}}) # Your Apple Developer Portal username
+itc_team_id({{itc_team_id}}) # Developer Portal Team ID
+team_id({{app_team_id}}) # A
+{{/use_env}}
+
+ENV["PILOT_SKIP_WAITING_FOR_BUILD_PROCESSING"] = "true"
+
+
+for_platform :ios do
+  for_lane :build_testflight do
+  {{#use_env}}
+    app_identifier(ENV["PACKAGE_NAME"])
+  {{/use_env}}
+  {{^use_env}}
+    app_identifier({{package_name}})
+  {{/use_env}}
+  end
+end

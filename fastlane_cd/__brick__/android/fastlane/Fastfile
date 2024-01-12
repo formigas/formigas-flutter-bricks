@@ -1,0 +1,52 @@
+import "secrets"
+
+KEY_FILES_DIRECTORY = "../build_secrets"
+KEY_FILES_PASSWORD = ENV['KEYS_ENCRYPTION_PASSWORD']
+
+default_platform(:android)
+
+platform :android do
+
+    error do |ex|
+      cleanup()
+    end
+    
+    ### build and deploy app to Google Play 
+    desc "Deploy the app the Google Play on internal track"
+    lane :deploy_internal do
+    begin
+      decrypt_secrets
+      build_appbundle
+
+      build_number = number_of_commits()
+        upload_to_play_store(
+          track: "internal",
+          package_name: {{package_name}},
+          skip_upload_metadata: true,
+          skip_upload_images: true,
+          skip_upload_screenshots: true,
+          aab: "../build/app/outputs/bundle/devRelease/app-dev-release.aab",
+          release_status: "completed",
+          version_name: "Version Build: #{build_number}",
+          json_key: 'build_secrets/play-store-service-account.json'
+        )
+
+      ensure
+        delete_unencrypted_secrets(KEY_FILES_DIRECTORY)
+      end
+    end
+
+    desc "Build app"
+    lane :build_appbundle do
+      build_number = number_of_commits()
+      Dir.chdir "../.." do
+          sh("flutter", "build", "appbundle",
+              "--release",
+              "--obfuscate",
+              "--split-debug-info","build/app/outputs/symbols",
+              "--build-number=#{build_number}"
+              )
+      end
+    end
+
+end

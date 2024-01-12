@@ -1,0 +1,7 @@
+json_key_file("build_secrets/play-store-service-account.json")
+{{#use_env}}
+package_name({{package_name}})
+{{/use_env}}
+{{^use_env}}
+package_name(ENV["PACKAGE_NAME"])
+{{/use_env}}

@@ -1,0 +1,152 @@
+opt_out_usage
+require 'yaml'
+import "secrets"
+
+KEY_FILES_DIRECTORY = "#{Dir.pwd}/../build_secrets"
+KEY_FILES_PASSWORD = ENV['KEYS_ENCRYPTION_PASSWORD']
+TEAM_ID = ENV['APP_TEAM_ID']
+FASTLANE_USER = ENV['FASTLANE_USER']
+APP_IDENTIFIER = ENV['APP_IDENTIFIER']
+
+default_platform(:ios)
+
+platform :ios do
+
+  error do |ex|
+    cleanup()
+  end
+
+  ### build and deploy dev 
+  desc "Build app for Testflight"  
+  lane :build_testflight do |options|
+    params = Helper::Params.new(options)
+    secret = KEY_FILES_PASSWORD
+
+    decrypt_secrets
+
+    create_keychain(
+      path: "#{KEY_FILES_DIRECTORY}/signing.keychain",
+      password: secret,
+      default_keychain: false,
+      unlock: false,
+      timeout: 3600,
+      lock_when_sleeps: true
+    )
+
+    import_certificate(
+      certificate_path: "#{KEY_FILES_DIRECTORY}/Certificates.p12",
+      keychain_password: secret,
+      certificate_password: "",
+      keychain_path: "#{KEY_FILES_DIRECTORY}/signing.keychain",
+    )
+
+    prepare_build()
+
+    build_number = number_of_commits()
+
+    flutter = Helper::Flutter.new()
+    version_number = flutter.version_number
+
+    xcargs = [
+      "FLUTTER_SUPPRESS_ANALYTICS=true",
+      "FLUTTER_BUILD_NAME=#{version_number}",
+      "FLUTTER_BUILD_NUMBER=#{build_number}",
+      "COMPILER_INDEX_STORE_ENABLE=NO",
+      "-DTDKProvisioningProfileExtraSearchPaths=#{KEY_FILES_DIRECTORY}/",
+    ]
+
+    build_ios_app(
+      skip_profile_detection: true,
+      disable_xcpretty: true,
+      skip_codesigning: true,
+      xcargs: xcargs.join(" "),
+    )
+
+    resign()
+
+    upload_to_testflight(
+        itc_provider: TEAM_ID,
+        username: FASTLANE_USER,
+        app_identifier: APP_IDENTIFIER,
+    )
+
+    cleanup()
+  end
+
+ 
+  desc 'Clean up all artifacts that has been temporarily generated to build and sign the app'
+  private_lane :cleanup do
+    delete_keychain(keychain_path: "#{KEY_FILES_DIRECTORY}/signing.keychain")
+    delete_unencrypted_secrets(KEY_FILES_DIRECTORY)
+  end
+
+  desc 'Prebuild with flutter tool to generated xcconfig and Flutter frameworks files'
+  private_lane :prepare_build do |options|
+    gymfile = Helper::Gymfile.new();
+    configuration = gymfile.configuration
+
+    # UI.user_error!('Only Release builds are allowed') unless configuration.include?('Release-')
+
+    Dir.chdir "../.." do
+      sh("flutter", "build", "ios",
+          "--release",
+          "--obfuscate",
+          "--split-debug-info","build/app/outputs/symbols",      
+          "--no-codesign"
+        )
+    end
+  end
+
+end
+
+module Helper
+  class Gymfile
+    require 'gym'
+
+    @config
+    @configuration
+
+    def configuration
+      config.config_file_options[:configuration]
+    end
+    
+    def config 
+      loadConfig = -> {
+        Dir.chdir "../../ios" do
+          Gym.config = FastlaneCore::Configuration.create(Gym::Options.available_options, {})
+          config = Gym.config
+        end
+      }
+
+      @config ||= loadConfig.call()
+    end
+
+    private :config
+  end
+
+  class Flutter
+    @@pubspec_path = "#{Dir.pwd}/../../pubspec.yaml"
+
+    def version_number
+      pubspec = YAML.load(File.read(@@pubspec_path))
+
+      version_with_buildnumber = pubspec['version']
+
+      if version_with_buildnumber.include?('+')
+        version_with_buildnumber.slice(0..(version_with_buildnumber.index('+') - 1))
+      end
+    end
+  end
+
+
+	class Params
+    def initialize(options)
+      @options = options
+    end
+
+    def value(name)
+      symbol = name.downcase.to_sym
+      ENV[name] || @options[symbol]
+    end
+  end
+end

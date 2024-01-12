@@ -1,0 +1,27 @@
+workspace("Runner.xcworkspace")
+output_directory("../build/ios")
+
+include_bitcode(false)
+include_symbols(false)
+
+ENV["FL_USE_APP_ENTITLEMENTS"] = "true"
+
+export_options(
+  method: "app-store",
+  provisioningProfiles: {
+    ENV["PACKAGE_NAME"] => ENV["PROVISIONING_PROFILE_NAME"]
+  },
+  signingStyle: "manual",
+  signingCertificate: ENV["FL_RESIGN_SIGNING_IDENTITY"],
+  teamID: ENV["TEAM_ID"],
+  destination: "export"
+)
+
+for_platform :ios do
+  for_lane :build_testflight do
+    ENV["FL_RESIGN_PROVISIONING_PROFILE"] = "./build_secrets/SmartAccess_AppStore.mobileprovision"
+    output_name(ENV["APP_NAME"])
+    scheme("Runner")
+    configuration("Release")
+  end
+end
