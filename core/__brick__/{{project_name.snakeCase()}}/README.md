@@ -176,7 +176,7 @@ The pipeline uses following actions:
 - [actions/checkout](https://github.com/marketplace/actions/checkout): Checkout the repository
 - [subosito/flutter-action](https://github.com/marketplace/actions/flutter-action): Install Flutter
 - [dorny/test-reporter](https://github.com/marketplace/actions/test-reporter): Add test coverage to workflow summary
-- [zgosalvez/github-actions-report-lcov](https://github.com/marketplace/actions/report-lcov): Upload html coverage report to workflow artifacts and comment coverage on PR
+- [zgosalvez/github-actions-report-lcov](https://github.com/marketplace/actions/report-lcov): Upload html coverage report to workflow artifacts and comment coverage on Pull Requests
 
 Please refer to their documentation for configuration details
 
