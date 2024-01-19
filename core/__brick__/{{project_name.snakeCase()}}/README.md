@@ -160,4 +160,24 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 
 Alternatively, run `flutter run` and code generation will take place automatically.
 
+## GitHub Actions CI
+The GitHub CI pipeline runs validation, build and tests.  
+The pipeline is run on every push to `develop`, `staging` and `master`/`main` branches, as well as on every merge request.  
+The build stage runs a different flavor depending on the branch:  
+- `develop` runs the `development` flavor
+- `staging` runs the `staging` flavor
+- `master`/`main` runs the `production` flavor
+
+### Configuration
+The pipeline is defined in `.github/workflows/continuous-integration.yml`, while the build action is in `.github/actions/build_app/action.yml`.
+- Flutter version: Make sure to update the `FLUTTER_VERSION` to the version of Flutter you want to use
+  
+The pipeline uses following actions:
+- [actions/checkout](https://github.com/marketplace/actions/checkout): Checkout the repository
+- [subosito/flutter-action](https://github.com/marketplace/actions/flutter-action): Install Flutter
+- [dorny/test-reporter](https://github.com/marketplace/actions/test-reporter): Add test coverage to workflow summary
+- [zgosalvez/github-actions-report-lcov](https://github.com/marketplace/actions/report-lcov): Upload html coverage report to workflow artifacts and comment coverage on PR
+
+Please refer to their documentation for configuration details
+
 [very_good_ventures_link]: https://github.com/VeryGoodOpenSource/{{project_name.snakeCase()}}
