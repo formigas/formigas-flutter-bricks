@@ -161,7 +161,7 @@ flutter gen-l10n --arb-dir="lib/l10n/arb"
 Alternatively, run `flutter run` and code generation will take place automatically.
 
 ## GitHub Actions CI
-The GitHub CI pipeline runs validation, build and tests.  
+The GitHub Actions CI pipeline runs validation, build and tests.  
 The pipeline is run on every push to `develop`, `staging` and `master`/`main` branches, as well as on every merge request.  
 The build stage runs a different flavor depending on the branch:  
 - `develop` runs the `development` flavor
