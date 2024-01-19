@@ -19,7 +19,7 @@ runs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
-        flutter-version: ${{{{{ inputs.flutter_version }}}}}
+        flutter-version: {{{${{ inputs.flutter_version }}}}}
         cache: true
     - name: Clean
       shell: bash
@@ -31,9 +31,9 @@ runs:
       shell: bash
       run: |
         build_command=""
-        if [ "${{{{{ inputs.platform }}}}}" = "android" ]; then
+        if [ "{{{${{ inputs.platform }}}}}" = "android" ]; then
           build_command="appbundle"
-        elif [ "${{{{{ inputs.platform }}}}}" = "ios" ]; then
+        elif [ "{{{${{ inputs.platform }}}}}" = "ios" ]; then
           build_command="ios --no-codesign"
         fi
-        flutter build $build_command --debug --flavor ${{{{{ inputs.flavor }}}}} -t lib/main_${{{{{ inputs.flavor }}}}}.dart
+        flutter build $build_command --debug --flavor {{{${{ inputs.flavor }}}}} -t lib/main_{{{${{ inputs.flavor }}}}}.dart
