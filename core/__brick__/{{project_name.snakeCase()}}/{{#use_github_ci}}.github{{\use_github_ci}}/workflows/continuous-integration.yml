@@ -1,0 +1,109 @@
+name: Continuous Integration
+
+permissions:
+  checks: write
+  pull-requests: write
+
+on:
+  push:
+    branches: [develop, staging, master, main]
+  pull_request:
+
+env:
+  FLUTTER_VERSION: "3.13.9"
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      - name: Format
+        run: dart format -o none --set-exit-if-changed lib/ test/
+      - name: Build runner
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Analyze
+        run: flutter analyze --fatal-infos --fatal-warnings
+
+  determine-flavor:
+    name: Determine Flavor
+    runs-on: ubuntu-latest
+    outputs:
+      flavor: ${{ steps.set-flavor.outputs.flavor }}
+    steps:
+      - name: Determine Flavor
+        id: set-flavor
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/master" || "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "flavor=production" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == "refs/heads/staging" ]]; then
+            echo "flavor=staging" >> $GITHUB_OUTPUT
+          else
+            echo "flavor=development" >> $GITHUB_OUTPUT
+          fi
+
+  build:
+    name: Build ${{ matrix.platform }} ${{ needs.determine-flavor.outputs.flavor }}
+    needs: determine-flavor
+    strategy:
+      matrix:
+        platform: [android, ios]
+        include:
+          - runs-on: ubuntu-latest
+            platform: android
+          - runs-on: macos-latest
+            platform: ios
+    runs-on: ${{ matrix.runs-on }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build ${{ matrix.platform }} ${{ needs.determine-flavor.outputs.flavor }}
+        uses: ./.github/actions/build_app
+        with:
+          platform: ${{ matrix.platform }}
+          flavor: ${{ needs.determine-flavor.outputs.flavor }}
+
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+      - name: Install lcov
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install lcov
+      - name: Clean
+        run: flutter clean
+      - name: Build runner
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Run tests
+        run: flutter test --coverage --file-reporter json:test_results.json
+      - name: Remove generated files from coverage
+        run: lcov --remove coverage/lcov.info '**.g.dart'  -o coverage/clean_lcov.info
+      - name: Publish test results
+        uses: dorny/test-reporter@v1.7.0
+        if: success() || failure()
+        with:
+          name: Unit tests report
+          path: test_results.json
+          reporter: flutter-json
+          max-annotations: 50
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish coverage report
+        uses: zgosalvez/github-actions-report-lcov@v3
+        with:
+          coverage-files: coverage/clean_lcov.info
+          minimum-coverage: 50
+          artifact-name: code-coverage-report
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          update-comment: true
+          additional-message: Remember that you want to write high quality tests, so you can sleep well at night!
