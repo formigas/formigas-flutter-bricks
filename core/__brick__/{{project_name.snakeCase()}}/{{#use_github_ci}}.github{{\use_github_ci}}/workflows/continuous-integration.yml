@@ -21,7 +21,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{#mustacheCase}} env.FLUTTER_VERSION {{/mustacheCase}}
+          flutter-version: ${{#mustacheCase}}env.FLUTTER_VERSION{{/mustacheCase}}
           cache: true
       - name: Format
         run: dart format -o none --set-exit-if-changed lib/ test/
@@ -34,21 +34,21 @@ jobs:
     name: Determine Flavor
     runs-on: ubuntu-latest
     outputs:
-      flavor: ${{#mustacheCase}} steps.set-flavor.outputs.flavor {{/mustacheCase}}
+      flavor: ${{#mustacheCase}}steps.set-flavor.outputs.flavor{{/mustacheCase}}
     steps:
       - name: Determine Flavor
         id: set-flavor
         run: |
-          if [[ "${{#mustacheCase}} github.ref {{/mustacheCase}}" == "refs/heads/master" || "${{#mustacheCase}} github.ref {{/mustacheCase}}" == "refs/heads/main" ]]; then
+          if [[ "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/master" || "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/main" ]]; then
             echo "flavor=production" >> $GITHUB_OUTPUT
-          elif [[ "${{#mustacheCase}} github.ref {{/mustacheCase}}" == "refs/heads/staging" ]]; then
+          elif [[ "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/staging" ]]; then
             echo "flavor=staging" >> $GITHUB_OUTPUT
           else
             echo "flavor=development" >> $GITHUB_OUTPUT
           fi
 
   build:
-    name: Build ${{#mustacheCase}} matrix.platform {{/mustacheCase}} ${{#mustacheCase}} needs.determine-flavor.outputs.flavor {{/mustacheCase}}
+    name: Build ${{#mustacheCase}}matrix.platform{{/mustacheCase}} ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
     needs: determine-flavor
     strategy:
       matrix:
@@ -58,14 +58,14 @@ jobs:
             platform: android
           - runs-on: macos-latest
             platform: ios
-    runs-on: ${{#mustacheCase}} matrix.runs-on {{/mustacheCase}}
+    runs-on: ${{#mustacheCase}}matrix.runs-on{{/mustacheCase}}
     steps:
       - uses: actions/checkout@v3
-      - name: Build ${{#mustacheCase}} matrix.platform {{/mustacheCase}} ${{#mustacheCase}} needs.determine-flavor.outputs.flavor {{/mustacheCase}}
+      - name: Build ${{#mustacheCase}}matrix.platform{{/mustacheCase}} ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
         uses: ./.github/actions/build_app
         with:
-          platform: ${{#mustacheCase}} matrix.platform {{/mustacheCase}}
-          flavor: ${{#mustacheCase}} needs.determine-flavor.outputs.flavor {{/mustacheCase}}
+          platform: ${{#mustacheCase}}matrix.platform{{/mustacheCase}}
+          flavor: ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
 
   test:
     name: Test
@@ -75,7 +75,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{#mustacheCase}} env.FLUTTER_VERSION {{/mustacheCase}}
+          flutter-version: ${{#mustacheCase}}env.FLUTTER_VERSION{{/mustacheCase}}
           cache: true
       - name: Install lcov
         run: |
@@ -97,13 +97,13 @@ jobs:
           path: test_results.json
           reporter: flutter-json
           max-annotations: 50
-          token: ${{#mustacheCase}} secrets.GITHUB_TOKEN {{/mustacheCase}}
+          token: ${{#mustacheCase}}secrets.GITHUB_TOKEN{{/mustacheCase}}
       - name: Publish coverage report
         uses: zgosalvez/github-actions-report-lcov@v3
         with:
           coverage-files: coverage/clean_lcov.info
           minimum-coverage: 50
           artifact-name: code-coverage-report
-          github-token: ${{#mustacheCase}} secrets.GITHUB_TOKEN {{/mustacheCase}}
+          github-token: ${{#mustacheCase}}secrets.GITHUB_TOKEN{{/mustacheCase}}
           update-comment: true
           additional-message: Remember that you want to write high quality tests, so you can sleep well at night!
