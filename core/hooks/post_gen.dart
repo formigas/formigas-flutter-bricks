@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
+  await _checkFvm(context);
   await _checkFlutter(context);
   await _addFeatureMason(context);
   await _makeMvcMason(context);
@@ -51,6 +52,14 @@ Future<void> _makeMvcMason(HookContext context) async {
 Future<void> _checkFlutter(HookContext context) async {
   final progress = context.logger.progress('Checking flutter version');
   await _runProcess(context, 'flutter', ['--version']);
+  progress.complete();
+}
+
+Future<void> _checkFvm(HookContext context) async {
+  final progress = context.logger.progress('Checking fvm version');
+  if (_useFvm(context)) {
+    await _runProcess(context, 'install', []);
+  }
   progress.complete();
 }
 

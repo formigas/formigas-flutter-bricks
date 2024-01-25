@@ -13,7 +13,7 @@ Future<void> _installMvcLibrary(HookContext context) async {
   await _runProcess(context, 'dart', [
     'pub',
     'add',
-    'formigas_mvc:{"git":{"url":"git@git.dev.formigas.de:framework/lib-formigas-mvc.git","ref":"main"}}',
+    'formigas_mvc:{"git":{"url":"git@git.dev.formigas.de:framework/lib-formigas-mvc.git","ref":"develop"}}',
   ]);
   progress.complete();
 }
