@@ -36,4 +36,4 @@ runs:
         elif [ "${{#mustacheCase}}inputs.platform{{/mustacheCase}}" = "ios" ]; then
           build_command="ios --no-codesign"
         fi
-        flutter build $build_command --debug --flavor ${{#mustacheCase}}inputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}inputs.flavor{{/mustacheCase}}.dart
+        flutter build $build_command --release --flavor ${{#mustacheCase}}inputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}inputs.flavor{{/mustacheCase}}.dart
