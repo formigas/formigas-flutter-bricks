@@ -17,7 +17,7 @@ build_ios_$[[ inputs.flavor ]]:
   script:
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
-    - flutter build ios --no-codesign --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
+    - flutter build ios --no-codesign --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
 
 build_android_$[[ inputs.flavor ]]:
   stage: build
@@ -28,4 +28,4 @@ build_android_$[[ inputs.flavor ]]:
   script:
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
-    - flutter build appbundle --debug --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
+    - flutter build appbundle --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
