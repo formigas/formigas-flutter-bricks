@@ -3,10 +3,10 @@ require 'yaml'
 import "secrets"
 
 KEY_FILES_DIRECTORY = "#{Dir.pwd}/../build_secrets"
-KEY_FILES_PASSWORD = ENV['KEYS_ENCRYPTION_PASSWORD']
-TEAM_ID = ENV['APP_TEAM_ID']
-FASTLANE_USER = ENV['FASTLANE_USER']
-APP_IDENTIFIER = ENV['APP_IDENTIFIER']
+KEY_FILES_PASSWORD = {{#use_env}}ENV['KEYS_ENCRYPTION_PASSWORD']{{/use_env}}{{^use_env}}'YOUR_KEY_PASSWORD'{{/use_env}}
+TEAM_ID = {{#use_env}}ENV['APP_TEAM_ID']{{/use_env}}{{^use_env}}'{{app_team_id}}'{{/use_env}}
+FASTLANE_USER = {{#use_env}}ENV['FASTLANE_USER']{{/use_env}}{{^use_env}}'{{fastlane_user}}'{{/use_env}}
+APP_IDENTIFIER = {{#use_env}}ENV['PACKAGE_NAME']{{/use_env}}{{^use_env}}'{{package_name}}'{{/use_env}}
 
 default_platform(:ios)
 

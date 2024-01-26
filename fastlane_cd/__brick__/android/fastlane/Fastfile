@@ -19,17 +19,17 @@ platform :android do
       build_appbundle
 
       build_number = number_of_commits()
-        upload_to_play_store(
-          track: "internal",
-          package_name: {{package_name}},
-          skip_upload_metadata: true,
-          skip_upload_images: true,
-          skip_upload_screenshots: true,
-          aab: "../build/app/outputs/bundle/devRelease/app-dev-release.aab",
-          release_status: "completed",
-          version_name: "Version Build: #{build_number}",
-          json_key: 'build_secrets/play-store-service-account.json'
-        )
+      upload_to_play_store(
+        track: "internal",
+        {{#use_env}}package_name: ENV["PACKAGE_NAME"],{{/use_env}}{{^use_env}}package_name: {{package_name}},{{/use_env}}
+        skip_upload_metadata: true,
+        skip_upload_images: true,
+        skip_upload_screenshots: true,
+        aab: "../build/app/outputs/bundle/devRelease/app-dev-release.aab",
+        release_status: "completed",
+        version_name: "Version Build: #{build_number}",
+        json_key: 'build_secrets/play-store-service-account.json'
+      )
 
       ensure
         delete_unencrypted_secrets(KEY_FILES_DIRECTORY)

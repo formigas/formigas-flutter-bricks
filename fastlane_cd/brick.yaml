@@ -25,13 +25,7 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 #  * an optional separator (list only)
-vars:
-  package_name:
-    type: string
-    description: Package name
-    default: com.example
-    prompt: What is the app package name?
- 
+vars:    
   use_env:
     type: boolean
     description: Do you want to use ENV variables
@@ -41,14 +35,8 @@ vars:
   fastlane_user:
     type: string
     description: Your Apple Developer Portal username
-    default: de.formigas.apple
+    default: formigas@apple.com
     prompt: What is the your development AppleID?
-  
-  android_only:
-    type: boolean
-    description: Android Build only
-    default: false
-    prompt: Do you need android build only? 
     
   app_team_id:
     type: string
