@@ -59,6 +59,7 @@ test:
     - lcov --list coverage/lcov.info
   coverage: '/lines\.*: \d+\.\d+\%/'
   artifacts:
+    when: always
     reports:
       junit: test-report-app.xml
       coverage_report:
@@ -68,5 +69,6 @@ test:
     - coverage/lcov.info
     - coverage/cobertura.xml
     - docs/coverage/
+    - test-report-app.xml
     expire_in: 1 week
   rules:
