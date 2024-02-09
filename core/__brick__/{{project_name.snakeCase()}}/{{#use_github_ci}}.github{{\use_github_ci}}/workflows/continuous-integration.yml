@@ -115,7 +115,7 @@ jobs:
       - name: Remove generated files from coverage
         run: lcov --remove coverage/lcov.info '**.g.dart'  -o coverage/clean_lcov.info
       - name: Publish test results
-        uses: dorny/test-reporter@v1.7.0
+        uses: dorny/test-reporter@v1.8.0
         if: success() || failure()
         with:
           name: Unit tests report
