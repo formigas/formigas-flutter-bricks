@@ -25,7 +25,11 @@ build_android_$[[ inputs.flavor ]]:
   tags:
     - saas-linux-small-amd64
   image: $[[ inputs.docker_image ]]
+  variables:
+    SECURE_FILES_DOWNLOAD_PATH: ./android/app
+    ANDROID_KEYSTORE_PATH: upload-keystore.jks
   script:
+    - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
     - flutter build appbundle --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
