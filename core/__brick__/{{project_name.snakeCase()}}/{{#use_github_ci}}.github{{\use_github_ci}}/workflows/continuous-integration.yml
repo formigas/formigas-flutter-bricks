@@ -17,7 +17,7 @@ jobs:
     name: Validate
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -47,31 +47,56 @@ jobs:
             echo "flavor=development" >> $GITHUB_OUTPUT
           fi
 
-  build:
-    name: Build ${{#mustacheCase}}matrix.platform{{/mustacheCase}} ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
+  build_ios:
+    name: Build iOS ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
     needs: determine-flavor
-    strategy:
-      matrix:
-        platform: [android, ios]
-        include:
-          - runs-on: ubuntu-latest
-            platform: android
-          - runs-on: macos-latest
-            platform: ios
-    runs-on: ${{#mustacheCase}}matrix.runs-on{{/mustacheCase}}
+    runs-on: macos-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Build ${{#mustacheCase}}matrix.platform{{/mustacheCase}} ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
-        uses: ./.github/actions/build_app
+      - uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
         with:
-          platform: ${{#mustacheCase}}matrix.platform{{/mustacheCase}}
-          flavor: ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
+          flutter-version: ${{#mustacheCase}}env.FLUTTER_VERSION{{/mustacheCase}}
+          cache: true
+      - name: Clean
+        run: flutter clean
+      - name: Build runner
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Build
+        run: flutter build ios --no-codesign --release --flavor ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}.dart
+
+  build_android:
+    name: Build Android ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
+    needs: determine-flavor
+    runs-on: ubuntu-latest
+    env:
+      KEYSTORE_FILENAME: upload-keystore.jks
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{#mustacheCase}}env.FLUTTER_VERSION{{/mustacheCase}}
+          cache: true
+      - name: Setup Keystore
+        run: echo "${{#mustacheCase}}secrets.ANDROID_KEYSTORE_BASE64{{/mustacheCase}}" | base64 --decode > ./android/app/${{#mustacheCase}}env.KEYSTORE_FILENAME{{/mustacheCase}}
+      - name: Clean
+        run: flutter clean
+      - name: Build runner
+        run: dart run build_runner build --delete-conflicting-outputs
+      - name: Build
+        run: flutter build appbundle --release --flavor ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}.dart
+        env:
+          ANDROID_KEYSTORE_PATH: ${{#mustacheCase}}env.KEYSTORE_FILENAME{{/mustacheCase}}
+          ANDROID_KEYSTORE_PASSWORD: ${{#mustacheCase}}secrets.ANDROID_KEYSTORE_PASSWORD{{/mustacheCase}}
+          ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD: ${{#mustacheCase}}secrets.ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD{{/mustacheCase}}
+          ANDROID_KEYSTORE_ALIAS: ${{#mustacheCase}}vars.ANDROID_KEYSTORE_ALIAS{{/mustacheCase}}
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
