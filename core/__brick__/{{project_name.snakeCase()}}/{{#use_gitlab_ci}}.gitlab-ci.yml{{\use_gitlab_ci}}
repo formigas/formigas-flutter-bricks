@@ -51,7 +51,7 @@ test:
     - set -o pipefail
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
-    - flutter test --machine --coverage | tee >( $HOME/.pub-cache/bin/tojunit > test-report-app.xml )
+    - flutter test --machine --coverage | $HOME/.pub-cache/bin/tojunit > test-report-app.xml
     - flutter pub global activate cobertura
     - $HOME/.pub-cache/bin/cobertura convert -i coverage/lcov.info -o coverage/cobertura.xml -p pubspec.yaml
     - apt update && apt install -y lcov
@@ -63,10 +63,10 @@ test:
       junit: test-report-app.xml
       coverage_report:
           coverage_format: cobertura
-          path: /coverage/cobertura.xml
+          path: coverage/cobertura.xml
     paths:
-    - /coverage/lcov.info
-    - /coverage/cobertura.xml
-    - /docs/coverage/
+    - coverage/lcov.info
+    - coverage/cobertura.xml
+    - docs/coverage/
     expire_in: 1 week
   rules:
