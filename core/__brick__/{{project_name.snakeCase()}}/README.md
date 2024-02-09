@@ -172,7 +172,7 @@ The build stage will create a release build and runs a different flavor dependin
 If the pipeline is run on a merge request, the test stage will add the test coverage to it. Additionally, the pipeline will output code coverage reports.
 
 ### Setup for Android builds
-For Android builds, an upload key is required. Please refer to the [Create an upload keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore) to create a keystore. Remember that the keystore's password needs to be at least 8 characters long for GitLab to be able to store it as a masked variable. After having created the keystore, follow these steps to make it available to the pipeline:
+For Android builds, an upload key is required. Please refer to [Create an upload keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore) to create a keystore. Remember that the keystore's password needs to be at least 8 characters long for GitLab to be able to store it as a masked variable. After having created the keystore, follow these steps to make it available to the pipeline:
 1. Upload the keystore file to GitLab Secure Files in your project settings
 2. Add the keystore password to the GitLab CI/CD settings as a masked variable with the key `ANDROID_KEYSTORE_PASSWORD`
 3. Add the key password (usually the same as the keystore password) to the GitLab CI/CD settings as a masked variable with the key `ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD`
