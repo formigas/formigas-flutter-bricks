@@ -74,7 +74,7 @@ platform :ios do
   end
 
  
-  desc 'Clean up all artifacts that has been temporarily generated to build and sign the app'
+  desc 'Clean up all artifacts that have been temporarily generated to build and sign the app'
   private_lane :cleanup do
     delete_keychain(keychain_path: "#{KEY_FILES_DIRECTORY}/signing.keychain")
     delete_unencrypted_secrets(KEY_FILES_DIRECTORY)
@@ -84,8 +84,6 @@ platform :ios do
   private_lane :prepare_build do |options|
     gymfile = Helper::Gymfile.new();
     configuration = gymfile.configuration
-
-    # UI.user_error!('Only Release builds are allowed') unless configuration.include?('Release-')
 
     Dir.chdir "../.." do
       sh("flutter", "build", "ios",

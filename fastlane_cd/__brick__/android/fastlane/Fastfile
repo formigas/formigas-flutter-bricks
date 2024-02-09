@@ -12,7 +12,7 @@ platform :android do
     end
     
     ### build and deploy app to Google Play 
-    desc "Deploy the app the Google Play on internal track"
+    desc "Deploy the app to Google Play on internal track"
     lane :deploy_internal do
     begin
       decrypt_secrets
