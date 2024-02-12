@@ -11,8 +11,7 @@ void run(HookContext context) {
 }
 
 void _selectAppId(HookContext context) {
-  context.vars['application_id_android'] =
-      _createAppId(context, platform: Platform.android);
+  context.vars['application_id_android'] = _createAppId(context, platform: Platform.android);
   context.vars['application_id'] = _createAppId(context);
 }
 
@@ -36,7 +35,7 @@ String _createAppId(HookContext context, {Platform? platform}) {
   var applicationId = context.vars['application_id'] as String?;
   applicationId = (applicationId?.isNotEmpty ?? false)
       ? applicationId
-      : '''$orgName.${platform == Platform.android ? projectName.snakeCase : projectName.paramCase}''';
+      : '''$orgName.${projectName.snakeCase}''';
 
   return applicationId!;
 }
