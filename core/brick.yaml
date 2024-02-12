@@ -38,3 +38,8 @@ vars:
     description: Select if you want to use material 3 theming
     default: false
     prompt: Do you want to use material 3 theming?
+  use_svg:
+    type: boolean
+    description: Select if you want to use flutter_svg support
+    default: true
+    prompt: Do you want to use SVG assets integration?
