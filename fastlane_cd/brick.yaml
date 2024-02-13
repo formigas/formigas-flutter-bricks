@@ -35,7 +35,7 @@ vars:
   fastlane_user:
     type: string
     description: Your Apple Developer Portal username
-    default: formigas@apple.com
+    default: default@apple.com
     prompt: What is the your development AppleID?
     
   app_team_id:
