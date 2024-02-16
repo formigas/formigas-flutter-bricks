@@ -21,7 +21,13 @@ void _selectCI(HookContext context) {
     case 'Github Actions':
       context.vars = {...context.vars, 'use_github_ci': true};
     case 'Gitlab CI':
-      context.vars = {...context.vars, 'use_gitlab_ci': true};
+      {
+        context.vars = {...context.vars, 'use_gitlab_ci': true};
+        final runnerTag = context.logger.prompt(
+          'Enter the runner tag for the runner to be used for iOS builds:',
+        );
+        context.vars = {...context.vars, 'gitlab_ios_runner_tag': runnerTag};
+      }
     case 'Bitbucket Pipelines':
       context.vars = {...context.vars, 'use_bitbucket_ci': true};
     default:
