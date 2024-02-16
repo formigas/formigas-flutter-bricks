@@ -13,7 +13,7 @@ Future<void> run(HookContext context) async {
 
 Future<void> _addFeatureMason(HookContext context) async {
   final progress =
-      context.logger.progress('Adding formigas_feature brick to mason');
+  context.logger.progress('Adding formigas_feature brick to mason');
   await _runProcess(
     context,
     'mason',
@@ -27,14 +27,16 @@ Future<void> _addFeatureMason(HookContext context) async {
       '--git-ref',
       'develop',
     ],
-    useFvmIfNeccessary: false,
+    useFvmIfNecessary: false,
   );
   progress.complete();
 }
 
 Future<void> _makeMvcMason(HookContext context) async {
-  final progress = context.logger
-      .progress('Adding example feature via formigas_feature brick');
+  final progress = context.logger.progress(
+    'Adding example feature via formigas_feature brick',
+  );
+
   await _runProcess(
     context,
     'mason',
@@ -44,7 +46,7 @@ Future<void> _makeMvcMason(HookContext context) async {
       '--feature_name',
       'counter',
     ],
-    useFvmIfNeccessary: false,
+    useFvmIfNecessary: false,
   );
   progress.complete();
 }
@@ -84,14 +86,13 @@ Future<void> _runBuildRunner(HookContext context) async {
   progress.complete();
 }
 
-Future<void> _runProcess(
-  HookContext context,
-  String executable,
-  List<String> arguments, {
-  bool useFvmIfNeccessary = true,
-}) async {
-  final exec = useFvmIfNeccessary && _useFvm(context) ? 'fvm' : executable;
-  final args = useFvmIfNeccessary && _useFvm(context)
+Future<void> _runProcess(HookContext context,
+    String executable,
+    List<String> arguments, {
+      bool useFvmIfNecessary = true,
+    }) async {
+  final exec = useFvmIfNecessary && _useFvm(context) ? 'fvm' : executable;
+  final args = useFvmIfNecessary && _useFvm(context)
       ? [executable, ...arguments]
       : arguments;
   final result = await Process.run(
