@@ -12,16 +12,6 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Future.wait(
-    <Future<void>>[
-      // EasyLocalization.ensureInitialized(),
-    ],
-  ).onError(
-    (Object? error, StackTrace stackTrace) => <void>[
-      log(error.toString(), stackTrace: stackTrace),
-    ],
-  );
-
   runApp(await builder());
   log('End init of App');
 }

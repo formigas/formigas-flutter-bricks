@@ -119,3 +119,5 @@ app.*.map.json
 !.idea/dictionaries/
 !.idea/runConfigurations/
 
+# assets generated files
+*.gen.dart
