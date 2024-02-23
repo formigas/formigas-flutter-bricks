@@ -1,7 +1,7 @@
 name: formigas_feature
 description: flutter core created by formigas with the base from Very Good Venture
-repository: https://https://git.dev.formigas.de/framework/flutter-core
-version: 0.1.0
+repository: https://https://git.dev.formigas.de/framework/bricks
+version: 0.0.1
 
 environment:
   mason: ">=0.1.0-dev.50 <0.1.0"
