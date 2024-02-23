@@ -4,7 +4,12 @@ import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
   await _installMvcLibrary(context);
+  await _installFreezedLibrary(context);
+  await _installFreezedAnnotationLibrary(context);
+  await _installBuildRunnerLibrary(context);
   await _installPackages(context);
+  // build_runner fails, because install packages is not ready
+  await Future<void>.delayed(const Duration(seconds: 1));
   await _runBuildRunner(context);
 }
 
@@ -18,6 +23,36 @@ Future<void> _installMvcLibrary(HookContext context) async {
   progress.complete();
 }
 
+Future<void> _installBuildRunnerLibrary(HookContext context) async {
+  final progress = context.logger.progress('Installing build_runner');
+  await _runProcess(context, 'dart', [
+    'pub',
+    'add',
+    'dev:build_runner: ^2.4.8',
+  ]);
+  progress.complete();
+}
+
+Future<void> _installFreezedAnnotationLibrary(HookContext context) async {
+  final progress = context.logger.progress('Installing freezed_annotation');
+  await _runProcess(context, 'dart', [
+    'pub',
+    'add',
+    'freezed_annotation: ^2.4.1',
+  ]);
+  progress.complete();
+}
+
+Future<void> _installFreezedLibrary(HookContext context) async {
+  final progress = context.logger.progress('Installing freezed');
+  await _runProcess(context, 'dart', [
+    'pub',
+    'add',
+    'dev:freezed: ^2.4.5',
+  ]);
+  progress.complete();
+}
+
 Future<void> _installPackages(HookContext context) async {
   final progress = context.logger.progress('Installing packages');
   await _runProcess(context, 'flutter', ['packages', 'get']);
@@ -26,6 +61,7 @@ Future<void> _installPackages(HookContext context) async {
 
 Future<void> _runBuildRunner(HookContext context) async {
   final progress = context.logger.progress('Running build runner');
+
   await _runProcess(context, 'dart', [
     'pub',
     'run',
