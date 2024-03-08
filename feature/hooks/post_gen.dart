@@ -3,14 +3,20 @@ import 'dart:io';
 import 'package:mason/mason.dart';
 
 Future<void> run(HookContext context) async {
+  final usefreezed = context.vars['use_freezed'];
+
   await _installMvcLibrary(context);
   await _installFreezedLibrary(context);
-  await _installFreezedAnnotationLibrary(context);
-  await _installBuildRunnerLibrary(context);
-  await _installPackages(context);
-  // build_runner fails, because install packages is not ready
-  await Future<void>.delayed(const Duration(seconds: 1));
-  await _runBuildRunner(context);
+  if (usefreezed == true) {
+    await _installFreezedAnnotationLibrary(context);
+    await _installBuildRunnerLibrary(context);
+    await _installPackages(context);
+    // build_runner fails, because install packages is not ready
+    await Future<void>.delayed(const Duration(seconds: 1));
+    await _runBuildRunner(context);
+  } else {
+    await _installPackages(context);
+  }
 }
 
 Future<void> _installMvcLibrary(HookContext context) async {

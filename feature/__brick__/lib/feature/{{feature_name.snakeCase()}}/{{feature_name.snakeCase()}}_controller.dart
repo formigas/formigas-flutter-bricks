@@ -10,7 +10,7 @@ abstract class {{feature_name.pascalCase()}}Controller extends MVController<{{fe
 }
 
 class {{feature_name.pascalCase()}}ControllerImplementation extends {{feature_name.pascalCase()}}Controller {
-  {{feature_name.pascalCase()}}ControllerImplementation() : super(const {{feature_name.pascalCase()}}Model(count: 0));
+  {{feature_name.pascalCase()}}ControllerImplementation() : super({{#use_freezed}}const {{/use_freezed}}{{feature_name.pascalCase()}}Model(count: 0));
 
   @override
   void increment() => model = model.copyWith(count: model.count + 1);
