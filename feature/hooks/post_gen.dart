@@ -31,9 +31,13 @@ Future<void> _installMvcLibrary(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
-  if (dependencies?.keys.contains('formigas_mvc') ?? true) {
+  context.logger.info('Verifying formigas_mvc version from pubspec.yaml');
+  if (dependencies?.containsKey('formigas_mvc') ?? true) {
+    context.logger.info(
+        'Found formigas_mvc version ${dependencies?['formigas_mvc']} in pubspec.yaml');
     return;
   }
+  context.logger.info('Could not find formigas_mvc version in pubspec.yaml');
   final progress = context.logger.progress('Installing formigas-mvc library');
   await _runProcess(context, 'dart', [
     'pub',
@@ -47,9 +51,13 @@ Future<void> _installBuildRunnerLibrary(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
-  if (devDependencies?.keys.contains('build_runner') ?? true) {
+  context.logger.info('Verifying build_runner version from pubspec.yaml');
+  if (devDependencies?.containsKey('build_runner') ?? true) {
+    context.logger.info(
+        'Found build_runner version ${devDependencies?['build_runner']} in pubspec.yaml');
     return;
   }
+  context.logger.info('Could not find build_runner version in pubspec.yaml');
   final progress = context.logger.progress('Installing build_runner');
   await _runProcess(context, 'dart', [
     'pub',
@@ -63,9 +71,14 @@ Future<void> _installFreezedAnnotationLibrary(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
-  if (dependencies?.keys.contains('freezed_annotation') ?? true) {
+  context.logger.info('Verifying freezed_annotation version from pubspec.yaml');
+  if (dependencies?.containsKey('freezed_annotation') ?? true) {
+    context.logger.info(
+        'Found freezed_annotation version ${dependencies?['freezed_annotation']} in pubspec.yaml');
     return;
   }
+  context.logger
+      .info('Could not find freezed_annotation version in pubspec.yaml');
   final progress = context.logger.progress('Installing freezed_annotation');
   await _runProcess(context, 'dart', [
     'pub',
@@ -79,9 +92,13 @@ Future<void> _installFreezedLibrary(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
-  if (devDependencies?.keys.contains('freezed') ?? true) {
+  context.logger.info('Verifying freezed version from pubspec.yaml');
+  if (devDependencies?.containsKey('freezed') ?? true) {
+    context.logger.info(
+        'Found freezed version ${devDependencies?['freezed']} in pubspec.yaml');
     return;
   }
+  context.logger.info('Could not find freezed version in pubspec.yaml');
   final progress = context.logger.progress('Installing freezed');
   await _runProcess(context, 'dart', [
     'pub',
