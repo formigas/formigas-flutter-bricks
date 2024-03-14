@@ -48,7 +48,7 @@ definitions:
           - export FLAVOR=$(cat flavor.txt)
           - echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > ./android/app/$ANDROID_KEYSTORE_PATH
           - flutter clean
-          - dart run build_runner build --delete-conflicting-outputs
+          - flutter pub run build_runner build --delete-conflicting-outputs
           - flutter build appbundle --release --flavor $FLAVOR -t lib/main_$FLAVOR.dart
         caches:
           - flutter-linux
