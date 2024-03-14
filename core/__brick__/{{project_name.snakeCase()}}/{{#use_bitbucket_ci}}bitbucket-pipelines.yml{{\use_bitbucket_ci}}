@@ -8,9 +8,8 @@ definitions:
     - step: &validate
         name: Validate
         script:
-          - flutter pub get
           - dart format -o none --set-exit-if-changed lib/ test/
-          - dart run build_runner build --delete-conflicting-outputs
+          - flutter pub run build_runner build --delete-conflicting-outputs
           - flutter analyze --fatal-infos --fatal-warnings
         caches:
           - flutter-linux
@@ -57,20 +56,17 @@ definitions:
     - step: &test
         name: Test
         script:
-          - flutter pub get
-          - sudo apt-get update
-          - sudo apt-get -y install lcov
+          - flutter pub global activate junitreport
           - flutter clean
-          - dart run build_runner build --delete-conflicting-outputs
-          - flutter test --machine --coverage | $HOME/.pub-cache/bin/tojunit > test-report-app.xml
-          - flutter pub global activate cobertura
-          - $HOME/.pub-cache/bin/cobertura convert -i coverage/lcov.info -o coverage/cobertura.xml -p pubspec.yaml
-          - genhtml -o docs/coverage/ --no-function-coverage --no-branch-coverage coverage/lcov.info
+          - flutter pub run build_runner build --delete-conflicting-outputs
+          - mkdir test-reports
+          - flutter test --machine --coverage | tojunit > test-reports/test-report-app.xml
+          - genhtml -o coverage/ --no-function-coverage --no-branch-coverage coverage/lcov.info
         caches:
           - flutter-linux
         artifacts:
           - coverage/**
-          - docs/coverage/**
+          - test-reports/**
 
 pipelines:
   pull-requests:
