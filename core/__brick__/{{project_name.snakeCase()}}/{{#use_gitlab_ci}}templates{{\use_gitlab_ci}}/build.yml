@@ -16,7 +16,7 @@ build_ios_$[[ inputs.flavor ]]:
   image: $[[ inputs.docker_image ]]
   script:
     - flutter clean
-    - dart run build_runner build --delete-conflicting-outputs
+    - flutter pub run build_runner build --delete-conflicting-outputs
     - flutter build ios --no-codesign --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
 
 build_android_$[[ inputs.flavor ]]:
