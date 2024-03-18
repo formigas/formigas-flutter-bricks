@@ -259,7 +259,7 @@ For iOS builds, currently a macOS self-hosted runner is required. Please refer t
 
 ### Configuration
 The pipeline is defined in `bitbucket-pipelines.yml`, with separate steps for validation, build (iOS and Android), and tests.
-- Flutter version: Ensure the Flutter Docker image version matches the version you want to use. This is set in the `image` at the top of the `bitbucket-pipelines.yml` file.
+- Flutter version: Ensure the Flutter Docker image version matches the version you want to use. By default, [cirruslabs Flutter Docker images](https://github.com/cirruslabs/docker-images-flutter/pkgs/container/flutter) are used. If you want to use a different Flutter version or image, adjust the value of the `image` key at the top of the `bitbucket-pipelines.yml` file. 
 - Runners: For iOS builds, make sure you have a self-hosted macOS runner available and correctly tagged to handle the iOS build steps. If you use different tags than the default ones, you can adjust them in the `&build-ios` step.
 
 ### Troubleshooting
