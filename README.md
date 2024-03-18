@@ -1,4 +1,4 @@
-# Framwork bricks
+# Framework bricks
 
 There are currently two bricks in this reposiory:
 
