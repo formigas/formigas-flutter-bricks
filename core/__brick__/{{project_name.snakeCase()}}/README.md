@@ -206,7 +206,7 @@ The build stage will create a release build and runs a different flavor dependin
 - `master`/`main` runs the `production` flavor
 
 ### Setup GitHub Actions for Android builds
-For Android builds, an upload key is required. Please refer to [Create an upload keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore) to create a keystore. Remember that the keystore's password needs to be at least 8 characters long for GitLab to be able to store it as a masked variable. After having created the keystore, follow these steps to make it available to the pipeline:
+For Android builds, an upload key is required. Please refer to [Create an upload keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore) to create a keystore. After having created the keystore, follow these steps to make it available to the pipeline:
 1. Encode the keystore file to base64. You can use the following command assuming your keystore file is named `upload-keystore.jks` to encode it and then copy and paste the output to the repository secret:
 ```sh
 cat upload-keystore.jks | base64
