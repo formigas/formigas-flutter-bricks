@@ -211,9 +211,9 @@ For Android builds, an upload key is required. Please refer to [Create an upload
 ```sh
 cat upload-keystore.jks | base64
 ```
-1. Add the keystore password as a repository secret with the name `ANDROID_KEYSTORE_PASSWORD`
-2. Add the key password (usually the same as the keystore password) as a repository secret with the name `ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD`
-3. Add the alias of the keystore as a repository variable (not secret) with the name `ANDROID_KEYSTORE_ALIAS`. The alias can be found in the command you used to create the keystore.
+2. Add the keystore password as a repository secret with the name `ANDROID_KEYSTORE_PASSWORD`
+3. Add the key password (usually the same as the keystore password) as a repository secret with the name `ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD`
+4. Add the alias of the keystore as a repository variable (not secret) with the name `ANDROID_KEYSTORE_ALIAS`. The alias can be found in the command you used to create the keystore.
 
 ### Configuration
 The pipeline is defined in `.github/workflows/continuous-integration.yml`, while the build action is in `.github/actions/build_app/action.yml`.
