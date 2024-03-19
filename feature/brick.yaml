@@ -1,7 +1,7 @@
 name: formigas_feature
-description: flutter core created by formigas with the base from Very Good Venture
-repository: https://https://git.dev.formigas.de/framework/flutter-core
-version: 0.1.0
+description: new feature created by formigas based on the MVC-pattern
+repository: https://https://git.dev.formigas.de/framework/bricks
+version: 0.0.1
 
 environment:
   mason: ">=0.1.0-dev.50 <0.1.0"
@@ -12,3 +12,8 @@ vars:
     description: The feature name
     default: my_feature
     prompt: What is the feature name?
+  use_freezed:
+    type: boolean
+    description: Whether to use freezed
+    default: false
+    prompt: Do you want to use freezed for code generation?

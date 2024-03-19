@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('App', () {
-    const model = {{feature_name.pascalCase()}}Model(count: 2);
+    {{#use_freezed}}const{{/use_freezed}}{{^use_freezed}}final{{/use_freezed}} model = {{feature_name.pascalCase()}}Model(count: 2);
     final controller = {{feature_name.pascalCase()}}ControllerImplementation()..model = model;
     testWidgets('renders {{feature_name.pascalCase()}}', (tester) async {
       await tester.pumpWidget(
