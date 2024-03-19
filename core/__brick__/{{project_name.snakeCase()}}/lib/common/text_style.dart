@@ -1,3 +1,3 @@
 import 'package:flutter/material.dart';
 
-const textTheme = TextTheme();
+TextTheme textTheme(ColorScheme colorScheme) => const TextTheme();
