@@ -15,24 +15,26 @@ There are currently two bricks in this repository:
 ### Translations
 
 The project template contains a translations mechanism that is based on
-the [flutter_localizations](https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html) package. The translations are stored in the `lib/common/l10n` folder. The translations are loaded in the `main.dart` file and are available in the whole app.
+the [flutter_localizations][flutter_localizations_link] package. The translations are stored in
+the `lib/common/l10n` folder. The translations are loaded in
+the `main.dart` file and are available in the whole app.
 
 ### Theme
 
-The project template contains a theme configuration files in `lib/common/` folder. We separated
+The project template contains theme configuration files in `lib/common/` folder. We separated
 theme to `color_scheme.dart` and `custom_themes.dart` files where you add your color or whole widget
 theme configuration. The theme is loaded in the `main.dart` file and is available in the whole app.
 
 ### Routing
 
-The project template is using [go_router](https://pub.dev/packages/go_router) for the routing. The routes are defined in
+The project template is using [go_router][go_router_link] for the routing. The routes are defined in
 the `app/router` file and loaded in the `main.dart` file.
 
 ### State management
 
 The project template is using [formigas_mvc] for the state management. This is a
 custom state management solution that is using the MVC pattern. You can find more information in the
-[formigas_mvc](formigas_mvc_link) repository.
+[formigas_mvc][formigas_mvc_link] repository.
 
 ## Usage
 
@@ -63,7 +65,8 @@ mason make formigas_core
 
 ### Feature
 
-Together with [formigas_mvc](formigas_mvc_link) we have a feature brick that provides the files and MVC structure the app.
+Together with [formigas_mvc][formigas_mvc_link] we have a feature brick that provides the files and
+MVC structure to the app.
 To add a new feature to your app run the following command in the root of your project:
 
 ```sh
@@ -87,3 +90,9 @@ mason make formigas_feature
 [core_repo_link]: ./core/README.md
 
 [feature_repo_link]: ./feature/README.md
+
+[go_router_link]: https://pub.dev/packages/go_router
+
+[flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
+
+[formigas_mvc_link]: https://github.com/formigas/formigas_mvc
