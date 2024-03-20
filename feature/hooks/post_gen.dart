@@ -42,7 +42,7 @@ Future<void> _installMvcLibrary(
   await _runProcess(context, 'dart', [
     'pub',
     'add',
-    'formigas_mvc:{"git":{"url":"git@git.dev.formigas.de:framework/lib-formigas-mvc.git","ref":"develop"}}',
+    'formigas_mvc',
   ]);
   progress.complete();
 }
