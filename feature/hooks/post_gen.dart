@@ -41,7 +41,7 @@ Future<void> _installMvcLibrary(
   context.logger.info('Could not find formigas_mvc version in pubspec.yaml');
   final progress = context.logger.progress('Installing formigas-mvc library');
   try {
-    await _runProcess(context, 'dart', [
+    await _runProcess(context, 'flutter', [
       'pub',
       'add',
       'formigas_mvc',
@@ -67,7 +67,7 @@ Future<void> _installBuildRunnerLibrary(
   context.logger.info('Could not find build_runner version in pubspec.yaml');
   final progress = context.logger.progress('Installing build_runner');
   try {
-    await _runProcess(context, 'dart', [
+    await _runProcess(context, 'flutter', [
       'pub',
       'add',
       'dev:build_runner: ^2.4.8',
@@ -94,7 +94,7 @@ Future<void> _installFreezedAnnotationLibrary(
       .info('Could not find freezed_annotation version in pubspec.yaml');
   final progress = context.logger.progress('Installing freezed_annotation');
   try {
-    await _runProcess(context, 'dart', [
+    await _runProcess(context, 'flutter', [
       'pub',
       'add',
       'freezed_annotation: ^2.4.1',
@@ -120,7 +120,7 @@ Future<void> _installFreezedLibrary(
   context.logger.info('Could not find freezed version in pubspec.yaml');
   final progress = context.logger.progress('Installing freezed');
   try {
-    await _runProcess(context, 'dart', [
+    await _runProcess(context, 'flutter', [
       'pub',
       'add',
       'dev:freezed: ^2.4.5',
@@ -135,7 +135,7 @@ Future<void> _installFreezedLibrary(
 Future<void> _installPackages(HookContext context) async {
   final progress = context.logger.progress('Installing packages');
   try {
-    await _runProcess(context, 'dart', ['packages', 'get']);
+    await _runProcess(context, 'flutter', ['pub', 'get']);
   } catch (e) {
     progress.fail('Installing packages failed');
     rethrow;
@@ -147,7 +147,7 @@ Future<void> _runBuildRunner(HookContext context) async {
   final progress = context.logger.progress('Running build runner');
 
   try {
-    await _runProcess(context, 'dart', [
+    await _runProcess(context, 'flutter', [
       'pub',
       'run',
       'build_runner',
