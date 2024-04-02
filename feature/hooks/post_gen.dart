@@ -8,22 +8,27 @@ Future<void> run(HookContext context) async {
   final pubspecFile = File('$cwd/pubspec.yaml');
   Map<dynamic, dynamic>? devDependencies;
   Map<dynamic, dynamic>? dependencies;
-  if (pubspecFile.existsSync()) {
-    final pubspecYaml = loadYaml(pubspecFile.readAsStringSync()) as Map;
-    devDependencies = pubspecYaml['dev_dependencies'] as Map;
-    dependencies = pubspecYaml['dependencies'] as Map;
-  }
-  await _installMvcLibrary(context, dependencies);
-  if (context.vars['use_freezed'] == true) {
-    await _installFreezedLibrary(context, devDependencies);
-    await _installFreezedAnnotationLibrary(context, dependencies);
-    await _installBuildRunnerLibrary(context, devDependencies);
-    await _installPackages(context);
-    // build_runner fails, because install packages is not ready
-    await Future<void>.delayed(const Duration(seconds: 1));
-    await _runBuildRunner(context);
-  } else {
-    await _installPackages(context);
+  try {
+    if (pubspecFile.existsSync()) {
+      final pubspecYaml = loadYaml(pubspecFile.readAsStringSync()) as Map;
+      devDependencies = pubspecYaml['dev_dependencies'] as Map;
+      dependencies = pubspecYaml['dependencies'] as Map;
+    }
+    await _installMvcLibrary(context, dependencies);
+    if (context.vars['use_freezed'] == true) {
+      await _installFreezedLibrary(context, devDependencies);
+      await _installFreezedAnnotationLibrary(context, dependencies);
+      await _installBuildRunnerLibrary(context, devDependencies);
+      await _installPackages(context);
+      // build_runner fails, because install packages is not ready
+      await Future<void>.delayed(const Duration(seconds: 1));
+      await _runBuildRunner(context);
+    } else {
+      await _installPackages(context);
+    }
+  } catch (e) {
+    context.logger.err('An error occurred while running post gen hooks. '
+        'Check the output above for more information.');
   }
 }
 
