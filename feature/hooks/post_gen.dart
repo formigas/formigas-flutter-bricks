@@ -48,6 +48,7 @@ Future<void> _installMvcLibrary(
     ]);
   } catch (e) {
     progress.fail('Could not install formigas_mvc library');
+    rethrow;
   }
   progress.complete();
 }
@@ -73,6 +74,7 @@ Future<void> _installBuildRunnerLibrary(
     ]);
   } catch (e) {
     progress.fail('Could not install build_runner');
+    rethrow;
   }
   progress.complete();
 }
@@ -99,6 +101,7 @@ Future<void> _installFreezedAnnotationLibrary(
     ]);
   } catch (e) {
     progress.fail('Could not install freezed_annotation');
+    rethrow;
   }
   progress.complete();
 }
@@ -124,6 +127,7 @@ Future<void> _installFreezedLibrary(
     ]);
   } catch (e) {
     progress.fail('Could not install freezed');
+    rethrow;
   }
   progress.complete();
 }
@@ -134,6 +138,7 @@ Future<void> _installPackages(HookContext context) async {
     await _runProcess(context, 'dart', ['packages', 'get']);
   } catch (e) {
     progress.fail('Installing packages failed');
+    rethrow;
   }
   progress.complete();
 }
@@ -151,7 +156,7 @@ Future<void> _runBuildRunner(HookContext context) async {
     ]);
   } catch (e) {
     progress.fail('Running build runner failed');
-    return;
+    rethrow;
   }
   progress.complete();
 }
