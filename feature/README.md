@@ -34,7 +34,7 @@ mason make formigas_feature
 ## Output 📦
 
 ```sh
-├── feature
+├── features
 │   ├── counter
 │   │   ├── counter_controller.dart
 │   │   ├── counter_model.dart

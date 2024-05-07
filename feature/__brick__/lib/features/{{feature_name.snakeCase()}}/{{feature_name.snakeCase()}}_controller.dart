@@ -1,4 +1,4 @@
-import 'package:{{project_name.snakeCase()}}/feature/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_model.dart';
+import 'package:{{project_name.snakeCase()}}/features/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_model.dart';
 import 'package:formigas_mvc/formigas_mvc.dart';
 
 abstract class {{feature_name.pascalCase()}}Controller extends MVController<{{feature_name.pascalCase()}}Model> {

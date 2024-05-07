@@ -1,6 +1,6 @@
 import 'package:{{project_name.snakeCase()}}/common/custom_themes.dart';
-import 'package:{{project_name.snakeCase()}}/feature/counter/counter_controller.dart';
-import 'package:{{project_name.snakeCase()}}/feature/counter/counter_view.dart';
+import 'package:{{project_name.snakeCase()}}/features/counter/counter_controller.dart';
+import 'package:{{project_name.snakeCase()}}/features/counter/counter_view.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
