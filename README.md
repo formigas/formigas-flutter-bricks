@@ -7,6 +7,9 @@
 This repository contains templates in the form of mason bricks that allow for plug-and-play setup of
 features for existing projects.
 
+#### Don't have a flutter project yet?
+No problem checkout [formigas_flutter_core][core_repo_link]
+
 ## Bricks
 
 - [feature][feature_repo_link]: a brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link]
@@ -29,6 +32,8 @@ See the respective brick's README for usage instructions.
 [brick_hub_development_link]: https://docs.brickhub.dev/brick-development
 
 [mason_link]: https://github.com/felangel/mason
+
+[core_repo_link]: https://github.com/formigas/formigas-flutter-core
 
 [feature_repo_link]: ./feature/README.md
 

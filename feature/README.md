@@ -3,8 +3,6 @@
 A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our flutter projects.
 It follows the principles of the MVC-pattern.
 
-The brick formigas_feature is part of the [formigas_core][core_repo_link], but can also be used on its own.
-
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
 
@@ -55,7 +53,6 @@ Following dependencies will be installed for this brick:
 [formigas_link]: https://formigas.io
 [mason_link]: https://github.com/felangel/mason
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
-[core_repo_link]: https://github.com/formigas/formigas-flutter-core
 [freezed_annotation_link]:https://pub.dev/packages/freezed_annotation
 [freezed_link]: https://pub.dev/packages/freezed
 [build_runner_link]: https://pub.dev/packages/build_runner
