@@ -25,10 +25,6 @@ See the respective brick's README for usage instructions.
 - [Brick Hub Development][brick_hub_development_link]
 - [Mason][mason_link]
 
-
-
-
-
 [very_good_ventures_link]: https://github.com/VeryGoodOpenSource/very_good_core
 
 [formigas_link]: https://formigas.io
