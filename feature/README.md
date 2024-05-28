@@ -1,4 +1,4 @@
-# Formigas Feature Brick
+# formigas Feature Brick
 
 A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our flutter projects.
 It follows the principles of the MVC-pattern.
@@ -61,4 +61,3 @@ Following dependencies will be installed for this brick:
 [build_runner_link]: https://pub.dev/packages/build_runner
 [flutter_link]:https://flutter.dev/
 [formigas_mvc_link]:https://git.dev.formigas.de/framework/lib-formigas-mvc
-

@@ -1,9 +1,0 @@
-//Add these variables to your CI environment
-ENV['KEYS_ENCRYPTION_PASSWORD'] = "YOUR_KEYS_ENCRYPTION_PASSWORD"
-{{#use_env}}ENV["PACKAGE_NAME"] = "{{package_name}}"{{/use_env}}
-{{#use_env}}ENV["FASTLANE_USER"] = "{{fastlane_user}}"{{/use_env}}
-{{#use_env}}ENV["PROJECT_NAME"] = "{{project_name}}"{{/use_env}}
-{{#use_env}}ENV["ITC_TEAM_ID"] = "{{itc_team_id}}"{{/use_env}}
-{{#use_env}}ENV["APP_TEAM_ID"] = "{{app_team_id}}"{{/use_env}}
-{{#use_env}}ENV["PROVISIONING_PROFILE_NAME"] = "YOUR_PROVISIONING_PROFILE_NAME"{{/use_env}}
-{{#use_env}}ENV["FL_RESIGN_SIGNING_IDENTITY"] = "YOUR_SIGNING_IDENTITY"{{/use_env}}
