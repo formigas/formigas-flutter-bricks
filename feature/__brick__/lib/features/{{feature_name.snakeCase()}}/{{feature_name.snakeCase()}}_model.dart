@@ -7,8 +7,7 @@ class {{feature_name.pascalCase()}}Model with _${{feature_name.pascalCase()}}Mod
   const factory {{feature_name.pascalCase()}}Model({
     required int count,
   }) = _{{feature_name.pascalCase()}}Model;
-}{{/use_freezed}}{{^use_freezed}}
-class {{feature_name.pascalCase()}}Model {
+}{{/use_freezed}}{{^use_freezed}}class {{feature_name.pascalCase()}}Model {
   int count;
   {{feature_name.pascalCase()}}Model({required this.count});
 
