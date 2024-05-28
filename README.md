@@ -8,7 +8,7 @@ This repository contains templates in the form of mason bricks that allow for pl
 features for existing projects.
 
 #### Don't have a flutter project yet?
-No problem checkout [formigas_flutter_core][core_repo_link]
+No problem checkout [formigas Flutter Core][core_repo_link] for an app template withe the most important features.
 
 ## Bricks
 
