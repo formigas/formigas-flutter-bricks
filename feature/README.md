@@ -13,25 +13,32 @@ To only add the formigas_feature brick to your local mason run:
 ```sh
 $ mason init
 ```
-<br />
 
-using ssh
+### using ssh
 ```sh
-$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path feature --git-ref develop
+$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
 ```
-using https
-```sh
-mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path feature --git-ref develop
-```
-<br />
-
 The formigas_feature brick should show up in the list of mason bricks:
 
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_feature 0.0.1 -> {your-git-url}#{commit-hash}
+└── formigas_feature {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
 ```
+
+### using https
+```sh
+mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
+```
+The formigas_feature brick should show up in the list of mason bricks:
+
+```
+$ mason list
+/Users/User/foo/bar
+└── formigas_feature {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
+```
+<br />
+<br />
 
 To add a new feature to your app run the following command in the root of your project:
 
