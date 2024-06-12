@@ -20,6 +20,6 @@ vars:
   use_sms:
     type: enum
     description: Choose the state management solution
-    default: bloc
+    default: "BLoC"
     prompt: Choose the state management solution
-    values: [BLoC, Formigas MVC]
+    values: ["BLoC", "Formigas MVC"]

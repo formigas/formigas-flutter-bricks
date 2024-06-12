@@ -7,6 +7,7 @@ void run(HookContext context) {
   _assertRootDirectory(context);
   _selectUseFvm(context);
   _selectProjectName(context);
+  _selectStateManagementSolution(context);
 }
 
 void _assertRootDirectory(HookContext context) {
@@ -54,5 +55,19 @@ void _assertProjectName(
       "Couldn't find project name in pubspec.yaml.",
     );
     exit(1);
+  }
+}
+
+void _selectStateManagementSolution(HookContext context) {
+  final useCI = context.vars['use_sms'] as String?;
+  switch (useCI) {
+    case 'Formigas MVC':
+      context.vars = {...context.vars, 'formigas_mvc': true};
+    case 'BLoC':
+      context.vars = {...context.vars, 'bloc': true};
+
+    case 'Riverpod':
+      context.vars = {...context.vars, 'riverpod': true};
+    default:
   }
 }
