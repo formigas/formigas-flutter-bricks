@@ -65,9 +65,5 @@ void _selectStateManagementSolution(HookContext context) {
       context.vars = {...context.vars, 'formigas_mvc': true};
     case 'BLoC':
       context.vars = {...context.vars, 'bloc': true};
-
-    case 'Riverpod':
-      context.vars = {...context.vars, 'riverpod': true};
-    default:
   }
 }
