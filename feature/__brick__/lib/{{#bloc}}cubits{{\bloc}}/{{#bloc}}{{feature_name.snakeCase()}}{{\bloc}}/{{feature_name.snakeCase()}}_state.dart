@@ -4,9 +4,9 @@ part '{{feature_name.snakeCase()}}_state.freezed.dart';
 
 @freezed
 class {{feature_name.pascalCase()}}State with _${{feature_name.pascalCase()}}State {
-  factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
-
   const factory {{feature_name.pascalCase()}}State({required final int count}) = _{{feature_name.pascalCase()}}State;
+
+  factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
 }{{/use_freezed}}{{^use_freezed}}class {{feature_name.pascalCase()}}State {
   final int _count;
   int get count => _count;
