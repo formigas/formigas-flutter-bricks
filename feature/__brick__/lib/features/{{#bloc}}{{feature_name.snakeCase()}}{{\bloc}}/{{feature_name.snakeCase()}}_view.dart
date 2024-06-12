@@ -3,14 +3,8 @@ import 'package:{{project_name.snakeCase()}}/cubits/{{feature_name.snakeCase()}}
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class {{feature_name.pascalCase()}}View extends StatefulWidget {
+class {{feature_name.pascalCase()}}View extends StatelessWidget {
   const {{feature_name.pascalCase()}}View({super.key});
-
-  @override
-  State<{{feature_name.pascalCase()}}View> createState() => _{{feature_name.pascalCase()}}ViewState();
-}
-
-class _{{feature_name.pascalCase()}}ViewState extends State<{{feature_name.pascalCase()}}View> {
 
   @override
   Widget build(BuildContext context) => Scaffold(
