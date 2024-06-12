@@ -59,7 +59,7 @@ void _assertProjectName(
 }
 
 void _selectStateManagementSolution(HookContext context) {
-  final useCI = context.vars['use_sms'] as String?;
+  final useCI = context.vars['state_management_solution'] as String?;
   switch (useCI) {
     case 'Formigas MVC':
       context.vars = {...context.vars, 'formigas_mvc': true};

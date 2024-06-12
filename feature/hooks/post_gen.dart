@@ -14,18 +14,18 @@ Future<void> run(HookContext context) async {
       devDependencies = pubspecYaml['dev_dependencies'] as Map;
       dependencies = pubspecYaml['dependencies'] as Map;
     }
-    final useSms = context.vars['use_sms'] as String;
+    final useSms = context.vars['state_management_solution'] as String;
     switch (useSms) {
       case 'BLoC':
-        await _installBlocLibrary(context, dependencies);
+        await _installBlocPackage(context, dependencies);
       case 'Formigas MVC':
-        await _installMvcLibrary(context, dependencies);
+        await _installMvcPackage(context, dependencies);
     }
 
     if (context.vars['use_freezed'] == true) {
-      await _installFreezedLibrary(context, devDependencies);
-      await _installFreezedAnnotationLibrary(context, dependencies);
-      await _installBuildRunnerLibrary(context, devDependencies);
+      await _installFreezedPackage(context, devDependencies);
+      await _installFreezedAnnotationPackage(context, dependencies);
+      await _installBuildRunnerPackage(context, devDependencies);
       await _installPackages(context);
       // build_runner fails, because install packages is not ready
       await Future<void>.delayed(const Duration(seconds: 2));
@@ -39,101 +39,7 @@ Future<void> run(HookContext context) async {
   }
 }
 
-Future<void> _installRiverpodLibraries(
-  HookContext context,
-  Map<dynamic, dynamic>? dependencies,
-) async {
-  context.logger.info('Verifying flutter_riverpod version from pubspec.yaml');
-  if (dependencies?.containsKey('flutter_riverpod') ?? true) {
-    context.logger.info(
-      'Found flutter_riverpod version ${dependencies?['flutter_riverpod']} in pubspec.yaml',
-    );
-    return;
-  }
-  try {
-    final progress = await _installFlutterRiverpod(context);
-
-    context.logger
-        .info('Verifying riverpod_annotation version from pubspec.yaml');
-    if (dependencies?.containsKey('riverpod_annotation') ?? true) {
-      context.logger.info(
-        'Found riverpod_annotation version ${dependencies?['riverpod_annotation']} in pubspec.yaml',
-      );
-      return;
-    }
-    await _installRiverpodAnnotation(context, progress);
-
-    context.logger.info('Verifying flutter_riverpod version from pubspec.yaml');
-    if (dependencies?.containsKey('flutter_riverpod') ?? true) {
-      context.logger.info(
-        'Found flutter_riverpod version ${dependencies?['flutter_riverpod']} in pubspec.yaml',
-      );
-      return;
-    }
-    await _installRiverpodGenerator(context, progress);
-    progress.complete();
-  } catch (e) {
-    rethrow;
-  }
-}
-
-Future<void> _installRiverpodGenerator(
-  HookContext context,
-  Progress progress,
-) async {
-  context.logger
-      .info('Could not find riverpod_generator version in pubspec.yaml');
-  context.logger.progress('Installing riverpod_generator library');
-  try {
-    await _runProcess(context, 'flutter', [
-      'pub',
-      'add',
-      'riverpod_generator',
-    ]);
-  } catch (e) {
-    progress.fail('Could not install riverpod_generator library');
-    rethrow;
-  }
-}
-
-Future<void> _installRiverpodAnnotation(
-  HookContext context,
-  Progress progress,
-) async {
-  context.logger
-      .info('Could not find riverpod_annotation version in pubspec.yaml');
-  context.logger.progress('Installing riverpod_annotation library');
-  try {
-    await _runProcess(context, 'flutter', [
-      'pub',
-      'add',
-      'riverpod_annotation',
-    ]);
-  } catch (e) {
-    progress.fail('Could not install riverpod_annotation library');
-    rethrow;
-  }
-}
-
-Future<Progress> _installFlutterRiverpod(HookContext context) async {
-  context.logger
-      .info('Could not find flutter_riverpod version in pubspec.yaml');
-  final progress =
-      context.logger.progress('Installing flutter_riverpod library');
-  try {
-    await _runProcess(context, 'flutter', [
-      'pub',
-      'add',
-      'flutter_riverpod',
-    ]);
-  } catch (e) {
-    progress.fail('Could not install flutter_riverpod library');
-    rethrow;
-  }
-  return progress;
-}
-
-Future<void> _installBlocLibrary(
+Future<void> _installBlocPackage(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
@@ -145,7 +51,7 @@ Future<void> _installBlocLibrary(
     return;
   }
   context.logger.info('Could not find flutter_bloc version in pubspec.yaml');
-  final progress = context.logger.progress('Installing flutter_bloc library');
+  final progress = context.logger.progress('Installing flutter_bloc package');
   try {
     await _runProcess(context, 'flutter', [
       'pub',
@@ -153,13 +59,13 @@ Future<void> _installBlocLibrary(
       'flutter_bloc',
     ]);
   } catch (e) {
-    progress.fail('Could not install flutter_bloc library');
+    progress.fail('Could not install flutter_bloc package');
     rethrow;
   }
   progress.complete();
 }
 
-Future<void> _installMvcLibrary(
+Future<void> _installMvcPackage(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
@@ -171,7 +77,7 @@ Future<void> _installMvcLibrary(
     return;
   }
   context.logger.info('Could not find formigas_mvc version in pubspec.yaml');
-  final progress = context.logger.progress('Installing formigas-mvc library');
+  final progress = context.logger.progress('Installing formigas-mvc package');
   try {
     await _runProcess(context, 'flutter', [
       'pub',
@@ -179,13 +85,13 @@ Future<void> _installMvcLibrary(
       'formigas_mvc',
     ]);
   } catch (e) {
-    progress.fail('Could not install formigas_mvc library');
+    progress.fail('Could not install formigas_mvc package');
     rethrow;
   }
   progress.complete();
 }
 
-Future<void> _installBuildRunnerLibrary(
+Future<void> _installBuildRunnerPackage(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
@@ -211,7 +117,7 @@ Future<void> _installBuildRunnerLibrary(
   progress.complete();
 }
 
-Future<void> _installFreezedAnnotationLibrary(
+Future<void> _installFreezedAnnotationPackage(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
@@ -238,7 +144,7 @@ Future<void> _installFreezedAnnotationLibrary(
   progress.complete();
 }
 
-Future<void> _installFreezedLibrary(
+Future<void> _installFreezedPackage(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
