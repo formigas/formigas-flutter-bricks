@@ -7,12 +7,17 @@ Future<void> run(HookContext context) async {
   final cwd = Directory.current.path;
   final pubspecFile = File('$cwd/pubspec.yaml');
   Map<dynamic, dynamic>? devDependencies;
-  Map<dynamic, dynamic>? dependencies;
+  Map<dynamic, dynamic> dependencies;
   try {
     if (pubspecFile.existsSync()) {
       final pubspecYaml = loadYaml(pubspecFile.readAsStringSync()) as Map;
-      devDependencies = pubspecYaml['dev_dependencies'] as Map;
+      devDependencies = pubspecYaml['dev_dependencies'] as Map?;
       dependencies = pubspecYaml['dependencies'] as Map;
+    } else {
+      context.logger.err(
+        "Couldn't find pubspec.yaml in the current directory.",
+      );
+      return;
     }
     final useSms = context.vars['state_management_solution'] as String;
     switch (useSms) {
@@ -41,12 +46,12 @@ Future<void> run(HookContext context) async {
 
 Future<void> _installBlocPackage(
   HookContext context,
-  Map<dynamic, dynamic>? dependencies,
+  Map<dynamic, dynamic> dependencies,
 ) async {
   context.logger.info('Verifying flutter_bloc version from pubspec.yaml');
-  if (dependencies?.containsKey('flutter_bloc') ?? true) {
+  if (dependencies.containsKey('flutter_bloc')) {
     context.logger.info(
-      'Found flutter_bloc version ${dependencies?['flutter_bloc']} in pubspec.yaml',
+      'Found flutter_bloc version ${dependencies['flutter_bloc']} in pubspec.yaml',
     );
     return;
   }
@@ -67,12 +72,12 @@ Future<void> _installBlocPackage(
 
 Future<void> _installMvcPackage(
   HookContext context,
-  Map<dynamic, dynamic>? dependencies,
+  Map<dynamic, dynamic> dependencies,
 ) async {
   context.logger.info('Verifying formigas_mvc version from pubspec.yaml');
-  if (dependencies?.containsKey('formigas_mvc') ?? true) {
+  if (dependencies.containsKey('formigas_mvc')) {
     context.logger.info(
-      'Found formigas_mvc version ${dependencies?['formigas_mvc']} in pubspec.yaml',
+      'Found formigas_mvc version ${dependencies['formigas_mvc']} in pubspec.yaml',
     );
     return;
   }
@@ -96,7 +101,7 @@ Future<void> _installBuildRunnerPackage(
   Map<dynamic, dynamic>? devDependencies,
 ) async {
   context.logger.info('Verifying build_runner version from pubspec.yaml');
-  if (devDependencies?.containsKey('build_runner') ?? true) {
+  if (devDependencies?.containsKey('build_runner') ?? false) {
     context.logger.info(
       'Found build_runner version ${devDependencies?['build_runner']} in pubspec.yaml',
     );
@@ -119,12 +124,12 @@ Future<void> _installBuildRunnerPackage(
 
 Future<void> _installFreezedAnnotationPackage(
   HookContext context,
-  Map<dynamic, dynamic>? dependencies,
+  Map<dynamic, dynamic> dependencies,
 ) async {
   context.logger.info('Verifying freezed_annotation version from pubspec.yaml');
-  if (dependencies?.containsKey('freezed_annotation') ?? true) {
+  if (dependencies.containsKey('freezed_annotation')) {
     context.logger.info(
-      'Found freezed_annotation version ${dependencies?['freezed_annotation']} in pubspec.yaml',
+      'Found freezed_annotation version ${dependencies['freezed_annotation']} in pubspec.yaml',
     );
     return;
   }
