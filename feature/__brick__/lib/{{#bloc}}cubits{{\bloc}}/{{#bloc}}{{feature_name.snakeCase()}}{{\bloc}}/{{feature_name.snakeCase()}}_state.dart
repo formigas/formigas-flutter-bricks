@@ -15,5 +15,5 @@ class {{feature_name.pascalCase()}}State with _${{feature_name.pascalCase()}}Sta
 
   factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
 
-  {{feature_name.pascalCase()}}State copyWith({required final int count}) => {{feature_name.pascalCase()}}State(count: count);
+  {{feature_name.pascalCase()}}State copyWith({final int? count}) => {{feature_name.pascalCase()}}State(count: count ?? _count);
 }{{/use_freezed}}
