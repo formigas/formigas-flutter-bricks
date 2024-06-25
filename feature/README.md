@@ -6,6 +6,10 @@ It follows the principles of the MVC-pattern.
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
 
+## Pre-requisites 🛠️
+
+- [Mason CLI][mason_cli_link]
+
 ## Usage 🏗️
 
 The formigas_feature brick is automatically added to your mason, if you already generated a project with the formigas_core brick.
@@ -68,6 +72,7 @@ Following dependencies will be installed for this brick:
 [license_link]: https://opensource.org/licenses/MIT
 [formigas_link]: https://formigas.io
 [mason_link]: https://github.com/felangel/mason
+[mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [freezed_annotation_link]:https://pub.dev/packages/freezed_annotation
 [freezed_link]: https://pub.dev/packages/freezed
