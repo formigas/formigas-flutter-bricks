@@ -23,6 +23,7 @@ Future<void> run(HookContext context) async {
     switch (useSms) {
       case 'BLoC':
         await _installBlocPackage(context, dependencies);
+        await _installBlocTestPackage(context, devDependencies);
       case 'Formigas MVC':
         await _installMvcPackage(context, dependencies);
     }
@@ -65,6 +66,33 @@ Future<void> _installBlocPackage(
     ]);
   } catch (e) {
     progress.fail('Could not install flutter_bloc package');
+    rethrow;
+  }
+  progress.complete();
+}
+
+Future<void> _installBlocTestPackage(
+  HookContext context,
+  Map<dynamic, dynamic>? dependencies,
+) async {
+  context.logger.info('Verifying flutter_bloc version from pubspec.yaml');
+  if (dependencies?.containsKey('bloc_test') ?? false) {
+    context.logger.info(
+      'Found bloc_test version ${dependencies?['bloc_test']} in pubspec.yaml',
+    );
+    return;
+  }
+  context.logger.info('Could not find bloc_test version in pubspec.yaml');
+  final progress = context.logger.progress('Installing bloc_test package');
+  try {
+    await _runProcess(context, 'flutter', [
+      'pub',
+      'add',
+      'bloc_test',
+      '--dev',
+    ]);
+  } catch (e) {
+    progress.fail('Could not install bloc_test package');
     rethrow;
   }
   progress.complete();
