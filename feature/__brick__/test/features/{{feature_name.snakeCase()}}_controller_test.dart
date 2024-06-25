@@ -16,7 +16,7 @@ void main() {
     test('should decrement the count', () {
       final controller = createTestController()
       ..decrement();
-      expect(controller.model.count, 0);
+      expect(controller.model.count, -1);
     });
   });
 }
