@@ -8,14 +8,14 @@ void main() {
       {{feature_name.pascalCase()}}ControllerImplementation();
     
     test('should increment the count', () {
-      final controller = createTestController();
-      controller.increment();
+      final controller = createTestController()
+      ..increment();
       expect(controller.model.count, 1);
     });
 
     test('should decrement the count', () {
-      final controller = createTestController();
-      controller.decrement();
+      final controller = createTestController()
+      ..decrement();
       expect(controller.model.count, 0);
     });
   });
