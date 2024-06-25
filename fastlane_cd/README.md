@@ -3,6 +3,10 @@
 fastlane_cd is a mason brick that provides a set of actions to help you with Continuous
 Deployment.
 
+## Pre-requisites
+
+- [Mason CLI][mason_cli_link]
+
 ## Requirements
 
 ### Secrets
@@ -55,3 +59,8 @@ This action will build and deploy the android appBundle to the internal track on
 ```
 
 This action will build and deploy the ios ipa for TestFlight on AppStore.
+
+
+
+
+[mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
