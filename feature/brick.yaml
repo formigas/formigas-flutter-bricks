@@ -17,3 +17,9 @@ vars:
     description: Whether to use freezed
     default: false
     prompt: Do you want to use freezed for code generation?
+  state_management_solution:
+    type: enum
+    description: The state management solution to use
+    default: "BLoC"
+    prompt: Which state management solution do you want to use?
+    values: ["BLoC", "Formigas MVC"]
