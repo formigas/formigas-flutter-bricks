@@ -7,21 +7,34 @@ Future<void> run(HookContext context) async {
   final cwd = Directory.current.path;
   final pubspecFile = File('$cwd/pubspec.yaml');
   Map<dynamic, dynamic>? devDependencies;
-  Map<dynamic, dynamic>? dependencies;
+  Map<dynamic, dynamic> dependencies;
   try {
     if (pubspecFile.existsSync()) {
       final pubspecYaml = loadYaml(pubspecFile.readAsStringSync()) as Map;
-      devDependencies = pubspecYaml['dev_dependencies'] as Map;
+      devDependencies = pubspecYaml['dev_dependencies'] as Map?;
       dependencies = pubspecYaml['dependencies'] as Map;
+    } else {
+      context.logger.err(
+        "Couldn't find pubspec.yaml in the current directory.",
+      );
+      return;
     }
-    await _installMvcLibrary(context, dependencies);
+    final useSms = context.vars['state_management_solution'] as String;
+    switch (useSms) {
+      case 'BLoC':
+        await _installBlocPackage(context, dependencies);
+        await _installBlocTestPackage(context, devDependencies);
+      case 'Formigas MVC':
+        await _installMvcPackage(context, dependencies);
+    }
+
     if (context.vars['use_freezed'] == true) {
-      await _installFreezedLibrary(context, devDependencies);
-      await _installFreezedAnnotationLibrary(context, dependencies);
-      await _installBuildRunnerLibrary(context, devDependencies);
+      await _installFreezedPackage(context, devDependencies);
+      await _installFreezedAnnotationPackage(context, dependencies);
+      await _installBuildRunnerPackage(context, devDependencies);
       await _installPackages(context);
       // build_runner fails, because install packages is not ready
-      await Future<void>.delayed(const Duration(seconds: 1));
+      await Future<void>.delayed(const Duration(seconds: 2));
       await _runBuildRunner(context);
     } else {
       await _installPackages(context);
@@ -32,19 +45,72 @@ Future<void> run(HookContext context) async {
   }
 }
 
-Future<void> _installMvcLibrary(
+Future<void> _installBlocPackage(
+  HookContext context,
+  Map<dynamic, dynamic> dependencies,
+) async {
+  context.logger.info('Verifying flutter_bloc version from pubspec.yaml');
+  if (dependencies.containsKey('flutter_bloc')) {
+    context.logger.info(
+      'Found flutter_bloc version ${dependencies['flutter_bloc']} in pubspec.yaml',
+    );
+    return;
+  }
+  context.logger.info('Could not find flutter_bloc version in pubspec.yaml');
+  final progress = context.logger.progress('Installing flutter_bloc package');
+  try {
+    await _runProcess(context, 'flutter', [
+      'pub',
+      'add',
+      'flutter_bloc',
+    ]);
+  } catch (e) {
+    progress.fail('Could not install flutter_bloc package');
+    rethrow;
+  }
+  progress.complete();
+}
+
+Future<void> _installBlocTestPackage(
   HookContext context,
   Map<dynamic, dynamic>? dependencies,
 ) async {
-  context.logger.info('Verifying formigas_mvc version from pubspec.yaml');
-  if (dependencies?.containsKey('formigas_mvc') ?? true) {
+  context.logger.info('Verifying flutter_bloc version from pubspec.yaml');
+  if (dependencies?.containsKey('bloc_test') ?? false) {
     context.logger.info(
-      'Found formigas_mvc version ${dependencies?['formigas_mvc']} in pubspec.yaml',
+      'Found bloc_test version ${dependencies?['bloc_test']} in pubspec.yaml',
+    );
+    return;
+  }
+  context.logger.info('Could not find bloc_test version in pubspec.yaml');
+  final progress = context.logger.progress('Installing bloc_test package');
+  try {
+    await _runProcess(context, 'flutter', [
+      'pub',
+      'add',
+      'bloc_test',
+      '--dev',
+    ]);
+  } catch (e) {
+    progress.fail('Could not install bloc_test package');
+    rethrow;
+  }
+  progress.complete();
+}
+
+Future<void> _installMvcPackage(
+  HookContext context,
+  Map<dynamic, dynamic> dependencies,
+) async {
+  context.logger.info('Verifying formigas_mvc version from pubspec.yaml');
+  if (dependencies.containsKey('formigas_mvc')) {
+    context.logger.info(
+      'Found formigas_mvc version ${dependencies['formigas_mvc']} in pubspec.yaml',
     );
     return;
   }
   context.logger.info('Could not find formigas_mvc version in pubspec.yaml');
-  final progress = context.logger.progress('Installing formigas-mvc library');
+  final progress = context.logger.progress('Installing formigas-mvc package');
   try {
     await _runProcess(context, 'flutter', [
       'pub',
@@ -52,18 +118,18 @@ Future<void> _installMvcLibrary(
       'formigas_mvc',
     ]);
   } catch (e) {
-    progress.fail('Could not install formigas_mvc library');
+    progress.fail('Could not install formigas_mvc package');
     rethrow;
   }
   progress.complete();
 }
 
-Future<void> _installBuildRunnerLibrary(
+Future<void> _installBuildRunnerPackage(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
   context.logger.info('Verifying build_runner version from pubspec.yaml');
-  if (devDependencies?.containsKey('build_runner') ?? true) {
+  if (devDependencies?.containsKey('build_runner') ?? false) {
     context.logger.info(
       'Found build_runner version ${devDependencies?['build_runner']} in pubspec.yaml',
     );
@@ -84,14 +150,14 @@ Future<void> _installBuildRunnerLibrary(
   progress.complete();
 }
 
-Future<void> _installFreezedAnnotationLibrary(
+Future<void> _installFreezedAnnotationPackage(
   HookContext context,
-  Map<dynamic, dynamic>? dependencies,
+  Map<dynamic, dynamic> dependencies,
 ) async {
   context.logger.info('Verifying freezed_annotation version from pubspec.yaml');
-  if (dependencies?.containsKey('freezed_annotation') ?? true) {
+  if (dependencies.containsKey('freezed_annotation')) {
     context.logger.info(
-      'Found freezed_annotation version ${dependencies?['freezed_annotation']} in pubspec.yaml',
+      'Found freezed_annotation version ${dependencies['freezed_annotation']} in pubspec.yaml',
     );
     return;
   }
@@ -111,7 +177,7 @@ Future<void> _installFreezedAnnotationLibrary(
   progress.complete();
 }
 
-Future<void> _installFreezedLibrary(
+Future<void> _installFreezedPackage(
   HookContext context,
   Map<dynamic, dynamic>? devDependencies,
 ) async {
