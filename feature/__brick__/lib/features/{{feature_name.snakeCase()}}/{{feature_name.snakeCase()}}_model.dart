@@ -8,8 +8,8 @@ class {{feature_name.pascalCase()}}Model with _${{feature_name.pascalCase()}}Mod
     required int count,
   }) = _{{feature_name.pascalCase()}}Model;
 }{{/use_freezed}}{{^use_freezed}}class {{feature_name.pascalCase()}}Model {
-  int count;
   {{feature_name.pascalCase()}}Model({required this.count});
+  int count;
 
   {{feature_name.pascalCase()}}Model copyWith({required int count}) => {{feature_name.pascalCase()}}Model(count: count);
 }{{/use_freezed}}
