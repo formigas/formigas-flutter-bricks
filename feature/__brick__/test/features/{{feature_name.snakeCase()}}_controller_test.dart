@@ -4,13 +4,17 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('The {{feature_name.pascalCase()}} controller', () {
-    final controller = {{feature_name.pascalCase()}}ControllerImplementation();
+    {{feature_name.pascalCase()}}Controller createTestController() =>
+      {{feature_name.pascalCase()}}ControllerImplementation();
+    
     test('should increment the count', () {
+      final controller = createTestController();
       controller.increment();
       expect(controller.model.count, 1);
     });
 
     test('should decrement the count', () {
+      final controller = createTestController();
       controller.decrement();
       expect(controller.model.count, 0);
     });
