@@ -1,5 +1,5 @@
-import 'package:{{project_name.snakeCase()}}/cubits/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_cubit.dart';
-import 'package:{{project_name.snakeCase()}}/cubits/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_state.dart';
+import 'package:{{project_name.snakeCase()}}/features/{{feature_name.snakeCase()}}/cubit/{{feature_name.snakeCase()}}_cubit.dart';
+import 'package:{{project_name.snakeCase()}}/features/{{feature_name.snakeCase()}}/cubit/{{feature_name.snakeCase()}}_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

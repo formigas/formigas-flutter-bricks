@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:{{project_name.snakeCase()}}/cubits/{{feature_name.snakeCase()}}/{{feature_name.snakeCase()}}_state.dart';
+import 'package:{{project_name.snakeCase()}}/features/{{feature_name.snakeCase()}}/cubit/{{feature_name.snakeCase()}}_state.dart';
 
 class {{feature_name.pascalCase()}}Cubit extends Cubit<{{feature_name.pascalCase()}}State> {
   {{feature_name.pascalCase()}}Cubit() : super({{feature_name.pascalCase()}}State.initial());
