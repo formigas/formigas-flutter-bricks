@@ -90,3 +90,4 @@ jobs:
         with:
           tag: feature-${{ github.event.inputs.version }}
           generateReleaseNotes: true
+          makeLatest: true
