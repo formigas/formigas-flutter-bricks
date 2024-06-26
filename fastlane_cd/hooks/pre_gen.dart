@@ -1,13 +1,13 @@
 import 'dart:io';
 
 import 'package:mason/mason.dart';
+import 'package:xml/xml.dart';
 import 'package:yaml/yaml.dart';
 
 void run(HookContext context) {
   _assertRootDirectory(context);
-  _selectUseFvm(context);
   _selectProjectName(context);
-  _selectStateManagementSolution(context);
+  _selectPackageName(context);
 }
 
 void _assertRootDirectory(HookContext context) {
@@ -18,14 +18,6 @@ void _assertRootDirectory(HookContext context) {
     );
     exit(1);
   }
-}
-
-void _selectUseFvm(HookContext context) {
-  final cwd = Directory.current.path;
-  context.vars = {
-    ...context.vars,
-    'use_fvm': File('$cwd/.fvm/fvm_config.json').existsSync(),
-  };
 }
 
 void _selectProjectName(HookContext context) {
@@ -58,12 +50,31 @@ void _assertProjectName(
   }
 }
 
-void _selectStateManagementSolution(HookContext context) {
-  final useCI = context.vars['state_management_solution'] as String?;
-  switch (useCI) {
-    case 'Formigas MVC':
-      context.vars = {...context.vars, 'formigas_mvc': true};
-    case 'BLoC':
-      context.vars = {...context.vars, 'bloc': true};
+void _selectPackageName(HookContext context) {
+  final cwd = Directory.current.path;
+  final manifestFile = File('$cwd/android/app/src/main/AndroidManifest.xml');
+  if (manifestFile.existsSync()) {
+    final manifest = XmlDocument.parse(manifestFile.readAsStringSync());
+    final manifestNode = manifest.getElement('manifest');
+    final package = manifestNode?.getAttribute('package');
+    _assertPackageName(package, context);
+    context.vars = {
+      ...context.vars,
+      'package_name': package,
+    };
+  } else {
+    context.logger.err(
+      "Couldn't find AndroidManifest.xml from current directory.",
+    );
+    exit(1);
+  }
+}
+
+void _assertPackageName(String? package, HookContext context) {
+  if (package == null) {
+    context.logger.err(
+      "Couldn't find package name in AndroidManifest.xml.",
+    );
+    exit(1);
   }
 }

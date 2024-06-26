@@ -1,98 +1,81 @@
-# Very Good Core
+# formigas Feature Brick
 
-[![Very Good Ventures][logo_white]][very_good_ventures_link_dark]
-
-Developed with 💙 by [Very Good Ventures][very_good_ventures_link] 🦄
+A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our flutter projects.
+It follows the principles of the MVC-pattern.
 
 [![License: MIT][license_badge]][license_link]
-[![Powered by Mason](https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge)](https://github.com/felangel/mason)
+[![Powered by Mason][mason_badge]][mason_link]
 
-A Very Good Flutter app created by Very Good Ventures 🦄.
+## Pre-requisites 🛠️
 
-## What's Included ✨
+- [Mason CLI][mason_cli_link]
 
-Out of the box, Very Good Core includes:
+## Usage 🏗️
 
-- ✅ [Cross Platform Support][flutter_cross_platform_link] - Built-in support for iOS, Android, Web, and Windows (MacOS/Linux coming soon!)
-- ✅ [Build Flavors][flutter_flavors_link] - Multiple flavor support for development, staging, and production
-- ✅ [Internationalization Support][internationalization_link] - Internationalization support using synthetic code generation to streamline the development process
-- ✅ [Sound Null-Safety][null_safety_link] - No more null-dereference exceptions at runtime. Develop with a sound, static type system.
-- ✅ [Bloc][bloc_link] - Integrated bloc architecture for scalable, testable code which offers a clear separation between business logic and presentation
-- ✅ [Testing][testing_link] - Unit and Widget Tests with 100% line coverage (Integration Tests coming soon!)
-- ✅ [Logging][logging_link] - Built-in, extensible logging to capture uncaught Flutter and Dart Exceptions
-- ✅ [Very Good Analysis][very_good_analysis_link] - Strict Lint Rules which are used at [Very Good Ventures][very_good_ventures_link]
-- ✅ [Continuous Integration][github_actions_link] - Lint, format, test, and enforce code coverage using [GitHub Actions][github_actions_link]
-- ✅ Dependabot Integration
+The formigas_feature brick is automatically added to your mason, if you already generated a project with the formigas_core brick.
+To only add the formigas_feature brick to your local mason run:
+```sh
+$ mason init
+```
 
-_\* Learn more at [Flutter Starter App: Very Good Core & CLI][very_good_cli_blog_link]_
+### using ssh
+```sh
+$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
+```
+The formigas_feature brick should show up in the list of mason bricks:
 
+```
+$ mason list
+/Users/User/foo/bar
+└── formigas_feature {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
+```
+
+### using https
+```sh
+mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
+```
+The formigas_feature brick should show up in the list of mason bricks:
+
+```
+$ mason list
+/Users/User/foo/bar
+└── formigas_feature {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
+```
+<br />
+<br />
+
+To add a new feature to your app run the following command in the root of your project:
+
+```sh
+mason make formigas_feature
+```
 ## Output 📦
 
 ```sh
-├── .github
-│   ├── PULL_REQUEST_TEMPLATE.md
-│   ├── dependabot.yaml
-│   └── workflows
-│       └── main.yaml
-├── .gitignore
-├── .idea
-│   └── runConfigurations
-│       ├── development.xml
-│       ├── production.xml
-│       └── staging.xml
-├── .vscode
-│   ├── extensions.json
-│   └── launch.json
-├── LICENSE
-├── README.md
-├── analysis_options.yaml
-├── android
-├── coverage_badge.svg
-├── ios
-├── l10n.yaml
-├── lib
-│   ├── app
-│   │   ├── app.dart
-│   │   └── view
-│   ├── bootstrap.dart
+├── features
 │   ├── counter
-│   │   ├── counter.dart
-│   │   ├── cubit
-│   │   └── view
-│   ├── l10n
-│   │   ├── arb
-│   │   └── l10n.dart
-│   ├── main_development.dart
-│   ├── main_production.dart
-│   └── main_staging.dart
-├── pubspec.lock
-├── pubspec.yaml
-├── test
-│   ├── app
-│   │   └── view
-│   ├── counter
-│   │   ├── cubit
-│   │   └── view
-│   └── helpers
-│       ├── helpers.dart
-│       └── pump_app.dart
-├── web
-└── windows   
+│   │   ├── counter_controller.dart
+│   │   ├── counter_model.dart
+│   │   ├── counter_model.freezed.dart
+│   │   └── counter_view.dart
 ```
+## Dependencies
+Following dependencies will be installed for this brick:
 
-[bloc_link]: https://bloclibrary.dev
-[flutter_cross_platform_link]: https://flutter.dev/docs/development/tools/sdk/release-notes/supported-platforms
-[flutter_flavors_link]: https://flutter.dev/docs/deployment/flavors
-[github_actions_link]: https://github.com/features/actions
-[internationalization_link]: https://flutter.dev/docs/development/accessibility-and-localization/internationalization
+* [formigas_mvc][formigas_mvc_link]
+* [freezed_annotation][freezed_annotation_link]
+* [freezed][freezed_link]
+* [build_runner][build_runner_link]
+
+
 [license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
 [license_link]: https://opensource.org/licenses/MIT
-[logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
-[logging_link]: https://api.flutter.dev/flutter/dart-developer/log.html
-[null_safety_link]: https://flutter.dev/docs/null-safety
-[testing_link]: https://flutter.dev/docs/testing
-[very_good_analysis_link]: https://pub.dev/packages/very_good_analysis
-[very_good_cli_blog_link]: https://verygood.ventures/blog/flutter-starter-app-very-good-core-cli
-[very_good_ventures_link_dark]: https://verygood.ventures#gh-dark-mode-only
-[very_good_ventures_link]: https://verygood.ventures
-[very_good_workflows_link]: https://github.com/VeryGoodOpenSource/very_good_workflows
+[formigas_link]: https://formigas.io
+[mason_link]: https://github.com/felangel/mason
+[mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
+[mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
+[freezed_annotation_link]:https://pub.dev/packages/freezed_annotation
+[freezed_link]: https://pub.dev/packages/freezed
+[build_runner_link]: https://pub.dev/packages/build_runner
+[flutter_link]:https://flutter.dev/
+[formigas_mvc_link]:https://github.com/formigas/formigas-mvc

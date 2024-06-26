@@ -1,54 +1,42 @@
-# Framwork bricks
+<p align="center">
+<img src="docs/main_logo.png" height="200" alt="Formigas" />
+</p>
 
-There are currently two bricks in this reposiory:
+# formigas Flutter Bricks
 
-- [core][core_repo_link]: core flutter app inspired by [very_good_ventures][very_good_ventures_link]
-- [feature][feature_repo_link]: a brick that provides the files and strucu for a freature how we implement it at [formigas][formigas_link]
+This repository contains templates in the form of mason bricks that allow for plug-and-play setup of
+features for existing projects.
 
-# Usage
+#### Don't have a flutter project yet?
+No problem checkout [formigas Flutter Core][core_repo_link] for an app template with the most important features.
 
-## Preparation
+## Bricks
 
-If not done, add the formigas_core brick to your local mason:
+- [feature][feature_repo_link]: a brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link]
 
-```sh
-$ mason init
-$ mason add formigas_core --git-url git@git.dev.formigas.de:framework/bricks.git --git-path core --git-ref develop
-```
+- [fastlane_cd][fastlane_cd_repo_link]: a brick that provides a set of actions to help you with Continuous Deployment.
 
-The formigas_core brick should show up in the list of mason bricks:
+## Usage
 
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_core 0.1.0 -> git@git.dev.formigas.de:framework/bricks.git#{commit-hash}
-```
+See the respective brick's README for usage instructions.
 
-## Core
+## Helpful links
 
-Create a new formigas core application
-
-```sh
-mason make formigas_core
-```
-
-## Feature
-
-To add a new feature to your app run the following command in the root of your project:
-
-```sh
-mason make formigas_core
-```
-
-# Helpful links
-
-- [VGV Core Brick][very_good_ventures_link]
 - [Brick Hub Development][brick_hub_development_link]
 - [Mason][mason_link]
 
 [very_good_ventures_link]: https://github.com/VeryGoodOpenSource/very_good_core
+
 [formigas_link]: https://formigas.io
+
 [brick_hub_development_link]: https://docs.brickhub.dev/brick-development
+
 [mason_link]: https://github.com/felangel/mason
-[core_repo_link]: ./core/README.md
+
+[core_repo_link]: https://github.com/formigas/formigas-flutter-core
+
 [feature_repo_link]: ./feature/README.md
+
+[fastlane_cd_repo_link]: ./fastlane_cd/README.md
+
+[formigas_mvc_link]: https://github.com/formigas/formigas_mvc
