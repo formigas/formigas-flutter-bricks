@@ -1,0 +1,54 @@
+name: feature brick CI
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.22.1
+          cache: true
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: create flutter project
+        run: flutter create my_app --empty --template=app --platforms=android --no-pub
+
+      - name: Add formigas_feature with mason
+        run: mason add formigas_feature --path ./feature
+
+      - name: Make formigas_feature with freezed and bloc
+        run: mason make formigas_feature --feature_name=formigas_feature_freezed_bloc --use_freezed=true --state_management_solution=BLoC
+        working-directory: my_app
+
+      - name: Make formigas_feature with bloc
+        run: mason make formigas_feature --feature_name=formigas_feature_bloc --use_freezed=false --state_management_solution=BLoC
+        working-directory: my_app
+
+      - name: Make formigas_feature with freezed and Formigas MVC
+        run: mason make formigas_feature --feature_name=formigas_feature_freezed_mvc --use_freezed=true --state_management_solution="Formigas MVC"
+        working-directory: my_app
+
+      - name: Make formigas_feature with Formigas MVC
+        run: mason make formigas_feature --feature_name=formigas_feature_mvc --use_freezed=false --state_management_solution="Formigas MVC"
+        working-directory: my_app
+
+      - name: Run tests
+        run: flutter test
+        working-directory: my_app
