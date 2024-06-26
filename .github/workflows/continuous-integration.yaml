@@ -49,6 +49,15 @@ jobs:
         run: mason make formigas_feature --feature_name=formigas_feature_mvc --use_freezed=false --state_management_solution="Formigas MVC"
         working-directory: my_app
 
+      - name: Check code formatting
+        run: dart format -o none --set-exit-if-changed lib/ test/
+        working-directory: my_app/lib/
+
+      - name: Analyze code
+        # This might fail with a sorting import error if the project_name is set to something different than `my_app` during development
+        run: flutter analyze --fatal-infos --fatal-warnings
+        working-directory: my_app/lib/
+
       - name: Run tests
         run: flutter test
         working-directory: my_app
