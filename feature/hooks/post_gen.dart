@@ -38,8 +38,6 @@ Future<void> run(HookContext context) async {
       await _runBuildRunner(context);
     } else {
       await _installEquatablePackage(context, dependencies);
-      // build_runner fails, because install packages is not ready
-      await Future<void>.delayed(const Duration(seconds: 2));
       await _installPackages(context);
     }
   } catch (e) {
