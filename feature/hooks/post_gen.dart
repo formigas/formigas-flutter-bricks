@@ -37,6 +37,9 @@ Future<void> run(HookContext context) async {
       await Future<void>.delayed(const Duration(seconds: 2));
       await _runBuildRunner(context);
     } else {
+      await _installEquatablePackage(context, dependencies);
+      // build_runner fails, because install packages is not ready
+      await Future<void>.delayed(const Duration(seconds: 2));
       await _installPackages(context);
     }
   } catch (e) {
@@ -198,6 +201,32 @@ Future<void> _installFreezedPackage(
     ]);
   } catch (e) {
     progress.fail('Could not install freezed');
+    rethrow;
+  }
+  progress.complete();
+}
+
+Future<void> _installEquatablePackage(
+  HookContext context,
+  Map<dynamic, dynamic> dependencies,
+) async {
+  context.logger.info('Verifying equatable version from pubspec.yaml');
+  if (dependencies.containsKey('equatable')) {
+    context.logger.info(
+      'Found equatable version ${dependencies['equatable']} in pubspec.yaml',
+    );
+    return;
+  }
+  context.logger.info('Could not find equatable version in pubspec.yaml');
+  final progress = context.logger.progress('Installing equatable');
+  try {
+    await _runProcess(context, 'flutter', [
+      'pub',
+      'add',
+      'equatable',
+    ]);
+  } catch (e) {
+    progress.fail('Could not install equatable');
     rethrow;
   }
   progress.complete();

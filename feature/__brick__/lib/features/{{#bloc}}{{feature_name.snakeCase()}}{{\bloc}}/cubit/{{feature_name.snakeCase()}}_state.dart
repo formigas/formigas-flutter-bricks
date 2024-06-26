@@ -7,13 +7,17 @@ class {{feature_name.pascalCase()}}State with _${{feature_name.pascalCase()}}Sta
   const factory {{feature_name.pascalCase()}}State({required int count}) = _{{feature_name.pascalCase()}}State;
 
   factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
-}{{/use_freezed}}{{^use_freezed}}class {{feature_name.pascalCase()}}State {
+}{{/use_freezed}}{{^use_freezed}} import 'package:equatable/equatable.dart';
+class {{feature_name.pascalCase()}}State extends Equatable {
+  const {{feature_name.pascalCase()}}State({required int count}): _count = count;
+
+  factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
   final int _count;
   int get count => _count;
 
-  const {{feature_name.pascalCase()}}State({required final int count}): _count = count;
 
-  factory {{feature_name.pascalCase()}}State.initial() => const {{feature_name.pascalCase()}}State(count: 0);
+  {{feature_name.pascalCase()}}State copyWith({int? count}) => {{feature_name.pascalCase()}}State(count: count ?? _count);
 
-  {{feature_name.pascalCase()}}State copyWith({final int? count}) => {{feature_name.pascalCase()}}State(count: count ?? _count);
+  @override
+  List<Object?> get props => [_count];
 }{{/use_freezed}}
