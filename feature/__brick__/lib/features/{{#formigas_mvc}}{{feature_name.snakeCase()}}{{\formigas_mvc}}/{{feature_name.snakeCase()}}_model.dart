@@ -7,9 +7,16 @@ class {{feature_name.pascalCase()}}Model with _${{feature_name.pascalCase()}}Mod
   const factory {{feature_name.pascalCase()}}Model({
     required int count,
   }) = _{{feature_name.pascalCase()}}Model;
-}{{/use_freezed}}{{^use_freezed}}class {{feature_name.pascalCase()}}Model {
-  int count;
-  {{feature_name.pascalCase()}}Model({required this.count});
+}{{/use_freezed}}{{^use_freezed}} import 'package:equatable/equatable.dart';
+class {{feature_name.pascalCase()}}Model extends Equatable {
+  const {{feature_name.pascalCase()}}Model({required this.count});
 
-  {{feature_name.pascalCase()}}Model copyWith({required int count}) => {{feature_name.pascalCase()}}Model(count: count);
+  factory {{feature_name.pascalCase()}}Model.initial() => const {{feature_name.pascalCase()}}Model(count: 0);
+  final int count;
+
+
+  {{feature_name.pascalCase()}}Model copyWith({int? count}) => {{feature_name.pascalCase()}}Model(count: count ?? this.count);
+
+  @override
+  List<Object?> get props => [count];
 }{{/use_freezed}}
