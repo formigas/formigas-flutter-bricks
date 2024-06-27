@@ -1,4 +1,4 @@
-name: fastlane_cd
+name: formigas_fastlane_cd
 description: A new brick created with the Mason CLI.
 
 # The following defines the brick repository url.
@@ -25,28 +25,27 @@ environment:
 #  * an optional prompt phrase used when asking for the variable
 #  * a list of values (enums only)
 #  * an optional separator (list only)
-vars:    
+vars:
   use_env:
     type: boolean
     description: Do you want to use ENV variables
     default: false
     prompt: Do you want to use ENV variables
-  
+
   fastlane_user:
     type: string
     description: Your Apple Developer Portal username
     default: default@apple.com
     prompt: What is the your development AppleID?
-    
+
   app_team_id:
     type: string
     description: Your App Store Connect Team ID
     default: 12345678
     prompt: What is the your development App Store Connect Team ID?
-     
+
   itc_team_id:
     type: string
     description: Your Developer Portal Team ID
     default: 12345678
     prompt: What is the your Developer Portal Team ID?
-     
