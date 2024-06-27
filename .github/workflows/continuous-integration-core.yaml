@@ -1,0 +1,43 @@
+name: core brick CI
+
+on:
+  pull_request:
+    paths:
+      - core/**
+      - .github/workflows/continuous-integration-core.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.22.1
+
+      - name: Install FVM
+        run: curl -fsSL https://fvm.app/install.sh | bash
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add formigas_core with Mason
+        run: mason add formigas_core --path ./core
+
+      - name: Make formigas core
+        run: mason make formigas_core --project_name=my_app --org_name=com.example --description="App description" --use_fvm=true --use_ci=None --use_material_3=true --use_svg=true --use_freezed=true --state_management_solution=BLoC
+
+      - name: Run tests
+        run: fvm flutter test
+        working-directory: my_app
