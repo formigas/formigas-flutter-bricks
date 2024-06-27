@@ -35,7 +35,7 @@ jobs:
       - name: Add formigas_core with Mason
         run: mason add formigas_core --path ./formigas_core
 
-      # Remove these steps as soon as feature brick is public
+      # Remove these steps as soon as formigas_feature brick is public
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:

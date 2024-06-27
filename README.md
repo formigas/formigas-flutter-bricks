@@ -11,7 +11,7 @@ features for existing projects
 
 - [formigas_core][formigas_core_link]: An app template with the most important features.
 
-- [feature][feature_repo_link]: a brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link]
+- [formigas_feature][formigas_feature_repo_link]: a brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link]
 
 - [fastlane_cd][fastlane_cd_repo_link]: a brick that provides a set of actions to help you with Continuous Deployment.
 
@@ -34,7 +34,7 @@ See the respective brick's README for usage instructions.
 
 [formigas_core_link]: https://github.com/formigas/formigas-flutter-bricks/tree/main/formigas_core
 
-[feature_repo_link]: ./feature/README.md
+[formigas_feature_repo_link]: ./formigas_feature/README.md
 
 [fastlane_cd_repo_link]: ./fastlane_cd/README.md
 

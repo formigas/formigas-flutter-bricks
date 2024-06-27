@@ -1,9 +1,9 @@
-name: formigas feature brick CI
+name: formigas_feature brick CI
 
 on:
   pull_request:
     paths:
-      - feature/**
+      - formigas_feature/**
       - .github/workflows/continuous-integration-formigas_feature.yaml
 
 concurrency:
@@ -34,7 +34,7 @@ jobs:
         run: flutter create my_app --empty --template=app --platforms=android --no-pub
 
       - name: Add formigas_feature with mason
-        run: mason add formigas_feature --path ./feature
+        run: mason add formigas_feature --path ./formigas_feature
 
       - name: Make formigas_feature with freezed and bloc
         run: mason make formigas_feature --feature_name=formigas_feature_freezed_bloc --use_freezed=true --state_management_solution=BLoC
