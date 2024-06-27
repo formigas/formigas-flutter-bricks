@@ -28,7 +28,7 @@ jobs:
               exit 1
           fi
 
-          if git rev-parse "refs/tags/feature-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
+          if git rev-parse "refs/tags/formigas_feature-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
               echo "::error::Tag ${{ github.event.inputs.version }} already exists for formigas_feature brick"
               exit 1
           fi
