@@ -1,0 +1,108 @@
+image: ghcr.io/cirruslabs/flutter:3.22.1
+
+definitions:
+  caches:
+    flutter-macos: ~/.pub-cache
+    flutter-linux: ~/.pub-cache
+  steps:
+    - step: &validate
+        name: Validate
+        script:
+          - dart format -o none --set-exit-if-changed lib/ test/
+          - flutter pub run build_runner build --delete-conflicting-outputs
+          - flutter analyze --fatal-infos --fatal-warnings
+        caches:
+          - flutter-linux
+
+    - step: &determine-flavor
+        name: Determine Flavor
+        script:
+          - >
+            if [ "$BITBUCKET_BRANCH" == "master" ] || [ "$BITBUCKET_BRANCH" == "main" ]; then
+              echo "production" > flavor.txt
+            elif [ "$BITBUCKET_BRANCH" == "staging" ]; then
+              echo "staging" > flavor.txt
+            else
+              echo "development" > flavor.txt
+            fi
+        artifacts:
+          - flavor.txt
+
+    - step: &build-ios
+        name: Build iOS
+        runs-on:
+          - self.hosted
+          - macos
+        script:
+          - export FLAVOR=$(cat flavor.txt)
+          - flutter clean
+          - flutter pub run build_runner build --delete-conflicting-outputs
+          - flutter build ios --no-codesign --release --flavor $FLAVOR -t lib/main_$FLAVOR.dart
+        caches:
+          - flutter-macos
+
+    - step: &build-android
+        name: Build Android
+        script:
+          - export ANDROID_KEYSTORE_PATH=upload-keystore.jks
+          - export FLAVOR=$(cat flavor.txt)
+          - echo $ANDROID_KEYSTORE_BASE64 | base64 --decode > ./android/app/$ANDROID_KEYSTORE_PATH
+          - flutter clean
+          - flutter pub run build_runner build --delete-conflicting-outputs
+          - flutter build appbundle --release --flavor $FLAVOR -t lib/main_$FLAVOR.dart
+        caches:
+          - flutter-linux
+
+    - step: &test
+        name: Test
+        script:
+          - flutter pub global activate junitreport
+          - flutter clean
+          - flutter pub run build_runner build --delete-conflicting-outputs
+          - mkdir test-reports
+          - flutter test --machine --coverage | tojunit > test-reports/test-report-app.xml
+          - genhtml -o coverage/ --no-function-coverage --no-branch-coverage coverage/lcov.info
+        caches:
+          - flutter-linux
+        artifacts:
+          - coverage/**
+          - test-reports/**
+
+pipelines:
+  pull-requests:
+    '**':
+      - step: *determine-flavor
+      - parallel:
+        - step: *validate
+        - step: *build-ios
+        - step: *build-android
+        - step: *test
+  branches:
+    develop:
+      - step: *determine-flavor
+      - parallel:
+        - step: *validate
+        - step: *build-ios
+        - step: *build-android
+        - step: *test
+    staging:
+      - step: *determine-flavor
+      - parallel:
+        - step: *validate
+        - step: *build-ios
+        - step: *build-android
+        - step: *test
+    master:
+      - step: *determine-flavor
+      - parallel:
+        - step: *validate
+        - step: *build-ios
+        - step: *build-android
+        - step: *test
+    main:
+      - step: *determine-flavor
+      - parallel:
+        - step: *validate
+        - step: *build-ios
+        - step: *build-android
+        - step: *test
