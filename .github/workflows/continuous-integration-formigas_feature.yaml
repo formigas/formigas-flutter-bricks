@@ -1,7 +1,10 @@
-name: feature brick CI
+name: formigas feature brick CI
 
 on:
   pull_request:
+    paths:
+      - feature/**
+      - .github/workflows/continuous-integration-formigas_feature.yaml
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
