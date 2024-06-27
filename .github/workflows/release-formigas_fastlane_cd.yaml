@@ -1,4 +1,4 @@
-name: Release FastlaneCD
+name: Release formigas_fastlane_cd brick
 
 permissions:
   contents: read
@@ -28,8 +28,8 @@ jobs:
               exit 1
           fi
 
-          if git rev-parse "refs/tags/fastlane_cd-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
-              echo "::error::Tag ${{ github.event.inputs.version }} already exists for fastlane_cd brick"
+          if git rev-parse "refs/tags/formigas_fastlane_cd-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
+              echo "::error::Tag ${{ github.event.inputs.version }} already exists for formigas_fastlane_cd brick"
               exit 1
           fi
 
@@ -53,7 +53,7 @@ jobs:
         run: |
           echo "Updating version to ${{ github.event.inputs.version }} in brick.yaml"
           sed -i "s/version: .*/version: ${{ github.event.inputs.version }}/" brick.yaml
-        working-directory: fastlane_cd
+        working-directory: formigas_fastlane_cd
 
       - name: Check if version actually changed
         id: changes
@@ -65,13 +65,13 @@ jobs:
       - name: Commit version bump if changes detected
         if: steps.changes.outputs.changes == 'changes-detected'
         run: |
-          git commit -am "Release: fastlane_cd-${{ github.event.inputs.version }}"
+          git commit -am "Release: formigas_fastlane_cd-${{ github.event.inputs.version }}"
           git push origin main
 
       - name: Create and push tag
         run: |
-          git tag fastlane_cd-${{ github.event.inputs.version }}
-          git push origin fastlane_cd-${{ github.event.inputs.version }}
+          git tag formigas_fastlane_cd-${{ github.event.inputs.version }}
+          git push origin formigas_fastlane_cd-${{ github.event.inputs.version }}
 
   create-release:
     runs-on: ubuntu-latest
@@ -88,6 +88,6 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          tag: fastlane_cd-${{ github.event.inputs.version }}
+          tag: formigas_fastlane_cd-${{ github.event.inputs.version }}
           generateReleaseNotes: true
           makeLatest: true

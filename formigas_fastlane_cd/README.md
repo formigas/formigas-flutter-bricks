@@ -1,6 +1,6 @@
-# fastlane_cd
+# formigas_fastlane_cd
 
-fastlane_cd is a mason brick that provides a set of actions to help you with Continuous
+formigas_fastlane_cd is a mason brick that provides a set of actions to help you with Continuous
 Deployment.
 
 ## Pre-requisites
