@@ -1,9 +1,8 @@
-<p align="center">
-<img src="docs/main_logo.png" height="200" alt="Formigas" />
-</p>
-
 # formigas Flutter Core
 Flutter app template inspired by [Very Good Core][very_good_core_link]
+
+[![License: MIT][license_badge]][license_link]
+[![Powered by Mason][mason_badge]][mason_link]
 
 ###
 If you already have your Flutter project set up, check out 
@@ -34,7 +33,7 @@ the `app/router` file and loaded in the `main.dart` file.
 The project template is using [formigas MVC][formigas_mvc_link] for the state management. This is a
 custom state management solution that is using the MVC pattern.
 
-## Pre-requisites
+## Pre-requisites 🛠️
 
 - [Mason CLI][mason_cli_link]
 
@@ -51,7 +50,7 @@ mason init
   
 **using SSH:**
 ```sh
-mason add formigas_core --git-url git@github.com:formigas/formigas-flutter-core.git --git-ref {VERSION}
+mason add formigas_core --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path core --git-ref {VERSION}
 ```
 
 The formigas_core brick should show up in the list of mason bricks:
@@ -59,19 +58,19 @@ The formigas_core brick should show up in the list of mason bricks:
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_core {VERSION} -> git@github.com:formigas/formigas-flutter-core.git#{commit-hash}
+└── formigas_core {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
 ```
 
 **using HTTPS:**
 ```sh
-mason add formigas_core --git-url https://github.com/formigas/formigas-flutter-core.git --git-ref {VERSION}
+mason add formigas_core --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path core --git-ref {VERSION}
 ```
 The formigas_core brick should show up in the list of mason bricks:
 
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_core {VERSION} -> https://github.com/formigas/formigas-flutter-core.git#{commit-hash}
+└── formigas_core {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
 ```
 
 
@@ -90,40 +89,22 @@ based on the formigas Flutter Core brick.
 
 After you have set up the core, you can add features to your app using [formigas Flutter Bricks][formigas_flutter_bricks_link]. 
 
-# Contribution
-
-## Create a Release
-To release a new version of the formigas core brick, follow these steps:
-1. Go to the repo's [Actions Tab][core_actions_link]
-2. Click on the `Release` workflow
-3. Click on `Run workflow`
-4. Make sure the branch is set to `main`
-5. Enter the version number you want to release
-6. Click on `Run workflow`
-
 ## Helpful links
 
 - [Very Good Core][very_good_core_link]
 - [Brick Hub Development][brick_hub_development_link]
 - [Mason][mason_link]
 
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_link]: https://opensource.org/licenses/MIT
 [very_good_core_link]: https://github.com/VeryGoodOpenSource/very_good_templates/tree/main/very_good_core
-
 [formigas_link]: https://formigas.io
-
 [formigas_flutter_bricks_link]: https://github.com/formigas/formigas-flutter-bricks
-
 [formigas_mvc_link]: https://github.com/formigas/formigas-mvc
-
 [brick_hub_development_link]: https://docs.brickhub.dev/brick-development
-
+[mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [mason_link]: https://github.com/felangel/mason
-
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
-
 [core_repo_link]: ./core/README.md
-[core_actions_link]: https://github.com/formigas/formigas-flutter-core/actions
-
 [go_router_link]: https://pub.dev/packages/go_router
-
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
