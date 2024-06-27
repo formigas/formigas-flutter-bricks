@@ -24,8 +24,8 @@ jobs:
               exit 1
           fi
 
-          if git rev-parse "refs/tags/core-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
-              echo "::error::Tag ${{ github.event.inputs.version }} already exists for the core brick"
+          if git rev-parse "refs/tags/formigas_core-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
+              echo "::error::Tag ${{ github.event.inputs.version }} already exists for the formigas_core brick"
               exit 1
           fi
 
@@ -49,7 +49,7 @@ jobs:
         run: |
           echo "Updating version to ${{ github.event.inputs.version }} in brick.yaml"
           sed -i "s/version: .*/version: ${{ github.event.inputs.version }}/" brick.yaml
-        working-directory: core
+        working-directory: formigas_core
 
       - name: Check if version actually changed
         id: changes
@@ -61,13 +61,13 @@ jobs:
       - name: Commit version bump if changes detected
         if: steps.changes.outputs.changes == 'changes-detected'
         run: |
-          git commit -am "Release: core-${{ github.event.inputs.version }}"
+          git commit -am "Release: formigas_core-${{ github.event.inputs.version }}"
           git push origin main
 
       - name: Create and push tag
         run: |
-          git tag core-${{ github.event.inputs.version }}
-          git push origin core-${{ github.event.inputs.version }}
+          git tag formigas_core-${{ github.event.inputs.version }}
+          git push origin formigas_core-${{ github.event.inputs.version }}
 
   create-release:
     runs-on: ubuntu-latest
@@ -84,6 +84,6 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1.14.0
         with:
-          tag: core-${{ github.event.inputs.version }}
+          tag: formigas_core-${{ github.event.inputs.version }}
           generateReleaseNotes: true
           makeLatest: true
