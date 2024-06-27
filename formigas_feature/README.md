@@ -20,7 +20,7 @@ $ mason init
 
 ### using ssh
 ```sh
-$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
+$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path formigas_feature --git-ref {VERSION}
 ```
 The formigas_feature brick should show up in the list of mason bricks:
 
@@ -32,7 +32,7 @@ $ mason list
 
 ### using https
 ```sh
-mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path feature --git-ref {VERSION}
+mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path formigas_feature --git-ref {VERSION}
 ```
 The formigas_feature brick should show up in the list of mason bricks:
 
