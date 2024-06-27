@@ -42,7 +42,7 @@ jobs:
           app-id: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
           private-key: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
-          repositories: "formigas-flutter-core,formigas-flutter-bricks"
+          repositories: "formigas-flutter-bricks"
       - name: Configure PAT
         run: git config --global "url.https://x-access-token:${{ steps.app-token.outputs.token }}@github.com.insteadof" "https://github.com"
 
