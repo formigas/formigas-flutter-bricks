@@ -9,7 +9,7 @@ features for existing projects
 
 ## Bricks
 
-- [core][core_repo_link]: an app template with the most important features.
+- [formigas_core][formigas_core_link]: An app template with the most important features.
 
 - [feature][feature_repo_link]: a brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link]
 
@@ -32,7 +32,7 @@ See the respective brick's README for usage instructions.
 
 [mason_link]: https://github.com/felangel/mason
 
-[core_repo_link]: https://github.com/formigas/formigas-flutter-bricks/tree/main/core
+[formigas_core_link]: https://github.com/formigas/formigas-flutter-bricks/tree/main/formigas_core
 
 [feature_repo_link]: ./feature/README.md
 

@@ -1,4 +1,4 @@
-# Flutter Core
+# formigas Flutter Core
 
 This is a fork of the [Very Good Flutter Starter Project created by the Very Good Ventures Team][very_good_ventures_link].
 

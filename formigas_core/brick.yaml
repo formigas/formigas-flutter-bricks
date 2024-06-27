@@ -1,6 +1,6 @@
 name: formigas_core
-description: flutter core created by formigas with the base from Very Good Venture
-repository: https://github.com/formigas/formigas-flutter-bricks/tree/main/core
+description: flutter app template created by formigas with the base from Very Good Venture
+repository: https://github.com/formigas/formigas-flutter-bricks/tree/main/formigas_core
 version: 0.1.0
 
 environment:

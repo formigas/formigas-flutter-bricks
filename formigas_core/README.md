@@ -12,7 +12,7 @@ If you already have your Flutter project set up, check out
 
 ### Translations
 
-The core brick contains a translations mechanism that is based on
+The formigas_core brick contains a translations mechanism that is based on
 the [flutter_localizations][flutter_localizations_link] package. The translations are stored in
 the `lib/common/l10n` folder. The translations are loaded in
 the `main.dart` file and are available in the whole app.
@@ -50,7 +50,7 @@ mason init
   
 **using SSH:**
 ```sh
-mason add formigas_core --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path core --git-ref {VERSION}
+mason add formigas_core --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path formigas_core --git-ref {VERSION}
 ```
 
 The formigas_core brick should show up in the list of mason bricks:
@@ -63,7 +63,7 @@ $ mason list
 
 **using HTTPS:**
 ```sh
-mason add formigas_core --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path core --git-ref {VERSION}
+mason add formigas_core --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path formigas_core --git-ref {VERSION}
 ```
 The formigas_core brick should show up in the list of mason bricks:
 
@@ -74,9 +74,9 @@ $ mason list
 ```
 
 
-### Core
+### formigas Flutter Core
 
-Create a new formigas core application using the following command:
+Create a new formigas_core application using the following command:
 
 ```sh
 mason make formigas_core
@@ -87,7 +87,7 @@ based on the formigas Flutter Core brick.
 
 ### Features
 
-After you have set up the core, you can add features to your app using [formigas Flutter Bricks][formigas_flutter_bricks_link]. 
+After you have set up the formigas_core, you can add features to your app using [formigas Flutter Bricks][formigas_flutter_bricks_link]. 
 
 ## Helpful links
 
@@ -105,6 +105,5 @@ After you have set up the core, you can add features to your app using [formigas
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [mason_link]: https://github.com/felangel/mason
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
-[core_repo_link]: ./core/README.md
 [go_router_link]: https://pub.dev/packages/go_router
 [flutter_localizations_link]: https://api.flutter.dev/flutter/flutter_localizations/flutter_localizations-library.html
