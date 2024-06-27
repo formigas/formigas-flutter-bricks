@@ -1,4 +1,4 @@
-name: Release Core
+name: Release formigas_core brick
 
 on:
   workflow_dispatch:
