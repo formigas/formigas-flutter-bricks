@@ -23,9 +23,9 @@ Future<void> _addFeatureMason(HookContext context) async {
       '--git-url',
       'https://github.com/formigas/formigas-flutter-bricks.git',
       '--git-path',
-      'feature',
+      'formigas_feature',
       '--git-ref',
-      '0.1.0',
+      'formigas_feature-0.1.0',
     ],
     useFvmIfNecessary: false,
   );
