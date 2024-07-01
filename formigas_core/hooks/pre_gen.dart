@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:mason/mason.dart';
 
 enum Platform {
@@ -25,9 +27,10 @@ void _selectCI(HookContext context) {
     case 'Gitlab CI':
       {
         context.vars = {...context.vars, 'use_gitlab_ci': true};
-        final runnerTag = context.logger.prompt(
+        context.logger.write(
           'Enter the runner tag for the runner to be used for iOS builds:',
         );
+        final runnerTag = stdin.readLineSync();
         context.vars = {...context.vars, 'gitlab_ios_runner_tag': runnerTag};
       }
     case 'Bitbucket Pipelines':
