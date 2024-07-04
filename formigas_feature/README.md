@@ -54,15 +54,17 @@ mason make formigas_feature
 ```sh
 ├── features
 │   ├── counter
-│   │   ├── counter_controller.dart
-│   │   ├── counter_model.dart
-│   │   ├── counter_model.freezed.dart
+│   │   ├── cubit
+│   │   │   ├── counter_cubit.dart
+│   │   │   ├── counter_state.dart
+│   │   │   ├── counter_state.freezed.dart
 │   │   └── counter_view.dart
 ```
 ## Dependencies
 Following dependencies will be installed for this brick:
 
-* [formigas_mvc][formigas_mvc_link]
+* [flutter_bloc][flutter_bloc_link]
+* [bloc_test][bloc_test_link]
 * [freezed_annotation][freezed_annotation_link]
 * [freezed][freezed_link]
 * [build_runner][build_runner_link]
@@ -77,4 +79,5 @@ Following dependencies will be installed for this brick:
 [freezed_link]: https://pub.dev/packages/freezed
 [build_runner_link]: https://pub.dev/packages/build_runner
 [flutter_link]:https://flutter.dev/
-[formigas_mvc_link]:https://github.com/formigas/formigas-mvc
+[flutter_bloc_link]:https://pub.dev/packages/flutter_bloc
+[bloc_test_link]:https://pub.dev/packages/bloc_test

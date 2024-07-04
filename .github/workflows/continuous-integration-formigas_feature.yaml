@@ -36,20 +36,8 @@ jobs:
       - name: Add formigas_feature with mason
         run: mason add formigas_feature --path ./formigas_feature
 
-      - name: Make formigas_feature with freezed and bloc
-        run: mason make formigas_feature --feature_name=formigas_feature_freezed_bloc --use_freezed=true --state_management_solution=BLoC
-        working-directory: my_app
-
-      - name: Make formigas_feature with bloc
-        run: mason make formigas_feature --feature_name=formigas_feature_bloc --use_freezed=false --state_management_solution=BLoC
-        working-directory: my_app
-
-      - name: Make formigas_feature with freezed and Formigas MVC
-        run: mason make formigas_feature --feature_name=formigas_feature_freezed_mvc --use_freezed=true --state_management_solution="Formigas MVC"
-        working-directory: my_app
-
-      - name: Make formigas_feature with Formigas MVC
-        run: mason make formigas_feature --feature_name=formigas_feature_mvc --use_freezed=false --state_management_solution="Formigas MVC"
+      - name: Make formigas_feature
+        run: mason make formigas_feature --feature_name=formigas_feature --use_freezed=true
         working-directory: my_app
 
       - name: Check code formatting
