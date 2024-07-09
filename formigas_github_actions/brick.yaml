@@ -1,0 +1,5 @@
+name: formigas_github_actions
+description: A default template for GitHub Actions
+version: 0.1.0
+environment:
+  mason: ">=0.1.0-dev.53 <0.1.0"

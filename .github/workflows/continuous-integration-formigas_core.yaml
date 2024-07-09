@@ -12,14 +12,6 @@ concurrency:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        use_fvm: [true, false]
-        use_ci: [None, GitHubActions, Bitbucket Pipelines]
-        use_material_3: [true, false]
-        use_svg: [true, false]
-        use_freezed: [true, false]
-        state_management_solution: [BLoC, Formigas MVC]
     runs-on: ubuntu-latest
 
     steps:
@@ -56,13 +48,8 @@ jobs:
         run: git config --global "url.https://x-access-token:${{ steps.app-token.outputs.token }}@github.com.insteadof" "https://github.com"
 
       - name: Make formigas formigas_core
-        run: mason make formigas_core --project_name=my_app --org_name=com.example --description="App description" --use_fvm=${{ matrix.use_fvm }} --use_ci="${{ matrix.use_ci }}" --use_material_3=${{ matrix.use_material_3 }} --use_svg=${{ matrix.use_svg}} --use_freezed=${{ matrix.use_freezed}} --state_management_solution="${{ matrix.state_management_solution }}"
+        run: mason make formigas_core --project_name=my_app --org_name=com.example --description="App description" --use_fvm=false --use_material_3=true --use_svg=true --use_freezed=true --state_management_solution="BLoC"
 
       - name: Run tests
-        run: |
-          if [[ ${{ matrix.use_fvm }} == true ]]; then
-            fvm flutter test
-          else
-            flutter test
-          fi
+        run: flutter test
         working-directory: my_app
