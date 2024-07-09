@@ -41,7 +41,7 @@ Future<void> _dartFormat(HookContext context) async {
   final progress = context.logger.progress('Formatting files');
   try {
     var command;
-    if(context.vars['use_fvm']) {
+    if (context.vars['use_fvm']) {
       command = 'fvm dart';
     } else {
       command = 'dart';
