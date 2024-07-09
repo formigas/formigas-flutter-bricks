@@ -1,18 +1,17 @@
 spec:
   inputs:
     docker_image:
-      description: 'Docker image to use for build'
+      description: "Docker image to use for build"
       type: string
     flavor:
-      description: 'Flavor to build for'
+      description: "Flavor to build for"
       options: [development, staging, production]
-
 ---
 build_ios_$[[ inputs.flavor ]]:
   stage: build
   needs: []
   tags:
-    - {{ gitlab_ios_runner_tag }}
+    - {{ runner_tag }}
   image: $[[ inputs.docker_image ]]
   script:
     - flutter clean

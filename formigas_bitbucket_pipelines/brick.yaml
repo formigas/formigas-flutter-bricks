@@ -1,0 +1,5 @@
+name: formigas_bitbucket_pipelines
+description: A default template for Bitbucket-pipelines
+version: 0.1.0
+environment:
+  mason: ">=0.1.0-dev.53 <0.1.0"

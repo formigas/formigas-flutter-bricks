@@ -10,24 +10,24 @@ workflow:
     - when: never
 
 include:
-  - local: 'templates/build.yml'
+  - local: "templates/build.yml"
     rules:
       - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
     inputs:
       docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: 'development'
-  - local: 'templates/build.yml'
+      flavor: "development"
+  - local: "templates/build.yml"
     rules:
       - if: $CI_COMMIT_BRANCH == "staging"
     inputs:
       docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: 'staging'
-  - local: 'templates/build.yml'
+      flavor: "staging"
+  - local: "templates/build.yml"
     rules:
       - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
     inputs:
       docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: 'production'
+      flavor: "production"
 
 stages:
   - validate
@@ -63,12 +63,12 @@ test:
     reports:
       junit: test-report-app.xml
       coverage_report:
-          coverage_format: cobertura
-          path: coverage/cobertura.xml
+        coverage_format: cobertura
+        path: coverage/cobertura.xml
     paths:
-    - coverage/lcov.info
-    - coverage/cobertura.xml
-    - docs/coverage/
-    - test-report-app.xml
+      - coverage/lcov.info
+      - coverage/cobertura.xml
+      - docs/coverage/
+      - test-report-app.xml
     expire_in: 1 week
   rules:

@@ -1,0 +1,12 @@
+name: formigas_gitlab_ci
+description: A default template for GitLab CI
+version: 0.1.0
+environment:
+  mason: ">=0.1.0-dev.53 <0.1.0"
+
+vars:
+  runner_tag:
+    type: string
+    description: "The runner tag for the runner used for iOS builds"
+    default: my-runner-tag
+    prompt: What is the tag of the runner to use?
