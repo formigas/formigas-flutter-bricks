@@ -1,0 +1,52 @@
+name: formigas_go_router brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_go_router/**
+      - .github/workflows/continuous-integration-formigas_go_router.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.22.1
+
+      - name: Install FVM
+        if: matrix.use_fvm == true
+        run: curl -fsSL https://fvm.app/install.sh | bash
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add VGV_core with Mason
+        run: dart pub global activate very_good_cli && very_good create flutter_app my_app
+
+      - name: Add formigas_go_router with Mason
+        run: mason add formigas_go_router --path ./formigas_go_router
+
+      - name: Make formigas formigas_go_router
+        run: mason make formigas_go_router --homepage_name=CounterPage --homepage_path=counter/view/
+        working-directory: my_app
+
+      - name: Verify file creation
+        run: |
+          if [ ! -f "lib/services/navigation_service/go_router.dart" ]; then
+            echo "lib/services/navigation_service/go_router.dart not found"
+            exit 1
+          fi
+        working-directory: my_app

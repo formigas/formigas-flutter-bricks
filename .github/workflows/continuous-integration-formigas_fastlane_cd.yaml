@@ -1,0 +1,108 @@
+name: formigas_fastlane_cd brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_fastlane_cd/**
+      - .github/workflows/continuous-integration-formigas_fastlane_cd.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.22.1
+
+      - name: Install FVM
+        if: matrix.use_fvm == true
+        run: curl -fsSL https://fvm.app/install.sh | bash
+
+      - name: create flutter project
+        run: flutter create my_app --empty --template=app --platforms=android --no-pub --org=org.com
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add formigas_fastlane_cd with Mason
+        run: mason add formigas_fastlane_cd --path ./formigas_fastlane_cd
+
+      - name: Make formigas_fastlane_cd
+        run: mason make formigas_fastlane_cd --use_env=true --fastlane_user= default@apple.com --app_team_id=12345678 --itc_team_id=12345678
+        working-directory: my_app
+
+      - name: Verify env file creation
+        run: |
+          if [ ! -f "env" ]; then
+            echo "env not found"
+            exit 1
+          fi
+        working-directory: my_app
+
+      - name: Verify android file creation
+        run: |
+          if [ ! -f "android/build_secrets/keys.properties" ]; then
+            echo "android/build_secrets/keys.properties not found"
+            exit 1
+          fi
+          if [ ! -f "android/build_secrets/keystore.jks" ]; then
+            echo "android/build_secrets/keystore.jks not found"
+            exit 1
+          fi
+          if [ ! -f "android/build_secrets/play-dev-store-service-account.json" ]; then
+            echo "android/build_secrets/play-dev-store-service-account.json not found"
+            exit 1
+          fi
+          if [ ! -f "android/fastlane/Appfile" ]; then
+            echo "android/fastlane/Appfile not found"
+            exit 1
+          fi
+          if [ ! -f "android/fastlane/Fastfile" ]; then
+            echo "android/fastlane/Fastfile not found"
+            exit 1
+          fi
+          if [ ! -f "android/fastlane/secrets" ]; then
+            echo "android/fastlane/secrets not found"
+            exit 1
+          fi
+        working-directory: my_app
+
+      - name: Verify ios file creation
+        run: |
+          if [ ! -f "ios/build_secrets/yours_keys.p12" ]; then
+            echo "ios/build_secrets/yours_keys.p12 not found"
+            exit 1
+          fi
+          if [ ! -f "ios/build_secrets/yours.mobileprovision" ]; then
+            echo "ios/build_secrets/yours.mobileprovision not found"
+            exit 1
+          fi
+          if [ ! -f "ios/fastlane/Appfile" ]; then
+            echo "ios/fastlane/Appfile not found"
+            exit 1
+          fi
+          if [ ! -f "ios/fastlane/Fastfile" ]; then
+            echo "ios/fastlane/Fastfile not found"
+            exit 1
+          fi
+          if [ ! -f "ios/fastlane/Gymfile" ]; then
+            echo "ios/fastlane/Gymfile not found"
+            exit 1
+          fi
+          if [ ! -f "ios/fastlane/secrets" ]; then
+            echo "ios/fastlane/secrets not found"
+            exit 1
+          fi
+        working-directory: my_app
