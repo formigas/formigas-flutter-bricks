@@ -1,0 +1,8 @@
+name: formigas_go_router_hooks
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  mason: ^0.1.0-dev.52
+  yaml: ^3.1.2
