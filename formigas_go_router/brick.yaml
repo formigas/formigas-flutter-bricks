@@ -5,6 +5,12 @@ environment:
   mason: ">=0.1.0-dev.53 <0.1.0"
 
 vars:
+  app_directory:
+    description: The directory where the app.dart file is located.
+    type: string
+    default: lib/app/view
+    prompt: "Where is the app.dart file located?"
+
   homepage_name:
     type: string
     description: The name of the homepage.
