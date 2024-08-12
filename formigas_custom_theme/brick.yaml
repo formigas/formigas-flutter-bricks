@@ -1,0 +1,17 @@
+name: formigas_custom_theme
+description: A new brick created with the Mason CLI.
+version: 0.1.0
+environment:
+  mason: ">=0.1.0-dev.53 <0.1.0"
+
+vars:
+  app_directory:
+    description: The directory where the app.dart file is located.
+    type: string
+    default: lib/app/view
+    prompt: "Where is the app.dart file located?"
+  use_fvm:
+    description: Whether fvm is used
+    type: boolean
+    default: false
+    prompt: Do you use fvm?
