@@ -21,7 +21,7 @@ Future<void> run(HookContext context) async {
 
 void _implementGoRouter(HookContext context) {
   try {
-    String appFile = File('${Directory.current.path}/lib/app/view/app.dart')
+    String appFile = File('${Directory.current.path}/${context.vars['app_directory']}/app.dart')
         .readAsStringSync();
     appFile =
         'import \'package:${context.vars['project_name']}/services/navigation_service/go_router.dart\';' +
@@ -29,7 +29,7 @@ void _implementGoRouter(HookContext context) {
             appFile;
     appFile = appFile.replaceAll('MaterialApp(', 'MaterialApp.router(');
     appFile = _findHomeWidget(appFile, context) ?? appFile;
-    File('${Directory.current.path}/lib/app/view/app.dart')
+    File('${Directory.current.path}/${context.vars['app_directory']}/app.dart')
         .writeAsStringSync(appFile);
   } catch (e) {
     context.logger.err('Could not implement go_router in app.dart,\nerror: $e');

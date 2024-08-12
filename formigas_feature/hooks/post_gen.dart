@@ -19,14 +19,8 @@ Future<void> run(HookContext context) async {
       );
       return;
     }
-    final useSms = context.vars['state_management_solution'] as String;
-    switch (useSms) {
-      case 'BLoC':
-        await _installBlocPackage(context, dependencies);
-        await _installBlocTestPackage(context, devDependencies);
-      case 'Formigas MVC':
-        await _installMvcPackage(context, dependencies);
-    }
+    await _installBlocPackage(context, dependencies);
+    await _installBlocTestPackage(context, devDependencies);
 
     if (context.vars['use_freezed'] == true) {
       await _installFreezedPackage(context, devDependencies);
@@ -94,32 +88,6 @@ Future<void> _installBlocTestPackage(
     ]);
   } catch (e) {
     progress.fail('Could not install bloc_test package');
-    rethrow;
-  }
-  progress.complete();
-}
-
-Future<void> _installMvcPackage(
-  HookContext context,
-  Map<dynamic, dynamic> dependencies,
-) async {
-  context.logger.info('Verifying formigas_mvc version from pubspec.yaml');
-  if (dependencies.containsKey('formigas_mvc')) {
-    context.logger.info(
-      'Found formigas_mvc version ${dependencies['formigas_mvc']} in pubspec.yaml',
-    );
-    return;
-  }
-  context.logger.info('Could not find formigas_mvc version in pubspec.yaml');
-  final progress = context.logger.progress('Installing formigas-mvc package');
-  try {
-    await _runProcess(context, 'flutter', [
-      'pub',
-      'add',
-      'formigas_mvc',
-    ]);
-  } catch (e) {
-    progress.fail('Could not install formigas_mvc package');
     rethrow;
   }
   progress.complete();
