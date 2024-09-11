@@ -12,8 +12,7 @@ It follows the principles of the MVC-pattern.
 
 ## Usage 🏗️
 
-The formigas_feature brick is automatically added to your mason, if you already generated a project with the formigas_core brick.
-To only add the formigas_feature brick to your local mason run:
+To add the formigas_feature brick to your local mason run:
 ```sh
 $ mason init
 ```

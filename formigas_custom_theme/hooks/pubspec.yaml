@@ -1,4 +1,4 @@
-name: formigas_core_hooks
+name: formigas_custom_theme_hooks
 
 environment:
   sdk: ">=3.4.1 <4.0.0"
