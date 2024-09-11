@@ -1,6 +1,6 @@
 # formigas Custom Theme Brick
 
-A brick that provides the files and structure for a custom theme how we implement it at [formigas][formigas_link] in our Flutter projects.
+A brick that provides the files and structure for a custom theme how we implement it at [formigas][formigas_link] in our [Flutter][flutter_link] projects.
 
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
@@ -11,45 +11,26 @@ A brick that provides the files and structure for a custom theme how we implemen
 
 ## Usage 🏗️
 
-To add the formigas_custom_theme brick to your local mason run:
+1. Navigate to the project you want to add the custom theme to. Then run:
 ```sh
-$ mason init
+mason init
 ```
-
-### using ssh
+2. Add the `formigas_custom_theme` brick to mason by running:
 ```sh
-$ mason add formigas_custom_theme --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path formigas_custom_theme --git-ref {VERSION}
+mason add formigas_custom_theme
 ```
 The formigas_custom_theme brick should show up in the list of mason bricks:
-
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_custom_theme {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
+└── formigas_custom_theme {VERSION}
 ```
-
-### using https
-```sh
-mason add formigas_custom_theme --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path formigas_custom_theme --git-ref {VERSION}
-```
-The formigas_custom_theme brick should show up in the list of mason bricks:
-
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_custom_theme {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
-```
-<br />
-<br />
-
-To add the custom Theme to your app run the following command in the root of your project:
-
+3. To add the custom Theme to your app run the following command:
 ```sh
 mason make formigas_custom_theme
 ```
 ## Output 📦
-The Brick adds the common folder
-
+The Brick adds the common folder with the theme files
 ```sh
 ├── common
 │   ├── color_scheme.dart
