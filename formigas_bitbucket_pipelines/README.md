@@ -15,18 +15,18 @@ See [Details](#setup-and-configuration) for more info about the pipeline and Tro
 
 1. Navigate to the project you want to add the pipeline configuration file to and run
 ```sh
-$ mason init
+mason init
 ```
 2. Add the `formigas_bitbucket_pipelines` brick to mason by running:
 ```sh
-$ mason add formigas_bitbucket_pipelines
+mason add formigas_bitbucket_pipelines
 ```
 The `formigas_bitbucket_pipelines` brick should show up in the list of mason bricks:
 
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_bitbucket_pipelines {VERSION}
+└── formigas_bitbucket_pipelines {VERSION} -> registry.brickhub.dev
 ```
 3. Generate the pipeline configuration in your project:
 ```sh
