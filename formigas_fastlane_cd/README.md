@@ -79,6 +79,9 @@ This action will build and deploy the android appBundle to the internal track on
 This action will build and deploy the ios ipa for TestFlight on AppStore.
 
 
-
+[license_badge]: https://img.shields.io/badge/license-MIT-blue.svg
+[license_link]: https://opensource.org/licenses/MIT
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
+[mason_link]: https://github.com/felangel/mason
+[mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [flutter_link]:https://flutter.dev/
