@@ -83,5 +83,5 @@ This error occurs when signing failed. Make sure you closely followed the steps 
 [formigas_link]: https://formigas.io
 [mason_link]: https://github.com/felangel/mason
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
-[mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-ibadge
+[mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [flutter_link]:https://flutter.dev/
