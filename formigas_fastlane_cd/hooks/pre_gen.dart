@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:mason/mason.dart';
-import 'package:xml/xml.dart';
 import 'package:yaml/yaml.dart';
 
 void run(HookContext context) {
@@ -52,12 +51,12 @@ void _assertProjectName(
 
 void _selectPackageName(HookContext context) {
   final cwd = Directory.current.path;
-  final manifestFile = File('$cwd/android/app/src/main/AndroidManifest.xml');
-  if (manifestFile.existsSync()) {
-    final manifest = XmlDocument.parse(manifestFile.readAsStringSync());
-    final manifestNode = manifest.getElement('manifest');
-    final package = manifestNode?.getAttribute('package');
-    _assertPackageName(package, context);
+  final buildFile = File('$cwd/android/app/build.gradle');
+  if (buildFile.existsSync()) {
+    final build = buildFile.readAsStringSync();
+    final packageStart = build.indexOf('namespace = "') + 13;
+    final packageEnd = build.substring(packageStart).indexOf('"');
+    final package = build.substring(packageStart, packageStart + packageEnd);
     context.vars = {
       ...context.vars,
       'package_name': package,
@@ -65,15 +64,6 @@ void _selectPackageName(HookContext context) {
   } else {
     context.logger.err(
       "Couldn't find AndroidManifest.xml from current directory.",
-    );
-    exit(1);
-  }
-}
-
-void _assertPackageName(String? package, HookContext context) {
-  if (package == null) {
-    context.logger.err(
-      "Couldn't find package name in AndroidManifest.xml.",
     );
     exit(1);
   }

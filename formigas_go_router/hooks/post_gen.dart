@@ -17,16 +17,20 @@ Future<void> run(HookContext context) async {
     (loadYaml(pubspec) as Map)['dependencies'] as Map,
   );
   await _installPackages(context);
+  await _dartFormat(context);
+  await _dartFix(context);
 }
 
 void _implementGoRouter(HookContext context) {
   try {
-    String appFile = File('${Directory.current.path}/${context.vars['app_directory']}/app.dart')
+    String appFile = File(
+            '${Directory.current.path}/${context.vars['app_directory']}/app.dart')
         .readAsStringSync();
-    appFile =
+    var beginSecondLine = appFile.indexOf('\n');
+    appFile = appFile.substring(0, beginSecondLine) +
         'import \'package:${context.vars['project_name']}/services/navigation_service/go_router.dart\';' +
-            '\n' +
-            appFile;
+        '\n' +
+        appFile.substring(beginSecondLine + 1);
     appFile = appFile.replaceAll('MaterialApp(', 'MaterialApp.router(');
     appFile = _findHomeWidget(appFile, context) ?? appFile;
     File('${Directory.current.path}/${context.vars['app_directory']}/app.dart')
@@ -167,6 +171,31 @@ Future<void> _installPackages(HookContext context) async {
     await _runProcess(context, 'flutter', ['pub', 'get']);
   } catch (e) {
     progress.fail('Installing packages failed');
+    rethrow;
+  }
+  progress.complete();
+}
+
+Future<void> _dartFormat(HookContext context) async {
+  final progress = context.logger.progress('Formatting files');
+  try {
+    await _runProcess(context, 'dart', ['format', '.']);
+  } catch (e) {
+    progress.fail('Formatting files failed');
+    rethrow;
+  }
+
+  progress.complete();
+}
+
+Future<void> _dartFix(HookContext context) async {
+  final progress = context.logger.progress('Resolving linter issues');
+  final appFilePath =
+      '${Directory.current.path}/${context.vars['app_directory']}/app.dart';
+  try {
+    await _runProcess(context, 'dart', ['fix', '--apply', "${appFilePath}"]);
+  } catch (e) {
+    progress.fail('Resolving linter issues failed');
     rethrow;
   }
   progress.complete();

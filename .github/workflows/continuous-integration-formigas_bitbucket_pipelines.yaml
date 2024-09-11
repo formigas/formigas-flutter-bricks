@@ -1,0 +1,52 @@
+name: formigas_bitbucket_pipelines brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_bitbucket_pipelines/**
+      - .github/workflows/continuous-integration-formigas_bitbucket_pipelines.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.2
+
+      - name: Install FVM
+        if: matrix.use_fvm == true
+        run: curl -fsSL https://fvm.app/install.sh | bash
+
+      - name: create flutter project
+        run: flutter create my_app --empty --template=app --platforms=android --no-pub
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add formigas_bitbucket_pipelines with Mason
+        run: mason add formigas_bitbucket_pipelines --path ./formigas_bitbucket_pipelines
+
+      - name: Make formigas_bitbucket_pipelines
+        run: mason make formigas_bitbucket_pipelines
+        working-directory: my_app
+
+      - name: Verify file creation
+        run: |
+          if [ ! -f "bitbucket-pipelines.yml" ]; then
+            echo "bitbucket-pipelines.yml not found"
+            exit 1
+          fi
+        working-directory: my_app
