@@ -23,7 +23,7 @@ The `formigas_fastlane_cd` brick should show up in the list of mason bricks:
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_fastlane_cd {VERSION}
+└── formigas_fastlane_cd {VERSION} -> registry.brickhub.dev
 ```
 1. To add the fastlane CD files to your app run the following command:
 ```sh
