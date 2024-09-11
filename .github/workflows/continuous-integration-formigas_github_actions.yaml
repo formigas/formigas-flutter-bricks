@@ -1,0 +1,48 @@
+name: formigas_github_actions brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_github_actions/**
+      - .github/workflows/continuous-integration-formigas_github_actions.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.2
+
+      - name: create flutter project
+        run: flutter create my_app --empty --template=app --platforms=android --no-pub
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add formigas_github_actions with Mason
+        run: mason add formigas_github_actions --path ./formigas_github_actions
+
+      - name: Make formigas_github_actions
+        run: mason make formigas_github_actions
+        working-directory: my_app
+
+      - name: Verify file creation
+        run: |
+          if [ ! -f ".github/workflows/continuous-integration.yml" ]; then
+            echo ".github/workflows/continuous-integration.yml not found"
+            exit 1
+          fi
+        working-directory: my_app

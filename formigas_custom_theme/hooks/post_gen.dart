@@ -30,9 +30,10 @@ void _implementCustomTheme(HookContext context) {
   }
   appFile = appFile.replaceRange(start, end + 1,
       'theme: CustomTheme().light,darkTheme: CustomTheme().dark');
-  appFile =
+  var beginSecondLine = appFile.indexOf('\n');
+  appFile = appFile.substring(0, beginSecondLine) +
       'import \'package:${context.vars['project_name']}/common/custom_themes.dart\';\n' +
-          appFile;
+      appFile.substring(beginSecondLine + 1);
   File('${Directory.current.path}/${context.vars['app_directory']}/app.dart')
       .writeAsStringSync(appFile);
 }

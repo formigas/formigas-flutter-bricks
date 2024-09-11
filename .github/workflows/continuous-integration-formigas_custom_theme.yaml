@@ -1,0 +1,78 @@
+name: formigas_custom_theme brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_custom_theme/**
+      - .github/workflows/continuous-integration-formigas_custom_theme.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.2
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add VGV_core with Mason
+        run: dart pub global activate very_good_cli && very_good create flutter_app my_app
+
+      - name: Add formigas_custom_theme with Mason
+        run: mason add formigas_custom_theme --path ./formigas_custom_theme
+
+      - name: Make formigas formigas_custom_theme
+        run: mason make formigas_custom_theme --app_directory=lib/app/view --use_fvm=false
+        working-directory: my_app
+
+      - name: Verify file creation
+        run: |
+          if [ ! -f "lib/common/color_scheme.dart" ]; then
+            echo "lib/common/color_scheme.dart not found"
+            exit 1
+          fi
+          if [ ! -f "lib/common/custom_themes.dart" ]; then
+            echo "lib/common/custom_themes.dart not found"
+            exit 1
+          fi
+          if [ ! -f "lib/common/text_style.dart" ]; then
+            echo "lib/common/text_style.dart not found"
+            exit 1
+          fi
+        working-directory: my_app
+
+      - name: Run tests
+        run: flutter test
+        working-directory: my_app
+
+      - name: format files
+        run: dart format -o none --set-exit-if-changed ./lib ./test
+        working-directory: my_app
+
+      - name: Analyze files
+        run: flutter analyze --fatal-infos --fatal-warnings
+        working-directory: my_app
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Build app
+        run: flutter build apk --debug --flavor production --target lib/main_production.dart
+        working-directory: my_app

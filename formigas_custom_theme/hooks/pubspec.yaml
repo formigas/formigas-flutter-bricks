@@ -2,7 +2,7 @@ name: formigas_core_hooks
 
 environment:
   sdk: ">=3.4.1 <4.0.0"
-  flutter: ">=3.22.1 <4.0.0"
+  flutter: ">=3.24.2 <4.0.0"
 
 dependencies:
   mason: ^0.1.0-dev.52

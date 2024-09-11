@@ -21,7 +21,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.22.1
+          flutter-version: 3.24.2
           cache: true
 
       - name: Install Mason CLI
@@ -51,4 +51,14 @@ jobs:
 
       - name: Run tests
         run: flutter test
+        working-directory: my_app
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Analyze files
+        run: flutter build appbundle
         working-directory: my_app

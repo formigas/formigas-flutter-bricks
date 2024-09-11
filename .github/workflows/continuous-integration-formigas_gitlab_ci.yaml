@@ -1,0 +1,52 @@
+name: formigas_gitlab_ci brick CI
+
+on:
+  pull_request:
+    paths:
+      - formigas_gitlab_ci/**
+      - .github/workflows/continuous-integration-formigas_gitlab_ci.yaml
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.24.2
+
+      - name: create flutter project
+        run: flutter create my_app --empty --template=app --platforms=android --no-pub
+
+      - name: Install Mason CLI
+        run: dart pub global activate mason_cli
+
+      - name: Initialize Mason
+        run: mason init
+
+      - name: Add formigas_gitlab_ci with Mason
+        run: mason add formigas_gitlab_ci --path ./formigas_gitlab_ci
+
+      - name: Make formigas_gitlab_ci
+        run: mason make formigas_gitlab_ci --runner_tag=my-runner-tag
+        working-directory: my_app
+
+      - name: Verify file creation
+        run: |
+          if [ ! -f "gitlab-ci.yml" ]; then
+            echo "gitlab-ci.yml not found"
+            exit 1
+          fi
+          if [ ! -f "templates/build.yml" ]; then
+            echo "templates/build.yml not found"
+            exit 1
+          fi
+        working-directory: my_app
