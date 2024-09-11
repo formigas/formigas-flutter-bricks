@@ -1,6 +1,6 @@
 # formigas Feature Brick
 
-A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our flutter projects.
+A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our [Flutter][flutter_link] projects.
 It follows the principles of the MVC-pattern.
 
 [![License: MIT][license_badge]][license_link]
@@ -12,39 +12,23 @@ It follows the principles of the MVC-pattern.
 
 ## Usage 🏗️
 
-To add the formigas_feature brick to your local mason run:
+1. Navigate to the project you want to add the feature to and run:
 ```sh
-$ mason init
+mason init
 ```
-
-### using ssh
+2. Add the `formigas_feature` to mason by running:
 ```sh
-$ mason add formigas_feature --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path formigas_feature --git-ref {VERSION}
+mason add formigas_feature
 ```
 The formigas_feature brick should show up in the list of mason bricks:
 
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_feature {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
+└── formigas_feature {VERSION} -> registry.brickhub.dev
 ```
 
-### using https
-```sh
-mason add formigas_feature --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path formigas_feature --git-ref {VERSION}
-```
-The formigas_feature brick should show up in the list of mason bricks:
-
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_feature {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
-```
-<br />
-<br />
-
-To add a new feature to your app run the following command in the root of your project:
-
+3. Generate the feature in your project:
 ```sh
 mason make formigas_feature
 ```
@@ -59,8 +43,9 @@ mason make formigas_feature
 │   │   │   ├── counter_state.freezed.dart
 │   │   └── counter_view.dart
 ```
+
 ## Dependencies
-Following dependencies will be installed for this brick:
+Following dependencies will be installed for this brick if they are not yet present:
 
 * [flutter_bloc][flutter_bloc_link]
 * [bloc_test][bloc_test_link]
