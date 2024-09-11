@@ -1,7 +1,7 @@
 # formigas Bitbucket Pipelines CI
 A brick that provides a [Bitbucket Pipelines][bitbucket_pipelines_link] Continuous Integration pipeline for [Flutter][flutter_link] projects as we use it at [formigas][formigas_link].  
 
-See [Details](#bitbucket-pipeline-ci) for more info about the pipeline and Troubleshooting.
+See [Details](#setup-and-configuration) for more info about the pipeline and Troubleshooting.
 
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
@@ -38,7 +38,7 @@ The pipeline configuration
 bitbucket-pipelines.yml
 ```
 
-## Setup & Configuration
+## Setup and Configuration
 The Bitbucket Pipeline CI runs validation, build, and tests.  
 The pipeline is run on every push to `develop`, `staging`, and `master`/`main` branches, as well as on every pull request.  
 The build stage will create a release build and runs a different flavor depending on the branch:  
