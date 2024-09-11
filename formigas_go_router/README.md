@@ -25,7 +25,7 @@ The `formigas_go_router` brick should show up in the list of mason bricks:
 $ mason list
 /Users/User/foo/bar
 └── formigas_go_router {VERSION} -> registry.brickhub.dev
-
+```
 ## Requirements
 
 For the brick to work, the Widget used as home route needs to be in a file named the same as the Widget but in snake_case.
