@@ -1,6 +1,6 @@
 # formigas GoRouter Brick
 
-A brick that provides the structure how we implement the GoRouter at [formigas][formigas_link] in our Flutter projects.
+A brick that provides the structure how we implement [`go_router`][go_router_link] at [formigas][formigas_link] in our [Flutter][flutter_link] projects.
 
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
@@ -11,35 +11,20 @@ A brick that provides the structure how we implement the GoRouter at [formigas][
 
 ## Usage 🏗️
 
+1. Navigate to the project you want to add `go_router` to and run
 ```sh
-$ mason init
+mason init
 ```
-Add the brick to your mason:
-### using ssh
+2. Add the `formigas_go_router` brick to mason by running:
 ```sh
-$ mason add formigas_go_router --git-url git@github.com:formigas/formigas-flutter-bricks.git --git-path formigas_go_router --git-ref {VERSION}
+mason add formigas_go_router
 ```
-The formigas_go_router brick should show up in the list of mason bricks:
+The `formigas_go_router` brick should show up in the list of mason bricks:
 
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_go_router {VERSION} -> git@github.com:formigas/formigas-flutter-bricks.git#{commit-hash}
-```
-
-### using https
-```sh
-mason add formigas_go_router --git-url https://github.com/formigas/formigas-flutter-bricks.git --git-path formigas_go_router --git-ref {VERSION}
-```
-The formigas_go_router brick should show up in the list of mason bricks:
-
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_go_router {VERSION} -> https://github.com/formigas/formigas-flutter-bricks.git#{commit-hash}
-```
-<br />
-<br />
+└── formigas_go_router {VERSION} -> registry.brickhub.dev
 
 ## Requirements
 
@@ -93,7 +78,7 @@ mason make formigas_go_router
 │   │   └── go_router.dart
 ```
 ## Dependencies
-Following dependencies will be installed for this brick:
+Following dependencies will be installed for this brick if not already present:
 
 * [go_router][go_router_link]
 
