@@ -23,7 +23,7 @@ The formigas_custom_theme brick should show up in the list of mason bricks:
 ```
 $ mason list
 /Users/User/foo/bar
-└── formigas_custom_theme {VERSION}
+└── formigas_custom_theme {VERSION} -> registry.brickhub.dev
 ```
 3. To add the custom Theme to your app run the following command:
 ```sh
