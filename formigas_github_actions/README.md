@@ -1,37 +1,15 @@
 # formigas GitHub Actions CI
-A brick that provides a GitHub Actions Continuous Integration workflow for [Flutter][flutter_link] projects as we use it at [formigas][formigas_link].  
+A brick that provides a [GitHub Actions][github_actions_link] Continuous Integration workflow for [Flutter][flutter_link] projects as we use it at [formigas][formigas_link].  
 
 See [Details](#setup-and-configuration) for more info about the pipeline and Troubleshooting.
 
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
 
+## Usage 🛠️
 
-## Pre-requisites 🛠️
+See [BrickHub][brick_hub_usage_link] for usage instructions.
 
-- [Mason CLI][mason_cli_link]
-
-## Usage 🏗️
-
-1. Navigate to the project you want to add the workflow file to and run
-```sh
-mason init
-```
-2. Add the `formigas_github_actions` brick to mason by running:
-```sh
-mason add formigas_github_actions
-```
-The `formigas_github_actions` brick should show up in the list of mason bricks:
-
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_github_actions {VERSION} -> registry.brickhub.dev
-```
-3. Generate the workflow file in your project:
-```sh
-mason make formigas_github_actions
-```
 ## Output 📦
 The workflow file
 ```
@@ -85,3 +63,5 @@ This error occurs when signing failed. Make sure you closely followed the steps 
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [flutter_link]:https://flutter.dev/
+[brick_hub_usage_link]:https://brickhub.dev/bricks/formigas_github_actions#usage
+[github_actions_link]:https://docs.github.com/actions

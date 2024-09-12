@@ -1,5 +1,14 @@
 name: formigas_github_actions
-description: A default template for GitHub Actions
+description: A brick that provides a GitHub Actions Continuous Integration workflow for Flutter projects.
+repository: https://github.com/formigas/formigas-flutter-bricks.git
 version: 0.1.0
+
 environment:
   mason: ">=0.1.0-dev.53 <0.1.0"
+
+vars:
+  project_name:
+    type: string
+    description: The name of your project
+    default: my_project
+    prompt: What is the name of your project?
