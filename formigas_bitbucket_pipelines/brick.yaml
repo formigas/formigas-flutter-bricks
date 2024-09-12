@@ -1,7 +1,7 @@
 name: formigas_bitbucket_pipelines
 description: A brick that provides a Bitbucket Pipelines Continuous Integration pipeline for Flutter projects.
 repository: https://github.com/formigas/formigas-flutter-bricks.git
-version: 0.1.0
+version: 0.1.1
 
 environment:
   mason: ">=0.1.0-dev.53 <0.1.0"
