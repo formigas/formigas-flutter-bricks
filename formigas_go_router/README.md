@@ -18,7 +18,7 @@ The `app.dart` file must use the `MaterialApp` widget and the homeRoute must eit
 If there is another widget than the `MaterialApp` the goRouter file is still created, but the `app.dart` file is not modified accordingly.
 
 A valid `app.dart` file can look like this:
-```
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:counter_app/common/theme/custom_themes.dart';

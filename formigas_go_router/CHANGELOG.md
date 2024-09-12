@@ -1,3 +1,7 @@
+# 0.1.1
+## Docs
+- Add language tag to code snippets in README.md
+
 # 0.1.0
 
 ## Docs
