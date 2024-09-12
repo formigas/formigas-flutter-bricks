@@ -1,0 +1,14 @@
+name: Publish formigas_custom_theme on BrickHub
+
+on:
+  push:
+    tags:
+      - "formigas_custom_theme-*.*.*"
+
+jobs:
+  publish:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/mason_publish.yml@v1
+    with:
+      working_directory: ./formigas_custom_theme
+    secrets:
+      mason_credentials: ${{ secrets.MASON_CREDENTIALS }}

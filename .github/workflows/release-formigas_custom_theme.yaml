@@ -1,0 +1,18 @@
+name: Release formigas_custom_theme brick
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version to release (e.g., 1.0.0)"
+        required: true
+
+jobs:
+  release-brick:
+    uses: ./.github/workflows/release-brick.yaml
+    with:
+      version: ${{ github.event.inputs.version }}
+      brick_name: formigas_custom_theme
+    secrets:
+      app_id: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
+      app_private_key: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
