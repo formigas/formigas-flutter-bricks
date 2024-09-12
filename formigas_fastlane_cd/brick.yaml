@@ -1,7 +1,7 @@
 name: formigas_fastlane_cd
 description: A brick to automate the release of your Flutter app using fastlane.
 repository: https://github.com/formigas/formigas-flutter-bricks.git
-version: 0.1.1
+version: 0.1.2
 
 environment:
   mason: ">=0.1.0-dev.51 <0.1.0"
