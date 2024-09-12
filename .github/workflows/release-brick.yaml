@@ -43,7 +43,7 @@ jobs:
 
           echo "Version format is valid and tag does not exist, proceeding with workflow..."
 
-  create-tag:
+  bump-version:
     runs-on: ubuntu-latest
     needs: validate-version
     steps:
@@ -73,17 +73,12 @@ jobs:
       - name: Commit version bump if changes detected
         if: steps.changes.outputs.changes == 'changes-detected'
         run: |
-          git commit -am "Release: ${{ inputs.brick_name }}-${{ inputs.version }}"
+          git commit -am "Bump version of ${{ inputs.brick_name }} to ${{ inputs.version }}"
           git push origin main
-
-      - name: Create and push tag
-        run: |
-          git tag ${{ inputs.brick_name }}-${{ inputs.version }}
-          git push origin ${{ inputs.brick_name }}-${{ inputs.version }}
 
   create-release:
     runs-on: ubuntu-latest
-    needs: create-tag
+    needs: bump-version
     steps:
       - uses: actions/create-github-app-token@v1
         id: app-token
