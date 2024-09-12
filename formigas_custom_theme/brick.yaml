@@ -1,6 +1,8 @@
 name: formigas_custom_theme
-description: A new brick created with the Mason CLI.
+description: A brick that provides the files and structure for a custom theme in Flutter projects.
+repository: https://github.com/formigas/formigas-flutter-bricks.git
 version: 0.1.0
+
 environment:
   mason: ">=0.1.0-dev.53 <0.1.0"
 
