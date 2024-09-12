@@ -1,9 +1,5 @@
 name: Release formigas_fastlane_cd brick
 
-permissions:
-  contents: read
-  pull-requests: write
-
 on:
   workflow_dispatch:
     inputs:
@@ -12,81 +8,11 @@ on:
         required: true
 
 jobs:
-  validate-version:
-    runs-on: ubuntu-latest
-    if: github.ref_name == 'main'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-tags: true
-
-      - name: Validate version format and existence
-        run: |
-          if [[ ! "${{ github.event.inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-              echo "::error::Invalid version format. Must be in the format of x.y.z"
-              exit 1
-          fi
-
-          if git rev-parse "refs/tags/formigas_fastlane_cd-${{ github.event.inputs.version }}" >/dev/null 2>&1; then
-              echo "::error::Tag ${{ github.event.inputs.version }} already exists for formigas_fastlane_cd brick"
-              exit 1
-          fi
-
-          echo "Version format is valid and tag does not exist, proceeding with workflow..."
-
-  create-tag:
-    runs-on: ubuntu-latest
-    needs: validate-version
-    steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
-          private-key: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          token: ${{ steps.app-token.outputs.token }}
-
-      - name: Bump version
-        run: |
-          echo "Updating version to ${{ github.event.inputs.version }} in brick.yaml"
-          sed -i "s/version: .*/version: ${{ github.event.inputs.version }}/" brick.yaml
-        working-directory: formigas_fastlane_cd
-
-      - name: Check if version actually changed
-        id: changes
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
-          git diff --exit-code || echo "changes=changes-detected" >> $GITHUB_OUTPUT
-
-      - name: Commit version bump if changes detected
-        if: steps.changes.outputs.changes == 'changes-detected'
-        run: |
-          git commit -am "Release: formigas_fastlane_cd-${{ github.event.inputs.version }}"
-          git push origin main
-
-      - name: Create and push tag
-        run: |
-          git tag formigas_fastlane_cd-${{ github.event.inputs.version }}
-          git push origin formigas_fastlane_cd-${{ github.event.inputs.version }}
-
-  create-release:
-    runs-on: ubuntu-latest
-    needs: create-tag
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          # This is needed to fetch the tag that was just pushed,
-          # otherwise the cached version of the repo will be used and the tag won't be found
-          ref: main
-      - name: Create Release
-        uses: ncipollo/release-action@v1.14.0
-        with:
-          tag: formigas_fastlane_cd-${{ github.event.inputs.version }}
-          makeLatest: false
+  release-brick:
+    uses: ./.github/workflows/release-brick.yaml
+    with:
+      version: ${{ github.event.inputs.version }}
+      brick_name: formigas_fastlane_cd
+    secrets:
+      FORMIGAS_VERSION_BUMPER_APP_ID: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
+      FORMIGAS_VERSION_BUMPER_PRIVATE_KEY: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}

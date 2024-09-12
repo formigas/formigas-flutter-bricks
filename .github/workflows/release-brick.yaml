@@ -1,0 +1,105 @@
+name: Release Brick Workflow
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: "The version to release"
+        required: true
+        type: string
+      brick_name:
+        description: "The name of the brick to release"
+        required: true
+        type: string
+    secrets:
+      app_id:
+        description: "The ID of the GitHub App to use for the release"
+        required: true
+      app_private_key:
+        description: "The private key of the GitHub App to use for the release"
+        required: true
+
+jobs:
+  validate-version:
+    runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+
+      - name: Validate version format and existence
+        run: |
+          if [[ ! "${{ inputs.version }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "::error::Invalid version format. Must be in the format of x.y.z"
+              exit 1
+          fi
+
+          if git rev-parse "refs/tags/${{ inputs.brick_name }}-${{ inputs.version }}" >/dev/null 2>&1; then
+              echo "::error::Tag ${{ inputs.version }} already exists for ${{ inputs.brick_name }} brick"
+              exit 1
+          fi
+
+          echo "Version format is valid and tag does not exist, proceeding with workflow..."
+
+  create-tag:
+    runs-on: ubuntu-latest
+    needs: validate-version
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.app_id }}
+          private-key: ${{ secrets.app_private_key }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Bump version
+        run: |
+          echo "Updating version to ${{ inputs.version }} in brick.yaml"
+          sed -i "s/version: .*/version: ${{ inputs.version }}/" brick.yaml
+        working-directory: ${{ inputs.brick_name }}
+
+      - name: Check if version actually changed
+        id: changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git diff --exit-code || echo "changes=changes-detected" >> $GITHUB_OUTPUT
+
+      - name: Commit version bump if changes detected
+        if: steps.changes.outputs.changes == 'changes-detected'
+        run: |
+          git commit -am "Release: ${{ inputs.brick_name }}-${{ inputs.version }}"
+          git push origin main
+
+      - name: Create and push tag
+        run: |
+          git tag ${{ inputs.brick_name }}-${{ inputs.version }}
+          git push origin ${{ inputs.brick_name }}-${{ inputs.version }}
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: create-tag
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.app_id }}
+          private-key: ${{ secrets.app_private_key }}
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+      - name: Create Release
+        uses: ncipollo/release-action@v1.14.0
+        with:
+          tag: ${{ inputs.brick_name }}-${{ inputs.version }}
+          token: ${{ steps.app-token.outputs.token }}
+          makeLatest: false
