@@ -1,0 +1,14 @@
+name: Publish formigas_github_actions on BrickHub
+
+on:
+  push:
+    tags:
+      - "formigas_github_actions-*.*.*"
+
+jobs:
+  publish:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/mason_publish.yml@v1
+    with:
+      working_directory: ./formigas_github_actions
+    secrets:
+      mason_credentials: ${{ secrets.MASON_CREDENTIALS }}
