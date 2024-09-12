@@ -1,37 +1,14 @@
 # formigas Feature Brick
 
-A brick that provides the files and structure for a feature how we implement it at [formigas][formigas_link] in our [Flutter][flutter_link] projects.
-It follows the principles of the MVC-pattern.
+A brick to create a feature how we implement it at [formigas][formigas_link]. It follows the principles of the MVC-pattern.
 
 [![License: MIT][license_badge]][license_link]
 [![Powered by Mason][mason_badge]][mason_link]
 
-## Pre-requisites 🛠️
+## Usage 🛠️
 
-- [Mason CLI][mason_cli_link]
+See [BrickHub][brick_hub_usage_link] for usage instructions.
 
-## Usage 🏗️
-
-1. Navigate to the project you want to add the feature to and run:
-```sh
-mason init
-```
-2. Add the `formigas_feature` to mason by running:
-```sh
-mason add formigas_feature
-```
-The formigas_feature brick should show up in the list of mason bricks:
-
-```
-$ mason list
-/Users/User/foo/bar
-└── formigas_feature {VERSION} -> registry.brickhub.dev
-```
-
-3. Generate the feature in your project:
-```sh
-mason make formigas_feature
-```
 ## Output 📦
 
 ```sh
@@ -62,6 +39,6 @@ Following dependencies will be installed for this brick if they are not yet pres
 [freezed_annotation_link]:https://pub.dev/packages/freezed_annotation
 [freezed_link]: https://pub.dev/packages/freezed
 [build_runner_link]: https://pub.dev/packages/build_runner
-[flutter_link]:https://flutter.dev/
 [flutter_bloc_link]:https://pub.dev/packages/flutter_bloc
 [bloc_test_link]:https://pub.dev/packages/bloc_test
+[brick_hub_usage_link]:https://brickhub.dev/bricks/formigas_feature#usage
