@@ -1,3 +1,8 @@
+# 0.1.2
+
+## Fixes
+- Add repository to brick.yaml
+
 # 0.1.1
 
 ## Docs
