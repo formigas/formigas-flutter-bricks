@@ -1,0 +1,14 @@
+name: Publish formigas_go_router on BrickHub
+
+on:
+  push:
+    tags:
+      - "formigas_go_router-*.*.*"
+
+jobs:
+  publish:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/mason_publish.yml@v1
+    with:
+      working_directory: ./formigas_go_router
+    secrets:
+      mason_credentials: ${{ secrets.MASON_CREDENTIALS }}
