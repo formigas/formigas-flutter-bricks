@@ -5,10 +5,3 @@ version: 0.1.0
 
 environment:
   mason: ">=0.1.0-dev.53 <0.1.0"
-
-vars:
-  project_name:
-    type: string
-    description: The name of your project
-    default: my_project
-    prompt: What is the name of your project?
