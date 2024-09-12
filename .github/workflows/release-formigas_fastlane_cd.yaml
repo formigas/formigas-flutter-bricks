@@ -1,4 +1,4 @@
-name: Release formigas_fastlane_cd brick
+name: 1 Release formigas_fastlane_cd brick
 
 on:
   workflow_dispatch:

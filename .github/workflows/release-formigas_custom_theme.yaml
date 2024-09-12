@@ -1,4 +1,4 @@
-name: Release formigas_custom_theme brick
+name: 1 Release formigas_custom_theme brick
 
 on:
   workflow_dispatch:

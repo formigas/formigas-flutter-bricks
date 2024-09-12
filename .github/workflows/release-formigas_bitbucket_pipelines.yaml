@@ -1,4 +1,4 @@
-name: Release formigas_bitbucket_pipelines brick
+name: 1 Release formigas_bitbucket_pipelines brick
 
 on:
   workflow_dispatch:
