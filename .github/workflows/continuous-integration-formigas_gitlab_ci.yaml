@@ -22,6 +22,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.24.2
+          cache: true
 
       - name: create flutter project
         run: flutter create my_app --empty --template=app --platforms=android --no-pub
