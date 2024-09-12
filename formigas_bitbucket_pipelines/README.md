@@ -59,3 +59,4 @@ This error occurs when signing failed. Make sure you closely followed the steps 
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [flutter_link]:https://flutter.dev/
 [bitbucket_pipelines_link]: https://www.atlassian.com/software/bitbucket/features/pipelines
+[brick_hub_usage_link]: https://brickhub.dev/bricks/formigas_bitbucket_pipelines#usage

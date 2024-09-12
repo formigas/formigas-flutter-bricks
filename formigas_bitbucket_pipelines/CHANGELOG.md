@@ -1,3 +1,8 @@
+# 0.1.1
+
+## Fixes
+- Fix link to BrickHub usage section in README
+
 # 0.1.0
 
 ## Docs
