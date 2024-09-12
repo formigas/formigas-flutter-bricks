@@ -89,5 +89,4 @@ jobs:
         uses: ncipollo/release-action@v1.14.0
         with:
           tag: formigas_fastlane_cd-${{ github.event.inputs.version }}
-          generateReleaseNotes: true
-          makeLatest: true
+          makeLatest: false
