@@ -14,5 +14,5 @@ jobs:
       version: ${{ github.event.inputs.version }}
       brick_name: formigas_feature
     secrets:
-      FORMIGAS_VERSION_BUMPER_APP_ID: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
-      FORMIGAS_VERSION_BUMPER_PRIVATE_KEY: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
+      app_id: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
+      app_private_key: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
