@@ -2,8 +2,6 @@ name: Publish formigas_feature on BrickHub
 
 on:
   push:
-    branches:
-      - main
     tags:
       - "formigas_feature-*.*.*"
 
