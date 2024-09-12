@@ -1,4 +1,4 @@
-name: Release formigas_github_actions brick
+name: 1 Release formigas_github_actions brick
 
 on:
   workflow_dispatch:

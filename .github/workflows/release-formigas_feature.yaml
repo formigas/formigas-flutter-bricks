@@ -1,4 +1,4 @@
-name: Release formigas_feature brick
+name: 1 Release formigas_feature brick
 
 on:
   workflow_dispatch:

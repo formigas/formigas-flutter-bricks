@@ -1,4 +1,4 @@
-name: Release formigas_gitlab_ci brick
+name: 1 Release formigas_gitlab_ci brick
 
 on:
   workflow_dispatch:
