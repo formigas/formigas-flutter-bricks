@@ -1,6 +1,4 @@
-<p align="center">
-<img src="docs/main_logo.png" height="200" alt="Formigas" />
-</p>
+![formigas_logo](docs/main_logo.png)
 
 # formigas Flutter Bricks
 
