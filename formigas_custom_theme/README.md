@@ -26,4 +26,4 @@ And modifies the `app.dart` file by replacing the current Theme with the generat
 [mason_cli_link]: https://github.com/felangel/mason/tree/master/packages/mason_cli
 [mason_badge]: https://img.shields.io/endpoint?url=https%3A%2F%2Ftinyurl.com%2Fmason-badge
 [flutter_link]:https://flutter.dev/
-[brick_hub_usage_link]: https://brickhub.dev/docs/usage
+[brick_hub_usage_link]: https://brickhub.dev/bricks/formigas_custom_theme#usage
