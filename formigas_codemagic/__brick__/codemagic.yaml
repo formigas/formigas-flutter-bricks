@@ -66,6 +66,14 @@ workflows:
       <<: *cache
     scripts:
       - *prepare_flutter_script
+      - name: Set up key.properties
+        script: |
+          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
       - name: Build Android
         script: flutter build appbundle --release --flavor production -t lib/main_production.dart
 
