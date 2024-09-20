@@ -2,6 +2,7 @@ name: Check Codemagic CI Label
 
 on:
   pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
     paths:
       - formigas_codemagic/**
       - .github/workflows/continuous-integration-formigas_codemagic.yaml
