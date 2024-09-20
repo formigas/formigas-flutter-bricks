@@ -5,6 +5,8 @@ on:
     types: [opened, labeled, unlabeled, synchronize]
     paths:
       - formigas_codemagic/**
+      - '!formigas_codemagic/**/*.md'
+      - '!formigas_codemagic/docs/**'
       - .github/workflows/continuous-integration-formigas_codemagic.yaml
       - .github/workflows/check-codemagic-ci-label.yaml
 
