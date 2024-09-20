@@ -1,0 +1,104 @@
+definitions:
+  environment: &environment
+    flutter: stable
+    xcode: latest
+  triggering: &triggering
+    events:
+      - pull_request
+      - push
+    cancel_previous_builds: true
+  cache: &cache
+    cache_paths:
+      - $HOME/.pub-cache
+      - $HOME/.gradle/caches
+      - $HOME/Library/Caches/CocoaPods
+  scripts:
+    - &prepare_flutter_script
+      name: Get Flutter dependencies
+      script: |
+        flutter clean
+        flutter pub get
+
+workflows:
+  validate:
+    name: Validate
+    max_build_duration: 10
+    instance_type: linux_x2
+    environment:
+      <<: *environment
+    triggering:
+      <<: *triggering
+    cache:
+      <<: *cache
+    scripts:
+      - *prepare_flutter_script
+      - name: Format
+        script: dart format -o none --set-exit-if-changed lib/ test/
+      - name: Analyze
+        script: flutter analyze --fatal-infos --fatal-warnings
+
+  build-ios:
+    name: Build iOS
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    environment:
+      <<: *environment
+    triggering:
+      <<: *triggering
+    cache:
+      <<: *cache
+    scripts:
+      - *prepare_flutter_script
+      - name: Build iOS
+        script: flutter build ios --release --no-codesign --flavor production -t lib/main_production.dart
+
+  build-android:
+    name: Build Android
+    max_build_duration: 30
+    instance_type: linux_x2
+    environment:
+      <<: *environment
+      android_signing:
+        - codemagic_ci_testapp_android_keystore
+    triggering:
+      <<: *triggering
+    cache:
+      <<: *cache
+    scripts:
+      - *prepare_flutter_script
+      - name: Set up key.properties
+        script: |
+          cat >> "$CM_BUILD_DIR/android/key.properties" <<EOF
+          storePassword=$CM_KEYSTORE_PASSWORD
+          keyPassword=$CM_KEY_PASSWORD
+          keyAlias=$CM_KEY_ALIAS
+          storeFile=$CM_KEYSTORE_PATH
+          EOF
+      - name: Build Android
+        script: flutter build appbundle --release --flavor production -t lib/main_production.dart
+
+  test:
+    name: Test and generate coverage
+    max_build_duration: 30
+    instance_type: linux_x2
+    environment:
+      <<: *environment
+    triggering:
+      <<: *triggering
+    cache:
+      <<: *cache
+    scripts:
+      - *prepare_flutter_script
+      - name: Install lcov
+        script: |
+          sudo apt-get update
+          sudo apt-get -y install lcov
+      - name: Run tests
+        script: flutter test --coverage --file-reporter json:test_results.json
+      - name: Generate coverage report
+        script: |
+          lcov --remove coverage/lcov.info '**.g.dart' --remove coverage/lcov.info '**/*.freezed.dart' -o coverage/clean_lcov.info
+          genhtml coverage/clean_lcov.info -o coverage/html
+    artifacts:
+      - test_results.json
+      - coverage/

@@ -1,0 +1,25 @@
+name: Check Codemagic CI Label
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+    paths:
+      - formigas_codemagic/**
+      - '!formigas_codemagic/**/*.md'
+      - '!formigas_codemagic/docs/**'
+      - .github/workflows/continuous-integration-formigas_codemagic.yaml
+      - .github/workflows/check-codemagic-ci-label.yaml
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check for required label
+        uses: mheap/github-action-required-labels@v5
+        with:
+          mode: minimum
+          count: 1
+          labels: "codemagic-ci: success"

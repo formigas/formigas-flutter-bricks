@@ -1,0 +1,14 @@
+name: Publish formigas_codemagic on BrickHub
+
+on:
+  push:
+    tags:
+      - "formigas_codemagic-*.*.*"
+
+jobs:
+  publish:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/mason_publish.yml@v1
+    with:
+      working_directory: ./formigas_codemagic
+    secrets:
+      mason_credentials: ${{ secrets.MASON_CREDENTIALS }}
