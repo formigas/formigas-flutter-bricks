@@ -1,0 +1,71 @@
+workflows:
+  definitions:
+    environment:
+      flutter: stable
+      xcode: latest
+    triggering:
+      events:
+        - pull_request
+        - push
+      cancel_previous_builds: true
+    scripts:
+      - &prepare_flutter_script
+        name: Prepare Flutter Build
+        script: |
+          flutter clean
+          flutter pub get
+    cache:
+      cache_paths:
+        - $HOME/.pub-cache
+        - $HOME/.gradle/caches
+        - $HOME/Library/Caches/CocoaPods
+
+  validate:
+    name: Validate
+    max_build_duration: 10
+    instance_type: linux_x2
+    scripts:
+      - *prepare_flutter_script
+      - name: Format
+        script: dart format -o none --set-exit-if-changed lib/ test/
+      - name: Analyze
+        script: flutter analyze --fatal-infos --fatal-warnings
+
+  build-ios:
+    name: Build iOS
+    max_build_duration: 30
+    instance_type: mac_mini_m2
+    scripts:
+      - *prepare_flutter_script
+      - name: Build iOS
+        script: flutter build ios --release --no-codesign --flavor production -t lib/main_production.dart
+
+  build-android:
+    name: Build Android
+    max_build_duration: 30
+    environment:
+      android_signing:
+        - android_keystore
+    instance_type: linux_x2
+    scripts:
+      - *prepare_flutter_script
+      - name: Build Android
+        script: flutter build appbundle --release --flavor production -t lib/main_production.dart
+
+  test:
+    name: Test
+    max_build_duration: 30
+    instance_type: linux_x2
+    scripts:
+      - *prepare_flutter_script
+      - name: Install lcov
+        script: |
+          sudo apt-get update
+          sudo apt-get -y install lcov
+      - name: Run tests
+        script: |
+          flutter test --coverage --file-reporter json:test_results.json
+          lcov --remove coverage/lcov.info '**.g.dart' --remove coverage/lcov.info '**/*.freezed.dart' -o coverage/clean_lcov.info
+    artifacts:
+      - test_results.json
+      - coverage/clean_lcov.info
