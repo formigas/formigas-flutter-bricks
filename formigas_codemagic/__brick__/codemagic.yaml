@@ -10,7 +10,7 @@ workflows:
       cancel_previous_builds: true
     scripts:
       - &prepare_flutter_script
-        name: Prepare Flutter Build
+        name: Get Flutter dependencies
         script: |
           flutter clean
           flutter pub get
