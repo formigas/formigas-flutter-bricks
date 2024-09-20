@@ -56,7 +56,7 @@ jobs:
         run: mason add formigas_codemagic --path ./formigas-flutter-bricks/formigas_codemagic
 
       - name: Make formigas_codemagic
-        run: mason make formigas_codemagic
+        run: mason make formigas_codemagic --on-conflict overwrite
         working-directory: codemagic-ci-brick-ci
 
       - name: Create Pull Request
