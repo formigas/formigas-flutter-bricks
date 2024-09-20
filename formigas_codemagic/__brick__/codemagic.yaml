@@ -53,7 +53,7 @@ workflows:
         script: flutter build appbundle --release --flavor production -t lib/main_production.dart
 
   test:
-    name: Test
+    name: Test and generate coverage
     max_build_duration: 30
     instance_type: linux_x2
     scripts:
