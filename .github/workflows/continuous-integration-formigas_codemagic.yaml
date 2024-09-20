@@ -57,6 +57,8 @@ jobs:
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
           BRANCH_NAME="codemagic-ci-changes-$PR_NUMBER"
+          git config --global user.name "formigas-flik[bot]"
+          git config --global user.email "173810882+formigas-flik[bot]@users.noreply.github.com"
           git checkout -b $BRANCH_NAME
           git add .
           git commit -m "Update codemagic CI workflow for PR $PR_NUMBER"
