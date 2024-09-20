@@ -59,7 +59,7 @@ workflows:
     environment:
       <<: *environment
       android_signing:
-        - android_keystore
+        - codemagic_ci_testapp_android_keystore
     triggering:
       <<: *triggering
     cache:
