@@ -63,7 +63,7 @@ jobs:
           git checkout -b $BRANCH_NAME
           git add .
           git commit -m "Update codemagic CI workflow for PR $PR_NUMBER"
-          git push origin $BRANCH_NAME
+          git push https://${{ steps.app-token.outputs.token }}@github.com/formigas/codemagic-ci-brick-ci.git $BRANCH_NAME
         working-directory: codemagic-ci-brick-ci
 
       - name: Create PR
