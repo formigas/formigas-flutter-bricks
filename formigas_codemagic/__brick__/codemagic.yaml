@@ -1,5 +1,6 @@
 workflows:
   definitions:
+    name: Continuous Integration
     environment:
       flutter: stable
       xcode: latest
