@@ -8,7 +8,7 @@ on:
   pull_request:
 
 env:
-  FLUTTER_VERSION: "latest"
+  FLUTTER_VERSION: "stable"
 
 jobs:
   validate:
