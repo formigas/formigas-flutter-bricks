@@ -5,12 +5,10 @@ permissions:
   pull-requests: write
 
 on:
-  push:
-    branches: [develop, staging, master, main]
   pull_request:
 
 env:
-  FLUTTER_VERSION: "3.24.2"
+  FLUTTER_VERSION: "3.24.3"
 
 jobs:
   validate:
@@ -25,31 +23,11 @@ jobs:
           cache: true
       - name: Format
         run: dart format -o none --set-exit-if-changed lib/ test/
-      - name: Build runner
-        run: dart run build_runner build --delete-conflicting-outputs
       - name: Analyze
         run: flutter analyze --fatal-infos --fatal-warnings
 
-  determine-flavor:
-    name: Determine Flavor
-    runs-on: ubuntu-latest
-    outputs:
-      flavor: ${{#mustacheCase}}steps.set-flavor.outputs.flavor{{/mustacheCase}}
-    steps:
-      - name: Determine Flavor
-        id: set-flavor
-        run: |
-          if [[ "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/master" || "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/main" ]]; then
-            echo "flavor=production" >> $GITHUB_OUTPUT
-          elif [[ "${{#mustacheCase}}github.ref{{/mustacheCase}}" == "refs/heads/staging" ]]; then
-            echo "flavor=staging" >> $GITHUB_OUTPUT
-          else
-            echo "flavor=development" >> $GITHUB_OUTPUT
-          fi
-
   build_ios:
-    name: Build iOS ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
-    needs: determine-flavor
+    name: Build iOS
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,19 +38,21 @@ jobs:
           cache: true
       - name: Clean
         run: flutter clean
-      - name: Build runner
-        run: dart run build_runner build --delete-conflicting-outputs
       - name: Build
-        run: flutter build ios --no-codesign --release --flavor ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}.dart
+        run: flutter build ios --no-codesign --release --flavor production -t lib/main_production.dart
 
   build_android:
-    name: Build Android ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}
-    needs: determine-flavor
+    name: Build Android
     runs-on: ubuntu-latest
     env:
       KEYSTORE_FILENAME: upload-keystore.jks
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -82,10 +62,8 @@ jobs:
         run: echo "${{#mustacheCase}}secrets.ANDROID_KEYSTORE_BASE64{{/mustacheCase}}" | base64 --decode > ./android/app/${{#mustacheCase}}env.KEYSTORE_FILENAME{{/mustacheCase}}
       - name: Clean
         run: flutter clean
-      - name: Build runner
-        run: dart run build_runner build --delete-conflicting-outputs
       - name: Build
-        run: flutter build appbundle --release --flavor ${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}} -t lib/main_${{#mustacheCase}}needs.determine-flavor.outputs.flavor{{/mustacheCase}}.dart
+        run: flutter build appbundle --release --flavor production -t lib/main_production.dart
         env:
           ANDROID_KEYSTORE_PATH: ${{#mustacheCase}}env.KEYSTORE_FILENAME{{/mustacheCase}}
           ANDROID_KEYSTORE_PASSWORD: ${{#mustacheCase}}secrets.ANDROID_KEYSTORE_PASSWORD{{/mustacheCase}}
@@ -108,8 +86,6 @@ jobs:
           sudo apt-get -y install lcov
       - name: Clean
         run: flutter clean
-      - name: Build runner
-        run: dart run build_runner build --delete-conflicting-outputs
       - name: Run tests
         run: flutter test --coverage --file-reporter json:test_results.json
       - name: Remove generated files from coverage

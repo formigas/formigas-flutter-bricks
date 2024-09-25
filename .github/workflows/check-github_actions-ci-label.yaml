@@ -1,0 +1,25 @@
+name: Check Github Actions CI Label
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+    paths:
+      - formigas_github_actions/**
+      - '!formigas_github_actions/**/*.md'
+      - '!formigas_github_actions/docs/**'
+      - .github/workflows/continuous-integration-formigas_github_actions.yaml
+      - .github/workflows/check-github_actions-ci-label.yaml
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check for required label
+        uses: mheap/github-action-required-labels@v5
+        with:
+          mode: minimum
+          count: 1
+          labels: "github-actions-ci: success"
