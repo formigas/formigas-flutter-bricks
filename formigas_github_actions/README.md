@@ -18,11 +18,8 @@ The workflow file
 
 ## Setup and Configuration
 The GitHub Actions CI pipeline runs validation, build and tests.  
-The pipeline is run on every push to `develop`, `staging` and `master`/`main` branches, as well as on every merge request.  
-The build stage will create a release build and runs a different flavor depending on the branch:  
-- `develop` runs the `development` flavor
-- `staging` runs the `staging` flavor
-- `master`/`main` runs the `production` flavor
+The pipeline is run on every push `main`, as well as on every merge request.  
+The build stage will create a release build for the `production` flavor.
 
 ### Setup GitHub Actions for Android builds
 For Android builds, an upload key is required. Please refer to [Create an upload keystore](https://docs.flutter.dev/deployment/android#create-an-upload-keystore) to create a keystore. After having created the keystore, follow these steps to make it available to the pipeline:
