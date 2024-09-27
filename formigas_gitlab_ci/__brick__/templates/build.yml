@@ -3,11 +3,8 @@ spec:
     docker_image:
       description: "Docker image to use for build"
       type: string
-    flavor:
-      description: "Flavor to build for"
-      options: [development, staging, production]
 ---
-build_ios_$[[ inputs.flavor ]]:
+build_ios:
   stage: build
   needs: []
   tags:
@@ -16,9 +13,9 @@ build_ios_$[[ inputs.flavor ]]:
   script:
     - flutter clean
     - flutter pub run build_runner build --delete-conflicting-outputs
-    - flutter build ios --no-codesign --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
+    - flutter build ios --no-codesign --release --flavor production -t lib/main_production.dart
 
-build_android_$[[ inputs.flavor ]]:
+build_android:
   stage: build
   needs: []
   tags:
@@ -31,4 +28,4 @@ build_android_$[[ inputs.flavor ]]:
     - curl --silent "https://gitlab.com/gitlab-org/incubation-engineering/mobile-devops/download-secure-files/-/raw/main/installer" | bash
     - flutter clean
     - dart run build_runner build --delete-conflicting-outputs
-    - flutter build appbundle --release --flavor $[[ inputs.flavor ]] -t lib/main_$[[ inputs.flavor ]].dart
+    - flutter build appbundle --release --flavor production -t lib/main_production.dart

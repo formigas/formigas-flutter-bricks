@@ -1,0 +1,25 @@
+name: Check GitLab CI Label
+
+on:
+  pull_request:
+    types: [opened, labeled, unlabeled, synchronize]
+    paths:
+      - formigas_gitlab_ci/**
+      - '!formigas_gitlab_ci/**/*.md'
+      - '!formigas_gitlab_ci/docs/**'
+      - .github/workflows/continuous-integration-formigas_gitlab_ci.yaml
+      - .github/workflows/check-gitlab-ci-label.yaml
+
+jobs:
+  check-label:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Check for required label
+        uses: mheap/github-action-required-labels@v5
+        with:
+          mode: minimum
+          count: 1
+          labels: "gitlab-ci: success"
