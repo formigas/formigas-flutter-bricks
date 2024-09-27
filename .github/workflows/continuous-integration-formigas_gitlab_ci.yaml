@@ -46,6 +46,12 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
+      - name: Checkout or create branch
+        working-directory: formigas-gitlab-ci-brick-ci
+        run: |
+          git fetch origin
+          git checkout -B ${{ env.branch_name }} origin/${{ env.branch_name }} || git checkout -b ${{ env.branch_name }}
+
       - name: Install Dart SDK
         uses: dart-lang/setup-dart@v1
         with:
@@ -64,11 +70,9 @@ jobs:
         run: mason make formigas_gitlab_ci --on-conflict overwrite --runner_tag gitlab-runner-tag
         working-directory: formigas-gitlab-ci-brick-ci
 
-      - name: Create or update branch and push changes
+      - name: Commit and push changes
         working-directory: formigas-gitlab-ci-brick-ci
         run: |
-          git fetch origin
-          git checkout -B ${{ env.branch_name }} origin/${{ env.branch_name }} || git checkout -b ${{ env.branch_name }}
           git add .
           git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
           git push -f origin ${{ env.branch_name }}
