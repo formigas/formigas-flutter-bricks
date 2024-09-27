@@ -29,19 +29,15 @@ jobs:
         with:
           path: formigas-flutter-bricks
 
-      - name: Create GitHub App token
-        uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ vars.FORMIGAS_VERSION_BUMPER_APP_ID }}
-          private-key: ${{ secrets.FORMIGAS_VERSION_BUMPER_PRIVATE_KEY }}
-          owner: formigas
-          repositories: formigas-flutter-bricks
-
       - name: Setup SSH key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.GITLAB_CI_BRICK_TEST_REPO_DEPLOY_KEY }}
+
+      - name: Add GitLab server to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          echo ${{ vars.FORMIGAS_GITLAB_SERVER_PUBLIC_KEY }} >> ~/.ssh/known_hosts
 
       - name: Checkout GitLab CI test repository
         run: |
