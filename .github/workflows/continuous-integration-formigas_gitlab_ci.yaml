@@ -94,14 +94,18 @@ jobs:
               "merge_when_pipeline_succeeds": true,
               "auto_merge_strategy": "merge_when_pipeline_succeeds"
             }' \
-            --write-out "%{http_code}" \
-            --silent \
-            --output /dev/null \
+            --write-out "\n%{http_code}" \
             "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests")
 
-          if [ "$response" -ge 200 ] && [ "$response" -lt 300 ]; then
-            echo "Merge request created successfully. Status code: $response"
+          body=$(echo "$response" | sed '$d')
+          status_code=$(echo "$response" | tail -n1)
+
+          echo "Response body: $body"
+          echo "Status code: $status_code"
+
+          if [ "$status_code" -ge 200 ] && [ "$status_code" -lt 300 ]; then
+            echo "Merge request created successfully."
           else
-            echo "Failed to create merge request. Status code: $response"
+            echo "Failed to create merge request."
             exit 1
           fi
