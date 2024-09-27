@@ -65,15 +65,15 @@ jobs:
         working-directory: formigas-gitlab-ci-brick-ci
 
       - name: Create Merge Request
+        working-directory: formigas-gitlab-ci-brick-ci
         run: |
-          cd formigas-gitlab-ci-brick-ci
           git checkout -b ${{ env.branch_name }}
           git add .
           git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
           git push -u origin ${{ env.branch_name }}
 
           curl --request POST \
-            --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+            --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" \
             --header "Content-Type: application/json" \
             --data '{
               "source_branch": "${{ env.branch_name }}",
@@ -87,11 +87,11 @@ jobs:
             "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests"
 
       - name: Set auto-merge for Merge Request
+        working-directory: formigas-gitlab-ci-brick-ci
         run: |
-          cd formigas-gitlab-ci-brick-ci
-          MR_IID=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests?state=opened&source_branch=${{ env.branch_name }}" | jq '.[0].iid')
+          MR_IID=$(curl --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests?state=opened&source_branch=${{ env.branch_name }}" | jq '.[0].iid')
           curl --request PUT \
-            --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
+            --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" \
             --header "Content-Type: application/json" \
             --data '{"merge_when_pipeline_succeeds": true}' \
             "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests/$MR_IID/merge"
