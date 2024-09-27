@@ -70,17 +70,17 @@ jobs:
         run: mason make formigas_gitlab_ci --on-conflict overwrite --runner_tag gitlab-runner-tag
         working-directory: formigas-gitlab-ci-brick-ci
 
-      - name: Commit and push changes
-        working-directory: formigas-gitlab-ci-brick-ci
-        run: |
-          git add .
-          git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
-          git push -f origin ${{ env.branch_name }}
+      # - name: Commit and push changes
+      #   working-directory: formigas-gitlab-ci-brick-ci
+      #   run: |
+      #     git add .
+      #     git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
+      #     git push -f origin ${{ env.branch_name }}
 
       - name: Create Merge Request
         working-directory: formigas-gitlab-ci-brick-ci
         run: |
-          curl --request POST \
+          response=$(curl --request POST \
             --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" \
             --header "Content-Type: application/json" \
             --data '{
@@ -94,4 +94,14 @@ jobs:
               "merge_when_pipeline_succeeds": true,
               "auto_merge_strategy": "merge_when_pipeline_succeeds"
             }' \
-            "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests"
+            --write-out "%{http_code}" \
+            --silent \
+            --output /dev/null \
+            "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests")
+
+          if [ "$response" -ge 200 ] && [ "$response" -lt 300 ]; then
+            echo "Merge request created successfully. Status code: $response"
+          else
+            echo "Failed to create merge request. Status code: $response"
+            exit 1
+          fi
