@@ -45,8 +45,8 @@ jobs:
 
       - name: Checkout GitLab CI test repository
         run: |
-          git clone git@git.dev.formigas.de:framework/formigas_gitlab_ci-brick-ci.git
-          cd formigas_gitlab_ci-brick-ci
+          git clone git@git.dev.formigas.de:framework/formigas-gitlab-ci-brick-ci.git
+          cd formigas-gitlab-ci-brick-ci
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
@@ -66,11 +66,11 @@ jobs:
 
       - name: Make formigas_gitlab_ci
         run: mason make formigas_gitlab_ci --on-conflict overwrite --runner_tag gitlab-runner-tag
-        working-directory: formigas_gitlab_ci-brick-ci
+        working-directory: formigas-gitlab-ci-brick-ci
 
       - name: Create Merge Request
         run: |
-          cd formigas_gitlab_ci-brick-ci
+          cd formigas-gitlab-ci-brick-ci
           git checkout -b ${{ env.branch_name }}
           git add .
           git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
@@ -92,7 +92,7 @@ jobs:
 
       - name: Set auto-merge for Merge Request
         run: |
-          cd formigas_gitlab_ci-brick-ci
+          cd formigas-gitlab-ci-brick-ci
           MR_IID=$(curl --header "PRIVATE-TOKEN: $GITLAB_TOKEN" "https://git.dev.formigas.de/api/v4/projects/${{ env.GITLAB_PROJECT_ID }}/merge_requests?state=opened&source_branch=${{ env.branch_name }}" | jq '.[0].iid')
           curl --request PUT \
             --header "PRIVATE-TOKEN: $GITLAB_TOKEN" \
