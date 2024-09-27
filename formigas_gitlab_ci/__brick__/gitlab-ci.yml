@@ -1,33 +1,15 @@
 variables:
-  FLUTTER_VERSION: "3.24.2"
+  FLUTTER_VERSION: "3.24.3"
   FLUTTER_DOCKER_IMAGE: "ghcr.io/cirruslabs/flutter:${FLUTTER_VERSION}"
 
 workflow:
   rules:
-    - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
-    - if: $CI_COMMIT_BRANCH == "staging"
-    - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
-    - when: never
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 include:
   - local: "templates/build.yml"
-    rules:
-      - if: $CI_COMMIT_BRANCH == "develop" || $CI_PIPELINE_SOURCE == "merge_request_event"
     inputs:
       docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: "development"
-  - local: "templates/build.yml"
-    rules:
-      - if: $CI_COMMIT_BRANCH == "staging"
-    inputs:
-      docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: "staging"
-  - local: "templates/build.yml"
-    rules:
-      - if: $CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "main"
-    inputs:
-      docker_image: $FLUTTER_DOCKER_IMAGE
-      flavor: "production"
 
 stages:
   - validate
