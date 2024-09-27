@@ -21,7 +21,6 @@ jobs:
     env:
       branch_name: "formigas_gitlab_ci-changes-${{ github.event.pull_request.number }}"
       GITLAB_PROJECT_ID: "251"
-      GITLAB_TOKEN: ${{ secrets.GITLAB_CI_BRICK_TEST_REPO_TOKEN }}
 
     steps:
       - name: Checkout brick repository
@@ -81,7 +80,7 @@ jobs:
         working-directory: formigas-gitlab-ci-brick-ci
         run: |
           response=$(curl --request POST \
-            --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" \
+            --header "PRIVATE-TOKEN: ${{ secrets.GITLAB_CI_BRICK_TEST_REPO_TOKEN }}" \
             --header "Content-Type: application/json" \
             --data '{
               "source_branch": "${{ env.branch_name }}",
