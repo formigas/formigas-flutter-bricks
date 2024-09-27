@@ -64,14 +64,18 @@ jobs:
         run: mason make formigas_gitlab_ci --on-conflict overwrite --runner_tag gitlab-runner-tag
         working-directory: formigas-gitlab-ci-brick-ci
 
+      - name: Create or update branch and push changes
+        working-directory: formigas-gitlab-ci-brick-ci
+        run: |
+          git fetch origin
+          git checkout -B ${{ env.branch_name }} origin/${{ env.branch_name }} || git checkout -b ${{ env.branch_name }}
+          git add .
+          git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
+          git push -f origin ${{ env.branch_name }}
+
       - name: Create Merge Request
         working-directory: formigas-gitlab-ci-brick-ci
         run: |
-          git checkout -b ${{ env.branch_name }}
-          git add .
-          git commit -m "Update GitLab CI configuration for GitLab CI brick PR ${{ github.event.pull_request.number }}"
-          git push -u origin ${{ env.branch_name }}
-
           curl --request POST \
             --header "PRIVATE-TOKEN: ${{ env.GITLAB_TOKEN }}" \
             --header "Content-Type: application/json" \
